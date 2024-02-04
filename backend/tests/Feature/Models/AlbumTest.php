@@ -4,10 +4,13 @@ namespace Tests\Feature\Models;
 
 use App\Models\Album;
 use App\Models\Artist;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class AlbumTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_can_be_created()
     {
         $album = Album::factory()->create();
@@ -68,12 +71,12 @@ class AlbumTest extends TestCase
     {
         $album = Album::factory()->create();
 
-        $album->addReview([
+        $review = $album->addReview([
             'rating' => 50,
             'body' => 'New Review',
         ]);
 
-        $album->editReview([
+        $album->updateReview($review, [
             'rating' => 100,
             'body' => 'Edited Review',
         ]);
@@ -89,12 +92,12 @@ class AlbumTest extends TestCase
     {
         $album = Album::factory()->create();
 
-        $album->addReview([
+        $review = $album->addReview([
             'rating' => 50,
             'body' => 'New Review',
         ]);
 
-        $album->deleteReview();
+        $album->deleteReview($review);
 
         $this->assertDatabaseMissing('album_reviews', [
             'album_id' => $album->id,
