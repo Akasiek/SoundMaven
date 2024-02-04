@@ -2,19 +2,75 @@
 
 namespace Tests\Feature\Models;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\Artist;
 use Tests\TestCase;
 
 class ArtistTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    public function test_can_be_created()
     {
-        $response = $this->get('/');
+        $artist = Artist::factory()->create();
 
-        $response->assertStatus(200);
+        $this->assertDatabaseHas('artists', [
+            'id' => $artist->id,
+        ]);
+    }
+
+    public function test_can_be_updated()
+    {
+        $artist = Artist::factory()->create();
+
+        $artist->update([
+            'name' => 'New Name',
+            'bio' => 'New Bio',
+        ]);
+
+        $this->assertDatabaseHas('artists', [
+            'id' => $artist->id,
+            'name' => 'New Name',
+            'bio' => 'New Bio',
+        ]);
+    }
+
+    public function test_can_be_deleted()
+    {
+        $artist = Artist::factory()->create();
+
+        $artist->delete();
+
+        $this->assertDatabaseMissing('artists', [
+            'id' => $artist->id,
+        ]);
+    }
+
+    public function test_can_add_album()
+    {
+        $artist = Artist::factory()->create();
+
+        $artist->addAlbum([
+            'title' => 'New Album',
+            'description' => 'New Description',
+        ]);
+
+        $this->assertDatabaseHas('albums', [
+            'title' => 'New Album',
+            'description' => 'New Description',
+            'artist_id' => $artist->id,
+        ]);
+    }
+
+    public function test_can_delete_album()
+    {
+        $artist = Artist::factory()->create();
+        $album = $artist->addAlbum([
+            'title' => 'New Album',
+            'description' => 'New Description',
+        ]);
+
+        $artist->deleteAlbum($album->id);
+
+        $this->assertDatabaseMissing('albums', [
+            'id' => $album->id,
+        ]);
     }
 }
