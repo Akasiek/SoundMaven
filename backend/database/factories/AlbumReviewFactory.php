@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Album;
+use App\Models\AlbumReview;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<AlbumReview>
+ */
+class AlbumReviewFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'rating' => fake()->numberBetween(0, 100),
+            'body' => fake()->text(1024),
+            'album_id' => Album::inRandomOrder()->first()?->id ?? Album::factory()->create()->id,
+        ];
+    }
+}

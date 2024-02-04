@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasReviews;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class Album extends Model
 {
-    use HasFactory, HasUuids, Sluggable, BlameableTrait;
+    use HasFactory, HasUuids, Sluggable, BlameableTrait, HasReviews;
 
     protected $fillable = [
         'title',
