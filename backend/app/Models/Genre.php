@@ -11,39 +11,32 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
-class Album extends Model
+class Genre extends Model
 {
     use HasFactory, HasUuids, Sluggable, BlameableTrait;
 
     protected $fillable = [
-        'title',
+        'name',
         'description',
-        'release_date',
-        'artist_id',
     ];
 
     public function sluggable(): array
     {
-        return ['slug' => ['source' => 'title']];
+        return ['slug' => ['source' => 'name']];
     }
 
-    public function artist(): BelongsTo
+    public function albums(): BelongsToMany
     {
-        return $this->belongsTo(Artist::class);
+        return $this->belongsToMany(Album::class);
     }
 
-    public function reviews(): HasMany
+    public function parent(): BelongsTo
     {
-        return $this->hasMany(AlbumReview::class);
+        return $this->belongsTo(Genre::class, 'parent_id');
     }
 
-    public function genres(): BelongsToMany
+    public function children(): HasMany
     {
-        return $this->belongsToMany(Genre::class);
-    }
-
-    public function averageRating(): float
-    {
-        return $this->reviews()->avg('rating');
+        return $this->hasMany(Genre::class, 'parent_id');
     }
 }
