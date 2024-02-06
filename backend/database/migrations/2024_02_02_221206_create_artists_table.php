@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->uuid('id')->primary();
 
             $table->string('name', 255);
-            $table->string('slug', 255)->unique();
+            $table->string('slug', 511)->unique();
             $table->text('description')->nullable();
             $table->enum('type', ['band', 'solo', 'duo', 'other']);
 
