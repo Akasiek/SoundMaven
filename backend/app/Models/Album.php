@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\HasReviews;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class Album extends Model
 {
-    use HasFactory, HasUuids, Sluggable, BlameableTrait, HasReviews;
+    use HasFactory, HasUuids, Sluggable, BlameableTrait;
 
     protected $fillable = [
         'title',
@@ -29,5 +29,15 @@ class Album extends Model
     public function artist(): BelongsTo
     {
         return $this->belongsTo(Artist::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(AlbumReview::class);
+    }
+
+    public function averageRating(): float
+    {
+        return $this->reviews()->avg('rating');
     }
 }

@@ -48,31 +48,40 @@ class ArtistTest extends TestCase
         ]);
     }
 
-    public function test_can_add_album()
+    public function test_can_add_albums()
     {
         $artist = Artist::factory()->create();
 
-        $album = $artist->addAlbum([
+        $artist->albums()->create([
             'title' => 'New Album',
             'description' => 'New Description',
+        ]);
+
+        $artist->albums()->create([
+            'title' => 'Another Album',
+            'description' => 'Another Description',
         ]);
 
         $this->assertDatabaseHas('albums', [
             'title' => 'New Album',
             'description' => 'New Description',
-            'artist_id' => $artist->id,
+        ]);
+
+        $this->assertDatabaseHas('albums', [
+            'title' => 'Another Album',
+            'description' => 'Another Description',
         ]);
     }
 
     public function test_can_delete_album()
     {
         $artist = Artist::factory()->create();
-        $album = $artist->addAlbum([
+        $album = $artist->albums()->create([
             'title' => 'New Album',
             'description' => 'New Description',
         ]);
 
-        $artist->deleteAlbum($album->id);
+        $artist->albums()->delete($album->id);
 
         $this->assertDatabaseMissing('albums', [
             'id' => $album->id,

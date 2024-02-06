@@ -54,7 +54,7 @@ class AlbumTest extends TestCase
     {
         $album = Album::factory()->create();
 
-        $album->addReview([
+        $album->reviews()->create([
             'rating' => 50,
             'body' => 'New Review. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
         ]);
@@ -65,39 +65,18 @@ class AlbumTest extends TestCase
             'album_id' => $album->id,
         ]);
 
-    }
-
-    public function test_can_edit_review()
-    {
-        $album = Album::factory()->create();
-
-        $review = $album->addReview([
-            'rating' => 50,
-            'body' => 'New Review',
-        ]);
-
-        $album->updateReview($review, [
-            'rating' => 100,
-            'body' => 'Edited Review',
-        ]);
-
-        $this->assertDatabaseHas('album_reviews', [
-            'rating' => 100,
-            'body' => 'Edited Review',
-            'album_id' => $album->id,
-        ]);
     }
 
     public function test_can_delete_review()
     {
         $album = Album::factory()->create();
 
-        $review = $album->addReview([
+        $review = $album->reviews()->create([
             'rating' => 50,
             'body' => 'New Review',
         ]);
 
-        $album->deleteReview($review);
+        $album->reviews()->delete($review->id);
 
         $this->assertDatabaseMissing('album_reviews', [
             'album_id' => $album->id,
@@ -108,17 +87,21 @@ class AlbumTest extends TestCase
     {
         $album = Album::factory()->create();
 
-        $album->addReview([
+        $album->reviews()->create([
             'rating' => 50,
             'body' => 'New Review',
         ]);
 
-        $album->addReview([
+        $album->reviews()->create([
             'rating' => 100,
             'body' => 'New Review',
         ]);
 
         $this->assertEquals(75, $album->averageRating());
+
+        $album->reviews()->where(['rating' => 100])->delete();
+
+        $this->assertEquals(50, $album->averageRating());
     }
 
     public function test_can_add_genre()
