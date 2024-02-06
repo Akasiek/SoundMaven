@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\AlbumReview;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -9,13 +10,39 @@ class AlbumReviewTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    public function test_can_be_created()
     {
-        $response = $this->get('/');
+        $albumReview = AlbumReview::factory()->create();
 
-        $response->assertStatus(200);
+        $this->assertDatabaseHas('album_reviews', [
+            'id' => $albumReview->id,
+        ]);
+    }
+
+    public function test_can_be_updated()
+    {
+        $albumReview = AlbumReview::factory()->create();
+
+        $albumReview->update([
+            'rating' => 50,
+            'body' => 'New Review. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        ]);
+
+        $this->assertDatabaseHas('album_reviews', [
+            'id' => $albumReview->id,
+            'rating' => 50,
+            'body' => 'New Review. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+        ]);
+    }
+
+    public function test_can_be_deleted()
+    {
+        $albumReview = AlbumReview::factory()->create();
+
+        $albumReview->delete();
+
+        $this->assertDatabaseMissing('album_reviews', [
+            'id' => $albumReview->id,
+        ]);
     }
 }
