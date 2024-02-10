@@ -42,6 +42,11 @@ class Album extends Model
         return $this->belongsToMany(Genre::class);
     }
 
+    public function tracks(): HasMany
+    {
+        return $this->hasMany(Track::class);
+    }
+
     public function averageRating(): float
     {
         return $this->reviews()->avg('rating');

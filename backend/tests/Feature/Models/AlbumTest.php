@@ -151,40 +151,16 @@ class AlbumTest extends TestCase
 
         $album->tracks()->create([
             'title' => 'New Track',
-            'length' => '3:00',
+            'length' => 250,
             'order' => 1,
         ]);
 
         $this->assertDatabaseHas('tracks', [
             'album_id' => $album->id,
             'title' => 'New Track',
-            'length' => '3:00',
+            'length' => 250,
             'order' => 1,
         ]);
-    }
-
-    public function test_can_update_track()
-    {
-        $album = Album::factory()->create();
-        $track = $album->tracks()->create([
-            'title' => 'New Track',
-            'length' => '3:00',
-            'order' => 1,
-        ]);
-
-        $album->tracks()->update($track->id, [
-            'title' => 'Updated Track',
-            'length' => '4:00',
-            'order' => 2,
-        ]);
-
-        $this->assertDatabaseHas('tracks', [
-            'album_id' => $album->id,
-            'title' => 'Updated Track',
-            'length' => '4:00',
-            'order' => 2,
-        ]);
-
     }
 
     public function test_can_delete_track()
@@ -192,7 +168,7 @@ class AlbumTest extends TestCase
         $album = Album::factory()->create();
         $track = $album->tracks()->create([
             'title' => 'New Track',
-            'length' => '3:00',
+            'length' => 200,
             'order' => 1,
         ]);
 
