@@ -4,10 +4,13 @@ namespace Tests\Feature\Models;
 
 use App\Models\Album;
 use App\Models\Track;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class TrackTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_can_be_created()
     {
         $track = Track::factory()->create();
