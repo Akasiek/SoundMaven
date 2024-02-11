@@ -35,6 +35,7 @@ class AlbumTest extends TestCase
         $this->assertDatabaseHas('albums', [
             'id' => $album->id,
             'title' => 'New Title',
+            'slug' => 'new-title',
             'description' => 'New Description',
             'artist_id' => $newArtist->id,
         ]);

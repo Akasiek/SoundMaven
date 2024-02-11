@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +13,7 @@ class UpdateAlbumRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
@@ -22,8 +23,17 @@ class UpdateAlbumRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
+        $rules = [
+            'title' => 'string|required|max:255',
+            'description' => 'string|nullable',
+            'release_date' => 'date|nullable',
+            'artist_id' => 'uuid|exists:artists,id|required',
         ];
+
+        if ($this->isMethod('patch')) {
+            return array_map(fn($rule) => str_replace('required', 'nullable', $rule), $rules);
+        }
+
+        return $rules;
     }
 }

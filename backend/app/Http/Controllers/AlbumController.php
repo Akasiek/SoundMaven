@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreAlbumRequest;
 use App\Http\Requests\UpdateAlbumRequest;
 use App\Http\Resources\AlbumCollection;
+use App\Http\Resources\AlbumResource;
 use App\Models\Album;
 use App\Services\AlbumService;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -36,23 +37,31 @@ class AlbumController extends Controller
      */
     public function store(StoreAlbumRequest $request)
     {
-        //
+        return new AlbumResource(
+            $this->service->create($request->validated())->loadMissing('artist')
+        );
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Album $album)
+    public function show(string $param)
     {
-        //
+        $album = Album::where(uuid_is_valid($param) ? 'id' : 'slug', $param)->firstOrFail();
+
+        return new AlbumResource($album->loadMissing('artist'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateAlbumRequest $request, Album $album)
+    public function update(UpdateAlbumRequest $request, string $param)
     {
-        //
+        $album = Album::where(uuid_is_valid($param) ? 'id' : 'slug', $param)->firstOrFail();
+
+        return new AlbumResource(
+            $this->service->update($request->validated(), $album)->loadMissing('artist')
+        );
     }
 
     /**
@@ -60,6 +69,8 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
-        //
+        $album->delete();
+
+        return response()->noContent();
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class AlbumCollection extends ResourceCollection
+class ArtistCollection extends ResourceCollection
 {
-    public $collects = AlbumResource::class;
+    public $collects = ArtistResource::class;
 }

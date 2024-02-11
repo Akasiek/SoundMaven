@@ -3,7 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
-use App\Models\User;
+use App\Models\Artist;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AlbumControllerTest extends ControllerTestCase
@@ -13,10 +13,8 @@ class AlbumControllerTest extends ControllerTestCase
     public function test_get_albums()
     {
         Album::factory(3)->create();
-        $user = User::factory()->create();
 
-        $response = $this->actingAs($user)
-            ->get('/albums');
+        $response = $this->get('/albums');
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
@@ -24,10 +22,12 @@ class AlbumControllerTest extends ControllerTestCase
 
     public function test_get_album()
     {
+        $artist = Artist::factory()->create();
         $album = Album::create([
-            'name' => 'Album 1',
+            'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'artist_id' => $artist->id,
         ]);
 
         $response = $this->get("/albums/{$album->id}");
@@ -36,62 +36,113 @@ class AlbumControllerTest extends ControllerTestCase
         $response->assertJson([
             'data' => [
                 'id' => $album->id,
-                'name' => 'Album 1',
+                'title' => 'Album 1',
+                'slug' => 'album-1',
                 'description' => 'Description 1',
                 'release_date' => '2021-01-01',
+                'artist' => [
+                    'id' => $artist->id,
+                    'name' => $artist->name,
+                ],
             ]
         ]);
     }
 
     public function test_store_album()
     {
+        $artist = Artist::factory()->create();
         $response = $this->post('/albums', [
-            'name' => 'Album 1',
+            'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'artist_id' => $artist->id,
         ]);
 
         $response->assertStatus(201);
         $response->assertJson([
             'data' => [
-                'name' => 'Album 1',
+                'title' => 'Album 1',
                 'description' => 'Description 1',
                 'release_date' => '2021-01-01',
+                'artist' => [
+                    'id' => $artist->id,
+                    'name' => $artist->name,
+                ],
             ]
         ]);
     }
 
     public function test_update_album()
     {
+        $artist = Artist::factory()->create();
         $album = Album::create([
-            'name' => 'Album 1',
+            'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'artist_id' => $artist->id,
         ]);
 
+        $newArtist = Artist::factory()->create();
         $response = $this->put("/albums/{$album->id}", [
-            'name' => 'Album 2',
+            'title' => 'Album 2',
             'description' => 'Description 2',
             'release_date' => '2021-01-02',
+            'artist_id' => $newArtist->id,
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
             'data' => [
                 'id' => $album->id,
-                'name' => 'Album 2',
+                'title' => 'Album 2',
                 'description' => 'Description 2',
                 'release_date' => '2021-01-02',
+                'artist' => [
+                    'id' => $newArtist->id,
+                    'name' => $newArtist->name,
+                ],
             ]
         ]);
     }
 
-    public function test_delete_album()
+    public function test_update_albums_one_field()
     {
+        $artist = Artist::factory()->create();
         $album = Album::create([
-            'name' => 'Album 1',
+            'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'artist_id' => $artist->id,
+        ]);
+
+        $response = $this->patch("/albums/{$album->id}", [
+            'description' => 'Description 2',
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'id' => $album->id,
+                'title' => 'Album 1',
+                'description' => 'Description 2',
+                'release_date' => '2021-01-01',
+                'artist' => [
+                    'id' => $artist->id,
+                    'name' => $artist->name,
+                ],
+            ]
+        ]);
+
+    }
+
+    public function test_delete_album()
+    {
+        $arist = Artist::factory()->create();
+        $album = Album::create([
+            'title' => 'Album 1',
+            'description' => 'Description 1',
+            'release_date' => '2021-01-01',
+            'artist_id' => $arist->id,
         ]);
 
         $response = $this->delete("/albums/{$album->id}");
@@ -135,7 +186,7 @@ class AlbumControllerTest extends ControllerTestCase
         ]);
     }
 
-    public function test_dont_store_album_track_with_duplicate_order()
+    public function test_cannot_store_album_track_with_duplicate_order()
     {
         $album = Album::factory()->create();
         $album->tracks()->create([

@@ -20,7 +20,13 @@ Route::get('/', function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResource('albums', AlbumController::class);
+    Route::controller(AlbumController::class)->group(function () {
+        Route::get('/', [AlbumController::class, 'index']);
+        Route::post('/', [AlbumController::class, 'store']);
+        Route::get('/{param}', [AlbumController::class, 'show']);
+        Route::put('/{param}', [AlbumController::class, 'update']);
+        Route::delete('/{album}', [AlbumController::class, 'destroy']);
+    });
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
