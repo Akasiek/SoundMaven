@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAlbumRequest extends FormRequest
+class UpdateAlbumRequest extends UpdateRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,10 +29,6 @@ class UpdateAlbumRequest extends FormRequest
             'artist_id' => 'uuid|exists:artists,id|required',
         ];
 
-        if ($this->isMethod('patch')) {
-            return array_map(fn($rule) => str_replace('required', 'nullable', $rule), $rules);
-        }
-
-        return $rules;
+        return $this->convertRulesBasedOnMethod($rules);
     }
 }

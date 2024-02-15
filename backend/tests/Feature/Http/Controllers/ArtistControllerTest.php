@@ -84,6 +84,19 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'type' => 'band',
             ]
         ]);
+
+        // Test patch
+        $response = $this->patch("/artists/{$artist->id}", [
+            'name' => 'Artist 3',
+        ]);
+        $response->assertJson([
+            'data' => [
+                'id' => $artist->id,
+                'name' => 'Artist 3',
+                'description' => 'Description 2',
+                'type' => 'band',
+            ]
+        ]);
     }
 
     public function test_delete_artist()
