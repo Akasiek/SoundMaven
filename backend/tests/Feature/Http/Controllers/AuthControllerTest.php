@@ -3,10 +3,15 @@
 namespace Http\Controllers;
 
 use App\Models\User;
-use Tests\Feature\Http\Controllers\ControllerTestCase;
+use Tests\TestCase;
 
-class AuthControllerTest extends ControllerTestCase
+class AuthControllerTest extends TestCase
 {
+    protected $defaultHeaders = [
+        'Accept' => 'application/json',
+    ];
+
+    protected $withCredentials = true;
 
     public function test_can_register()
     {

@@ -6,7 +6,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class AlbumControllerTest extends ControllerTestCase
+class AlbumControllerTest extends ControllerWithAuthTestCase
 {
     use RefreshDatabase;
 
@@ -46,6 +46,51 @@ class AlbumControllerTest extends ControllerTestCase
                 ],
             ]
         ]);
+    }
+
+    public function test_get_same_album_with_uuid_and_slug()
+    {
+        $artist = Artist::factory()->create();
+        $album = Album::create([
+            'title' => 'Album 1',
+            'description' => 'Description 1',
+            'release_date' => '2021-01-01',
+            'artist_id' => $artist->id,
+        ]);
+
+        $response = $this->get("/albums/{$album->id}");
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'id' => $album->id,
+                'title' => 'Album 1',
+                'slug' => 'album-1',
+                'description' => 'Description 1',
+                'release_date' => '2021-01-01',
+                'artist' => [
+                    'id' => $artist->id,
+                    'name' => $artist->name,
+                ],
+            ]
+        ]);
+
+        $response = $this->get("/albums/{$album->slug}");
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'id' => $album->id,
+                'title' => 'Album 1',
+                'slug' => 'album-1',
+                'description' => 'Description 1',
+                'release_date' => '2021-01-01',
+                'artist' => [
+                    'id' => $artist->id,
+                    'name' => $artist->name,
+                ],
+            ]
+        ]);
+
+        $this->assertEquals($response->json(), $response->json());
     }
 
     public function test_store_album()

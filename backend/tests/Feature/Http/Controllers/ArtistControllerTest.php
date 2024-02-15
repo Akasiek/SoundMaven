@@ -6,7 +6,7 @@ use App\Models\Artist;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ArtistControllerTest extends ControllerTestCase
+class ArtistControllerTest extends ControllerWithAuthTestCase
 {
     use RefreshDatabase;
 

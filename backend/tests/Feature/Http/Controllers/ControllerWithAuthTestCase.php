@@ -5,7 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\User;
 use Tests\TestCase;
 
-class ControllerTestCase extends TestCase
+class ControllerWithAuthTestCase extends TestCase
 {
     protected $defaultHeaders = [
         'Accept' => 'application/json',
