@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAlbumReviewRequest;
-use App\Http\Requests\UpdateAlbumReviewRequest;
+use App\Http\Requests\Store\StoreAlbumReviewRequest;
+use App\Http\Requests\Update\UpdateAlbumReviewRequest;
 use App\Models\AlbumReview;
 
 class AlbumReviewController extends Controller

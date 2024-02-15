@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Store;
 
 use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAlbumRequest extends UpdateRequest
+class StoreArtistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +23,10 @@ class UpdateAlbumRequest extends UpdateRequest
      */
     public function rules(): array
     {
-        $rules = [
-            'title' => 'string|required|max:255',
+        return [
+            'name' => 'string|required|max:255',
             'description' => 'string|nullable',
-            'release_date' => 'date|nullable',
-            'artist_id' => 'uuid|exists:artists,id|required',
+            'type' => 'string|in:band,solo,duo,other|required',
         ];
-
-        return $this->convertRulesBasedOnMethod($rules);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTrackRequest;
-use App\Http\Requests\UpdateTrackRequest;
+use App\Http\Requests\Store\StoreTrackRequest;
+use App\Http\Requests\Update\UpdateTrackRequest;
 use App\Models\Track;
 
 class TrackController extends Controller

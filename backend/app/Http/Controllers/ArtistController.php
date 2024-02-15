@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreArtistRequest;
-use App\Http\Requests\UpdateArtistRequest;
-use App\Http\Resources\ArtistCollection;
+use App\Http\Requests\Store\StoreArtistRequest;
+use App\Http\Requests\Update\UpdateArtistRequest;
 use App\Http\Resources\ArtistResource;
+use App\Http\Resources\Collection\ArtistCollection;
 use App\Models\Artist;
 use App\Services\ArtistService;
 use Illuminate\Http\Response;

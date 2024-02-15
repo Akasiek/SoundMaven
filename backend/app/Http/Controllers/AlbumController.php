@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreAlbumRequest;
-use App\Http\Requests\UpdateAlbumRequest;
-use App\Http\Resources\AlbumCollection;
+use App\Http\Requests\Store\StoreAlbumRequest;
+use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\Collection\AlbumCollection;
 use App\Models\Album;
 use App\Services\AlbumService;
 use Spatie\QueryBuilder\QueryBuilder;
