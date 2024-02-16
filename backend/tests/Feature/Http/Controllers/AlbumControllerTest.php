@@ -200,9 +200,9 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
     {
         $album = Album::factory()->create();
         $album->tracks()->createMany([
-            ['title' => 'Track 1', 'duration' => 180, 'order' => 1],
-            ['title' => 'Track 2', 'duration' => 240, 'order' => 2],
-            ['title' => 'Track 3', 'duration' => 300, 'order' => 3],
+            ['title' => 'Track 1', 'length' => 180, 'order' => 1],
+            ['title' => 'Track 2', 'length' => 240, 'order' => 2],
+            ['title' => 'Track 3', 'length' => 300, 'order' => 3],
         ]);
 
         $response = $this->get("/albums/{$album->id}/tracks");
@@ -217,7 +217,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
         $response = $this->post("/albums/{$album->id}/tracks", [
             'title' => 'Track 1',
-            'duration' => 180,
+            'length' => 180,
             'order' => 1,
         ]);
 
@@ -225,7 +225,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJson([
             'data' => [
                 'title' => 'Track 1',
-                'duration' => 180,
+                'length' => 180,
                 'order' => 1,
             ]
         ]);
@@ -236,13 +236,13 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $album = Album::factory()->create();
         $album->tracks()->create([
             'title' => 'Track 1',
-            'duration' => 180,
+            'length' => 180,
             'order' => 1,
         ]);
 
         $response = $this->post("/albums/{$album->id}/tracks", [
             'title' => 'Track 2',
-            'duration' => 220,
+            'length' => 220,
             'order' => 1,
         ]);
 
@@ -255,13 +255,13 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $album = Album::factory()->create();
         $track = $album->tracks()->create([
             'title' => 'Track 1',
-            'duration' => 180,
+            'length' => 180,
             'order' => 1,
         ]);
 
         $response = $this->put("/albums/{$album->id}/tracks/{$track->id}", [
             'title' => 'Track 2',
-            'duration' => 220,
+            'length' => 220,
             'order' => 2,
         ]);
 
@@ -270,7 +270,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
             'data' => [
                 'id' => $track->id,
                 'title' => 'Track 2',
-                'duration' => 220,
+                'length' => 220,
                 'order' => 2,
             ]
         ]);
@@ -281,7 +281,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $album = Album::factory()->create();
         $track = $album->tracks()->create([
             'title' => 'Track 1',
-            'duration' => 180,
+            'length' => 180,
             'order' => 1,
         ]);
 
