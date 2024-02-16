@@ -8,6 +8,7 @@ use App\Http\Resources\AlbumResource;
 use App\Http\Resources\Collection\AlbumCollection;
 use App\Models\Album;
 use App\Services\AlbumService;
+use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class AlbumController extends Controller
@@ -19,7 +20,7 @@ class AlbumController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(): AlbumCollection
     {
         return new AlbumCollection(
             QueryBuilder::for(Album::class)
@@ -32,30 +33,21 @@ class AlbumController extends Controller
         );
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreAlbumRequest $request)
+    public function store(StoreAlbumRequest $request): AlbumResource
     {
         return new AlbumResource(
             $this->service->create($request->validated())->loadMissing('artist')
         );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $param)
+    public function show(string $param): AlbumResource
     {
         $album = Album::where(uuid_is_valid($param) ? 'id' : 'slug', $param)->firstOrFail();
 
         return new AlbumResource($album->loadMissing('artist'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateAlbumRequest $request, string $param)
+    public function update(UpdateAlbumRequest $request, string $param): AlbumResource
     {
         $album = Album::where(uuid_is_valid($param) ? 'id' : 'slug', $param)->firstOrFail();
 
@@ -64,10 +56,7 @@ class AlbumController extends Controller
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Album $album)
+    public function destroy(Album $album): Response
     {
         $album->delete();
 
