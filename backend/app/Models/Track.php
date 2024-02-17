@@ -15,10 +15,6 @@ class Track extends Model
 {
     use HasFactory, HasUuids, Sluggable, BlameableTrait;
 
-    public function sluggable(): array
-    {
-        return ['slug' => ['source' => 'title']];
-    }
 
     protected $fillable = [
         'title',
@@ -26,6 +22,11 @@ class Track extends Model
         'order',
         'album_id',
     ];
+
+    public function sluggable(): array
+    {
+        return ['slug' => ['source' => 'title']];
+    }
 
     public function album(): BelongsTo
     {

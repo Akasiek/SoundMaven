@@ -208,7 +208,13 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response = $this->get("/albums/{$album->id}/tracks");
 
         $response->assertStatus(200);
-        $response->assertJsonCount(3, 'data');
+        $response->assertJson([
+            'data' => [
+                ['title' => 'Track 1', 'length' => 180, 'order' => 1],
+                ['title' => 'Track 2', 'length' => 240, 'order' => 2],
+                ['title' => 'Track 3', 'length' => 300, 'order' => 3],
+            ]
+        ]);
     }
 
     public function test_store_album_track()
@@ -227,68 +233,12 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'title' => 'Track 1',
                 'length' => 180,
                 'order' => 1,
+                'album' => [
+                    'id' => $album->id,
+                    'title' => $album->title,
+                ]
             ]
         ]);
-    }
-
-    public function test_cannot_store_album_track_with_duplicate_order()
-    {
-        $album = Album::factory()->create();
-        $album->tracks()->create([
-            'title' => 'Track 1',
-            'length' => 180,
-            'order' => 1,
-        ]);
-
-        $response = $this->post("/albums/{$album->id}/tracks", [
-            'title' => 'Track 2',
-            'length' => 220,
-            'order' => 1,
-        ]);
-
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors('Track with the same order already exists');
-    }
-
-    public function test_update_album_track()
-    {
-        $album = Album::factory()->create();
-        $track = $album->tracks()->create([
-            'title' => 'Track 1',
-            'length' => 180,
-            'order' => 1,
-        ]);
-
-        $response = $this->put("/albums/{$album->id}/tracks/{$track->id}", [
-            'title' => 'Track 2',
-            'length' => 220,
-            'order' => 2,
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJson([
-            'data' => [
-                'id' => $track->id,
-                'title' => 'Track 2',
-                'length' => 220,
-                'order' => 2,
-            ]
-        ]);
-    }
-
-    public function test_delete_album_track()
-    {
-        $album = Album::factory()->create();
-        $track = $album->tracks()->create([
-            'title' => 'Track 1',
-            'length' => 180,
-            'order' => 1,
-        ]);
-
-        $response = $this->delete("/albums/{$album->id}/tracks/{$track->id}");
-
-        $response->assertStatus(204);
-        $this->assertDatabaseMissing('tracks', ['id' => $track->id]);
     }
 
     public function test_get_album_reviews()

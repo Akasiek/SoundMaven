@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Album;
+use App\Models\Track;
 
 class AlbumService
 {
@@ -21,5 +22,12 @@ class AlbumService
     public function delete(Album $model): bool
     {
         return $model->delete();
+    }
+
+    public function addTrack(array $data, Album $model): Track
+    {
+        $data['album_id'] = $model->id;
+
+        return $model->tracks()->create($data);
     }
 }

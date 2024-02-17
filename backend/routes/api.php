@@ -24,10 +24,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::controller(AlbumController::class)->prefix('albums')->group(function () {
         Route::get('/', [AlbumController::class, 'index']);
         Route::post('/', [AlbumController::class, 'store']);
-        Route::get('/{param}', [AlbumController::class, 'show']);
-        Route::put('/{param}', [AlbumController::class, 'update']);
-        Route::patch('/{param}', [AlbumController::class, 'update']);
+        Route::get('/{albumParam}', [AlbumController::class, 'show']);
+        Route::put('/{albumParam}', [AlbumController::class, 'update']);
+        Route::patch('/{albumParam}', [AlbumController::class, 'update']);
         Route::delete('/{album}', [AlbumController::class, 'destroy']);
+
+        Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
+        Route::post('/{albumParam}/tracks', [AlbumController::class, 'storeTrack']);
     });
 
     Route::controller(ArtistController::class)->prefix('artists')->group(function () {
