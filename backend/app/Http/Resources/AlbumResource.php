@@ -15,6 +15,7 @@ class AlbumResource extends JsonResource
             'description' => $this->description,
             'release_date' => $this->release_date,
             'artist' => ArtistResource::make($this->whenLoaded('artist')),
+            'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

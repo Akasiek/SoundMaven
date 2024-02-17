@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\TrackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{param}', [ArtistController::class, 'update']);
         Route::patch('/{param}', [ArtistController::class, 'update']);
         Route::delete('/{artist}', [ArtistController::class, 'destroy']);
+    });
+
+    Route::controller(TrackController::class)->prefix('tracks')->group(function () {
+        Route::get('/', [TrackController::class, 'index']);
+        Route::post('/', [TrackController::class, 'store']);
+        Route::get('/{trackParam}', [TrackController::class, 'show']);
+        Route::put('/{trackParam}', [TrackController::class, 'update']);
+        Route::patch('/{trackParam}', [TrackController::class, 'update']);
+        Route::delete('/{track}', [TrackController::class, 'destroy']);
     });
 });
 

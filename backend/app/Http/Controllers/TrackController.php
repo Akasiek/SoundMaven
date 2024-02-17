@@ -4,47 +4,68 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Store\StoreTrackRequest;
 use App\Http\Requests\Update\UpdateTrackRequest;
+use App\Http\Resources\Collection\TrackCollection;
+use App\Http\Resources\TrackResource;
 use App\Models\Track;
+use App\Services\TrackService;
+use Illuminate\Http\Response;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TrackController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private TrackService $service;
+
+    public function __construct(TrackService $service)
     {
-        //
+        $this->service = $service;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreTrackRequest $request)
+    public function index(): TrackCollection
     {
-        //
+        return new TrackCollection(
+            QueryBuilder::for(Track::class)
+                ->allowedIncludes(['album'])
+                ->allowedFilters([
+                    'title',
+                    'slug',
+                    'album.title',
+                    'album.slug',
+                    'album.artist.name',
+                    'album.artist.slug',
+                ])->get()
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Track $track)
+    public function show(string $trackParam): TrackResource
     {
-        //
+        $track = Track::where(uuid_is_valid($trackParam) ? 'id' : 'slug', $trackParam)
+            ->firstOrFail();
+
+        return new TrackResource($track->loadMissing(['album']));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateTrackRequest $request, Track $track)
+    public function store(StoreTrackRequest $request): TrackResource
     {
-        //
+        return new TrackResource(
+            $this->service->create($request->validated())->loadMissing(['album'])
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Track $track)
+
+    public function update(UpdateTrackRequest $request, string $trackParam): TrackResource
     {
-        //
+        $track = Track::where(uuid_is_valid($trackParam) ? 'id' : 'slug', $trackParam)
+            ->firstOrFail();
+
+        return new TrackResource(
+            $this->service->update($request->validated(), $track)->loadMissing(['album'])
+        );
+    }
+
+    public function destroy(Track $track): Response
+    {
+        $this->service->delete($track);
+
+        return response()->noContent();
     }
 }

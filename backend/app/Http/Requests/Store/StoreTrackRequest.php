@@ -2,9 +2,14 @@
 
 namespace App\Http\Requests\Store;
 
+use App\Models\Track;
+use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @mixin Track
+ */
 class StoreTrackRequest extends FormRequest
 {
     /**
@@ -12,18 +17,21 @@ class StoreTrackRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::check();
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'title' => 'string|max:255|required',
+            'length' => 'integer|min:0|required',
+            'order' => 'integer|min:0|required|unique:tracks,order,NULL,id,album_id,' . $this->album_id,
+            'album_id' => 'uuid|exists:albums,id|required',
         ];
     }
 }

@@ -28,6 +28,7 @@ class AlbumController extends Controller
         return new AlbumCollection(
             QueryBuilder::for(Album::class)
                 ->with(['artist'])
+                ->allowedIncludes(['tracks'])
                 ->allowedFilters([
                     'title',
                     'artist.name',
@@ -47,7 +48,7 @@ class AlbumController extends Controller
     public function store(StoreAlbumRequest $request): AlbumResource
     {
         return new AlbumResource(
-            $this->service->create($request->validated())->loadMissing('artist')
+            $this->service->create($request->validated())->loadMissing(['artist', 'tracks'])
         );
     }
 
@@ -56,13 +57,13 @@ class AlbumController extends Controller
         $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
 
         return new AlbumResource(
-            $this->service->update($request->validated(), $album)->loadMissing('artist')
+            $this->service->update($request->validated(), $album)->loadMissing(['artist', 'tracks'])
         );
     }
 
     public function destroy(Album $album): Response
     {
-        $album->delete();
+        $this->service->delete($album);
 
         return response()->noContent();
     }
