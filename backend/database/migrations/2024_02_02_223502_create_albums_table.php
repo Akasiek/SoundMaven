@@ -20,8 +20,10 @@ return new class extends Migration {
             $table->foreignUuid('artist_id')->constrained('artists')->restrictOnDelete();
 
             $table->timestamps();
+            $table->softDeletes();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
         });
     }
 

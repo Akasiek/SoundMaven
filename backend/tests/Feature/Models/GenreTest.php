@@ -58,7 +58,7 @@ class GenreTest extends TestCase
 
         $genre->delete();
 
-        $this->assertDatabaseMissing('genres', [
+        $this->assertSoftDeleted('genres', [
             'id' => $genre->id,
         ]);
     }

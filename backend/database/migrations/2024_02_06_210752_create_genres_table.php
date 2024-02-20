@@ -18,10 +18,11 @@ return new class extends Migration {
             $table->string('slug', 511)->unique();
             $table->text('description')->nullable();
 
-
             $table->timestamps();
+            $table->softDeletes();
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
         });
 
         // Add foreign key for parent_id after table creation

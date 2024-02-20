@@ -193,7 +193,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response = $this->delete("/albums/{$album->id}");
 
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('albums', ['id' => $album->id]);
+        $this->assertSoftDeleted('albums', ['id' => $album->id]);
     }
 
     public function test_get_album_tracks()
@@ -323,7 +323,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response = $this->delete("/albums/{$album->id}/reviews/{$review->id}");
 
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('album_reviews', ['id' => $review->id]);
+        $this->assertSoftDeleted('album_reviews', ['id' => $review->id]);
     }
 
     public function test_get_album_genres()

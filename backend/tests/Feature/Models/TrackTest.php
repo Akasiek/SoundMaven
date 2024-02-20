@@ -55,7 +55,7 @@ class TrackTest extends TestCase
 
         $track->delete();
 
-        $this->assertDatabaseMissing('tracks', [
+        $this->assertSoftDeleted('tracks', [
             'id' => $track->id,
         ]);
     }

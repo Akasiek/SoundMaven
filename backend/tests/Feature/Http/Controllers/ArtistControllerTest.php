@@ -110,6 +110,6 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
         $response = $this->delete("/artists/{$artist->id}");
 
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('artists', ['id' => $artist->id]);
+        $this->assertSoftDeleted('artists', ['id' => $artist->id]);
     }
 }

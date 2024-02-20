@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 /**
@@ -16,7 +17,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
  */
 class Artist extends Model
 {
-    use HasFactory, HasUuids, Sluggable, BlameableTrait;
+    use SoftDeletes, HasFactory, HasUuids, Sluggable, BlameableTrait;
 
     protected $fillable = [
         'name',

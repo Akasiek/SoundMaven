@@ -47,7 +47,7 @@ class AlbumTest extends TestCase
 
         $album->delete();
 
-        $this->assertDatabaseMissing('albums', [
+        $this->assertSoftDeleted('albums', [
             'id' => $album->id,
         ]);
     }
@@ -80,7 +80,7 @@ class AlbumTest extends TestCase
 
         $album->reviews()->delete($review->id);
 
-        $this->assertDatabaseMissing('album_reviews', [
+        $this->assertSoftDeleted('album_reviews', [
             'album_id' => $album->id,
         ]);
     }
@@ -175,7 +175,7 @@ class AlbumTest extends TestCase
 
         $album->tracks()->delete($track->id);
 
-        $this->assertDatabaseMissing('tracks', [
+        $this->assertSoftDeleted('tracks', [
             'album_id' => $album->id,
         ]);
     }

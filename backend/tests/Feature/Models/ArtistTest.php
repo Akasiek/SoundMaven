@@ -43,7 +43,7 @@ class ArtistTest extends TestCase
 
         $artist->delete();
 
-        $this->assertDatabaseMissing('artists', [
+        $this->assertSoftDeleted('artists', [
             'id' => $artist->id,
         ]);
     }
@@ -83,7 +83,7 @@ class ArtistTest extends TestCase
 
         $artist->albums()->delete($album->id);
 
-        $this->assertDatabaseMissing('albums', [
+        $this->assertSoftDeleted('albums', [
             'id' => $album->id,
         ]);
     }

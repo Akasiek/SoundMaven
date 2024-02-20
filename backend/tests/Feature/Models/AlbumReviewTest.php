@@ -41,7 +41,7 @@ class AlbumReviewTest extends TestCase
 
         $albumReview->delete();
 
-        $this->assertDatabaseMissing('album_reviews', [
+        $this->assertSoftDeleted('album_reviews', [
             'id' => $albumReview->id,
         ]);
     }

@@ -169,6 +169,6 @@ class TrackControllerTest extends ControllerWithAuthTestCase
         $response = $this->delete("tracks/{$track->id}");
 
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('tracks', ['id' => $track->id]);
+        $this->assertSoftDeleted('tracks', ['id' => $track->id]);
     }
 }
