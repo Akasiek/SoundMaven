@@ -4,9 +4,12 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Track;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TrackControllerTest extends ControllerWithAuthTestCase
 {
+    use RefreshDatabase;
+
     public function test_get_tracks()
     {
         Track::factory(3)->create();
@@ -15,6 +18,18 @@ class TrackControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+    }
+
+    public function test_cannot_see_deleted_tracks()
+    {
+        Track::factory(3)->create();
+
+        $track = Track::inRandomOrder()->first();
+        $track->delete();
+
+        $response = $this->get('/tracks');
+
+        $response->assertJsonCount(2, 'data');
     }
 
     public function test_get_track()

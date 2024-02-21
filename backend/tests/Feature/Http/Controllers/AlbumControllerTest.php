@@ -21,6 +21,18 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonCount(3, 'data');
     }
 
+    public function test_cannot_see_deleted_albums()
+    {
+        Album::factory(3)->create();
+
+        $album = Album::inRandomOrder()->first();
+        $album->delete();
+
+        $response = $this->get('/albums');
+
+        $response->assertJsonCount(2, 'data');
+    }
+
     public function test_get_album()
     {
         $artist = Artist::factory()->create();

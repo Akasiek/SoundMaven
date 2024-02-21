@@ -36,7 +36,6 @@ class AlbumController extends Controller
                     'title',
                     'artist.name',
                 ])
-                ->whereNull('deleted_at')
                 ->get()
         );
     }

@@ -27,7 +27,7 @@ class ArtistController extends Controller
                 ->with(['albums'])
                 ->allowedFilters([
                     'name',
-                ])->whereNull('deleted_at')
+                ])
                 ->get()
         );
     }

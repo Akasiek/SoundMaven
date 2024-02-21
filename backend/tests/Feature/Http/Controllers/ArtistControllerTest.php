@@ -22,6 +22,18 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonCount(3, 'data');
     }
 
+    public function test_cannot_see_deleted_artists()
+    {
+        Artist::factory(3)->create();
+
+        $artist = Artist::inRandomOrder()->first();
+        $artist->delete();
+
+        $response = $this->get('/artists');
+
+        $response->assertJsonCount(2, 'data');
+    }
+
     public function test_get_artist()
     {
         $artist = Artist::create([

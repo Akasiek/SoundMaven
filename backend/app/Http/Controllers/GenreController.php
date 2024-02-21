@@ -29,7 +29,6 @@ class GenreController extends Controller
                     'name',
                     'album.name',
                 ])
-                ->whereNull('deleted_at')
                 ->get()
         );
     }

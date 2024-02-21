@@ -4,9 +4,12 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Genre;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GenreControllerTest extends ControllerWithAuthTestCase
 {
+    use RefreshDatabase;
+
     public function test_get_genres()
     {
         Genre::factory(3)->create([
@@ -17,6 +20,20 @@ class GenreControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+    }
+
+    public function test_cannot_see_deleted_genres()
+    {
+        Genre::factory(3)->create([
+            'parent_id' => null,
+        ]);
+
+        $genre = Genre::inRandomOrder()->first();
+        $genre->delete();
+
+        $response = $this->get('/genres');
+
+        $response->assertJsonCount(2, 'data');
     }
 
     public function test_get_genre()
