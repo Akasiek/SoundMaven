@@ -63,7 +63,7 @@ class GenreControllerTest extends ControllerWithAuthTestCase
         ]);
     }
 
-    public function test_update_genre()
+    public function test_update_genre_using_put()
     {
         $genre = Genre::factory()->create();
 
@@ -82,17 +82,21 @@ class GenreControllerTest extends ControllerWithAuthTestCase
         ]);
     }
 
-    public function test_can_add_album_to_genre()
+    public function test_update_genre_using_patch()
     {
         $genre = Genre::factory()->create();
-        $album = Album::factory()->create();
 
-        $response = $this->post("genres/{$genre->id}/albums/{$album->id}");
+        $response = $this->patch("genres/{$genre->id}", [
+            'name' => 'Genre 2',
+        ]);
 
-        $response->assertStatus(204);
-        $this->assertDatabaseHas('album_genre', [
-            'album_id' => $album->id,
-            'genre_id' => $genre->id,
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'id' => $genre->id,
+                'name' => 'Genre 2',
+                'description' => $genre->description,
+            ]
         ]);
     }
 

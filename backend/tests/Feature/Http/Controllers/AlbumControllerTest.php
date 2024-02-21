@@ -4,6 +4,7 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Artist;
+use App\Models\Genre;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AlbumControllerTest extends ControllerWithAuthTestCase
@@ -340,32 +341,34 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonCount(2, 'data');
     }
 
-    public function test_store_album_genre()
+    public function test_add_album_genre()
     {
         $album = Album::factory()->create();
+        $genre = Genre::factory()->create();
 
         $response = $this->post("/albums/{$album->id}/genres", [
-            'name' => 'Genre 1',
+            'id' => $genre->id,
         ]);
 
         $response->assertStatus(201);
-        $response->assertJson([
-            'data' => [
-                'name' => 'Genre 1',
-            ]
-        ]);
+
+        $response = $this->get("/albums/{$album->id}/genres");
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
     }
 
-    public function test_delete_album_genre()
+    public function test_remove_album_genre()
     {
         $album = Album::factory()->create();
-        $genre = $album->genres()->create([
-            'name' => 'Genre 1',
-        ]);
+        $genre = Genre::factory()->create();
+        $album->genres()->attach($genre->id);
 
         $response = $this->delete("/albums/{$album->id}/genres/{$genre->id}");
 
         $response->assertStatus(204);
-        $this->assertDatabaseMissing('album_genre', ['id' => $genre->id]);
+
+        $response = $this->get("/albums/{$album->id}/genres");
+        $response->assertStatus(200);
+        $response->assertJsonCount(0, 'data');
     }
 }
