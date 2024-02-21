@@ -32,7 +32,8 @@ class TrackController extends Controller
                     'album.slug',
                     'album.artist.name',
                     'album.artist.slug',
-                ])->get()
+                ])->whereNull('deleted_at')
+                ->get()
         );
     }
 

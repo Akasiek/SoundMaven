@@ -6,13 +6,16 @@ use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
 use App\Http\Resources\Collection\AlbumCollection;
+use App\Http\Resources\Collection\GenreCollection;
 use App\Http\Resources\Collection\TrackCollection;
 use App\Http\Resources\TrackResource;
 use App\Models\Album;
+use App\Models\Genre;
 use App\Services\AlbumService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class AlbumController extends Controller
 {
@@ -33,6 +36,7 @@ class AlbumController extends Controller
                     'title',
                     'artist.name',
                 ])
+                ->whereNull('deleted_at')
                 ->get()
         );
     }
@@ -88,5 +92,32 @@ class AlbumController extends Controller
         return new TrackResource(
             $this->service->addTrack($data, $album)->loadMissing(['album'])
         );
+    }
+
+    public function showGenres(string $albumParam): GenreCollection
+    {
+        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+
+        return new GenreCollection($album->genres);
+    }
+
+    public function attachGenre(string $albumParam, string $genreParam): Response
+    {
+        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+
+        $album->genres()->attach($genre);
+
+        return response()->noContent(HttpResponse::HTTP_CREATED);
+    }
+
+    public function detachGenre(string $albumParam, string $genreParam): Response
+    {
+        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+
+        $album->genres()->detach($genre);
+
+        return response()->noContent();
     }
 }

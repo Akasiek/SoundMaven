@@ -2,8 +2,12 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Album;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Album
+ */
 class AlbumResource extends JsonResource
 {
     public function toArray($request): array
