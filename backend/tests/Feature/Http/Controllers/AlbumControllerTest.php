@@ -209,7 +209,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $this->assertSoftDeleted('albums', ['id' => $album->id]);
     }
 
-    public function test_get_album_tracks()
+    public function test_get_tracks()
     {
         $album = Album::factory()->create();
         $album->tracks()->createMany([
@@ -230,31 +230,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         ]);
     }
 
-    public function test_store_album_track()
-    {
-        $album = Album::factory()->create();
-
-        $response = $this->post("/albums/{$album->id}/tracks", [
-            'title' => 'Track 1',
-            'length' => 180,
-            'order' => 1,
-        ]);
-
-        $response->assertStatus(201);
-        $response->assertJson([
-            'data' => [
-                'title' => 'Track 1',
-                'length' => 180,
-                'order' => 1,
-                'album' => [
-                    'id' => $album->id,
-                    'title' => $album->title,
-                ]
-            ]
-        ]);
-    }
-
-    public function test_get_album_reviews()
+    public function test_get_reviews()
     {
         $album = Album::factory()->create();
         $album->reviews()->createMany([
@@ -267,79 +243,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonCount(1, 'data');
     }
 
-    public function test_store_album_review()
-    {
-        $album = Album::factory()->create();
-
-        $response = $this->post("/albums/{$album->id}/reviews", [
-            'rating' => 50,
-            'body' => 'Comment 1',
-        ]);
-
-        $response->assertStatus(201);
-        $response->assertJson([
-            'data' => [
-                'rating' => 50,
-                'body' => 'Comment 1',
-            ]
-        ]);
-    }
-
-    public function test_dont_store_more_than_one_album_review()
-    {
-        $album = Album::factory()->create();
-        $album->reviews()->create([
-            'rating' => 50,
-            'body' => 'Comment 1',
-        ]);
-
-        $response = $this->post("/albums/{$album->id}/reviews", [
-            'rating' => 50,
-            'body' => 'Comment 2',
-        ]);
-
-        $response->assertStatus(422);
-        $response->assertJsonValidationErrors('You can only review an album once');
-    }
-
-    public function test_update_album_review()
-    {
-        $album = Album::factory()->create();
-        $review = $album->reviews()->create([
-            'rating' => 50,
-            'body' => 'Comment 1',
-        ]);
-
-        $response = $this->put("/albums/{$album->id}/reviews/{$review->id}", [
-            'rating' => 60,
-            'body' => 'Comment 2',
-        ]);
-
-        $response->assertStatus(200);
-        $response->assertJson([
-            'data' => [
-                'id' => $review->id,
-                'rating' => 60,
-                'body' => 'Comment 2',
-            ]
-        ]);
-    }
-
-    public function test_delete_album_review()
-    {
-        $album = Album::factory()->create();
-        $review = $album->reviews()->create([
-            'rating' => 50,
-            'body' => 'Comment 1',
-        ]);
-
-        $response = $this->delete("/albums/{$album->id}/reviews/{$review->id}");
-
-        $response->assertStatus(204);
-        $this->assertSoftDeleted('album_reviews', ['id' => $review->id]);
-    }
-
-    public function test_get_album_genres()
+    public function test_get_genres()
     {
         $album = Album::factory()->create();
         $album->genres()->createMany([
@@ -353,7 +257,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonCount(2, 'data');
     }
 
-    public function test_add_album_genre()
+    public function test_add_genre()
     {
         $album = Album::factory()->create();
         $genre = Genre::factory()->create();
@@ -367,7 +271,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonCount(1, 'data');
     }
 
-    public function test_remove_album_genre()
+    public function test_remove_genre()
     {
         $album = Album::factory()->create();
         $genre = Genre::factory()->create();

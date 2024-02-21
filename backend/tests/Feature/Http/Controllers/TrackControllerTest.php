@@ -112,10 +112,11 @@ class TrackControllerTest extends ControllerWithAuthTestCase
             'order' => 1,
         ]);
 
-        $response = $this->post("/albums/{$album->id}/tracks", [
+        $response = $this->post("/tracks", [
             'title' => 'Track 2',
             'length' => 220,
             'order' => 1,
+            'album_id' => $album->id,
         ]);
 
         $response->assertStatus(422);

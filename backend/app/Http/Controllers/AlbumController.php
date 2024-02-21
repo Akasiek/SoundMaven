@@ -6,13 +6,12 @@ use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
 use App\Http\Resources\Collection\AlbumCollection;
+use App\Http\Resources\Collection\AlbumReviewCollection;
 use App\Http\Resources\Collection\GenreCollection;
 use App\Http\Resources\Collection\TrackCollection;
-use App\Http\Resources\TrackResource;
 use App\Models\Album;
 use App\Models\Genre;
 use App\Services\AlbumService;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -78,19 +77,11 @@ class AlbumController extends Controller
         return new TrackCollection($album->tracks);
     }
 
-    public function storeTrack(Request $request, string $albumParam): TrackResource
+    public function showReviews(string $albumParam): AlbumReviewCollection
     {
         $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
 
-        $data = $request->validate([
-            'title' => 'string|max:255|required',
-            'length' => 'integer|min:0|required',
-            'order' => 'integer|min:0|required|unique:tracks,order,NULL,id,album_id,' . $album->id,
-        ]);
-
-        return new TrackResource(
-            $this->service->addTrack($data, $album)->loadMissing(['album'])
-        );
+        return new AlbumReviewCollection($album->reviews);
     }
 
     public function showGenres(string $albumParam): GenreCollection
