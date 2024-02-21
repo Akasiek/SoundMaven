@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\AlbumReviewController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\TrackController;
@@ -32,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{album}', [AlbumController::class, 'destroy']);
 
         Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
-        Route::post('/{albumParam}/tracks', [AlbumController::class, 'storeTrack']);
+        Route::get('/{albumParam}/reviews', [AlbumController::class, 'showReviews']);
 
         Route::get('/{albumParam}/genres', [AlbumController::class, 'showGenres']);
         Route::post('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'attachGenre']);
@@ -66,6 +67,15 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/{genre}', [GenreController::class, 'destroy']);
 
         Route::get('/{genreParam}/albums', [GenreController::class, 'showAlbums']);
+    });
+
+    Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function () {
+        Route::get('/', [AlbumReviewController::class, 'index']);
+        Route::post('/', [AlbumReviewController::class, 'store']);
+        Route::get('/{albumReview}', [AlbumReviewController::class, 'show']);
+        Route::put('/{albumReview}', [AlbumReviewController::class, 'update']);
+        Route::patch('/{albumReview}', [AlbumReviewController::class, 'update']);
+        Route::delete('/{albumReview}', [AlbumReviewController::class, 'destroy']);
     });
 });
 

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Album;
+use App\Models\AlbumReview;
 use App\Models\Track;
 
 class AlbumService
@@ -29,5 +30,12 @@ class AlbumService
         $data['album_id'] = $model->id;
 
         return $model->tracks()->create($data);
+    }
+
+    public function addReview(array $data, Album $model): AlbumReview
+    {
+        $data['album_id'] = $model->id;
+
+        return $model->reviews()->create($data);
     }
 }
