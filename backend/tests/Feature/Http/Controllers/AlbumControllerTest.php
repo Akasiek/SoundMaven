@@ -346,9 +346,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $album = Album::factory()->create();
         $genre = Genre::factory()->create();
 
-        $response = $this->post("/albums/{$album->id}/genres", [
-            'id' => $genre->id,
-        ]);
+        $response = $this->post("/albums/{$album->id}/genres/{$genre->id}");
 
         $response->assertStatus(201);
 

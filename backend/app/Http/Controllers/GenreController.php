@@ -4,47 +4,70 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Store\StoreGenreRequest;
 use App\Http\Requests\Update\UpdateGenreRequest;
+use App\Http\Resources\Collection\GenreCollection;
+use App\Http\Resources\GenreResource;
 use App\Models\Genre;
+use App\Services\GenreService;
+use Illuminate\Http\Response;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class GenreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private GenreService $service;
+
+    public function __construct(GenreService $service)
     {
-        //
+        $this->service = $service;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreGenreRequest $request)
+    public function index(): GenreCollection
     {
-        //
+        return new GenreCollection(
+            QueryBuilder::for(Genre::class)
+                ->allowedIncludes(['albums'])
+                ->allowedFilters([
+                    'name',
+                    'album.name',
+                ])
+                ->whereNull('deleted_at')
+                ->get()
+        );
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Genre $genre)
+    public function show(string $genreParam): GenreResource
     {
-        //
+        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+
+        return new GenreResource($genre->loadMissing(['albums']));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function store(StoreGenreRequest $request): GenreResource
     {
-        //
+        return new GenreResource(
+            $this->service->create($request->validated())->loadMissing(['albums'])
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Genre $genre)
+    public function update(UpdateGenreRequest $request, string $genreParam): GenreResource
     {
-        //
+        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+
+        return new GenreResource(
+            $this->service->update($request->validated(), $genre)->loadMissing(['albums'])
+        );
+    }
+
+    public function destroy(Genre $genre): Response
+    {
+        $this->service->delete($genre);
+
+        return response()->noContent();
+    }
+
+    public function showAlbums(string $genreParam): GenreCollection
+    {
+        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+
+        return new GenreCollection($genre->albums);
     }
 }

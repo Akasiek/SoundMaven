@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\GenreController;
 use App\Http\Controllers\TrackController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
         Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
         Route::post('/{albumParam}/tracks', [AlbumController::class, 'storeTrack']);
+
+        Route::get('/{albumParam}/genres', [AlbumController::class, 'showGenres']);
+        Route::post('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'attachGenre']);
+        Route::delete('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'detachGenre']);
     });
 
     Route::controller(ArtistController::class)->prefix('artists')->group(function () {
@@ -50,6 +55,17 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/{trackParam}', [TrackController::class, 'update']);
         Route::patch('/{trackParam}', [TrackController::class, 'update']);
         Route::delete('/{track}', [TrackController::class, 'destroy']);
+    });
+
+    Route::controller(GenreController::class)->prefix('genres')->group(function () {
+        Route::get('/', [GenreController::class, 'index']);
+        Route::post('/', [GenreController::class, 'store']);
+        Route::get('/{genreParam}', [GenreController::class, 'show']);
+        Route::put('/{genreParam}', [GenreController::class, 'update']);
+        Route::patch('/{genreParam}', [GenreController::class, 'update']);
+        Route::delete('/{genre}', [GenreController::class, 'destroy']);
+
+        Route::get('/{genreParam}/albums', [GenreController::class, 'showAlbums']);
     });
 });
 

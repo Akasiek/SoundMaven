@@ -9,7 +9,9 @@ class GenreControllerTest extends ControllerWithAuthTestCase
 {
     public function test_get_genres()
     {
-        Genre::factory(3)->create();
+        Genre::factory(3)->create([
+            'parent_id' => null,
+        ]);
 
         $response = $this->get('/genres');
 
