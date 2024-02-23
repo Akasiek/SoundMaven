@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AlbumSeeder::class,
             AlbumReviewSeeder::class,
             GenreSeeder::class,
+            TrackSeeder::class,
         ]);
     }
 }

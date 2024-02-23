@@ -62,7 +62,13 @@ abstract class CsvSeeder extends Seeder
 
         foreach ($data as $rowIndex => $row) {
             foreach ($mapping as $colName => $colIndex) {
-                $mappedData[$rowIndex][$colName] = $row[$colIndex];
+                try {
+                    $mappedData[$rowIndex][$colName] = $row[$colIndex];
+                } catch (Exception $e) {
+                    if (!isset($row[$colIndex])) {
+                        throw new Exception("Column not found in row $rowIndex");
+                    }
+                }
             }
         }
 
