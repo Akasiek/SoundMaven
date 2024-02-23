@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('slug', 511)->unique();
             $table->text('description')->nullable();
             $table->date('release_date')->nullable();
+            $table->enum('type', ['LP', 'EP', 'Single', 'Compilation', 'Live', 'Soundtrack', 'Remix', 'Other'])->default('LP');
             $table->foreignUuid('artist_id')->constrained('artists')->restrictOnDelete();
 
             $table->timestamps();

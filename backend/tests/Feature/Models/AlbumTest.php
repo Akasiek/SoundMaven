@@ -23,12 +23,21 @@ class AlbumTest extends TestCase
 
     public function test_can_be_updated()
     {
-        $album = Album::factory()->create();
+        $album = Album::factory()->create([
+            'title' => 'Old Title',
+            'description' => 'Old Description',
+            'release_date' => '2020-01-01',
+            'type' => 'LP',
+            'artist_id' => Artist::factory()->create()->id,
+        ]);
+
         $newArtist = Artist::factory()->create();
 
         $album->update([
             'title' => 'New Title',
             'description' => 'New Description',
+            'release_date' => '2021-01-01',
+            'type' => 'EP',
             'artist_id' => $newArtist->id,
         ]);
 
@@ -37,6 +46,8 @@ class AlbumTest extends TestCase
             'title' => 'New Title',
             'slug' => 'new-title',
             'description' => 'New Description',
+            'release_date' => '2021-01-01',
+            'type' => 'EP',
             'artist_id' => $newArtist->id,
         ]);
     }

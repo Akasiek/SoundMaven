@@ -22,6 +22,7 @@ class AlbumFactory extends Factory
             'title' => fake()->name(),
             'description' => fake()->text(1024),
             'release_date' => fake()->date(),
+            'type' => fake()->randomElement(['LP', 'EP', 'Single', 'Compilation', 'Live', 'Soundtrack', 'Remix', 'Other']),
             'artist_id' => Artist::factory(),
         ];
     }

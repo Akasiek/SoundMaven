@@ -40,6 +40,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
             'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'type' => 'LP',
             'artist_id' => $artist->id,
         ]);
 
@@ -53,6 +54,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'slug' => 'album-1',
                 'description' => 'Description 1',
                 'release_date' => '2021-01-01',
+                'type' => 'LP',
                 'artist' => [
                     'id' => $artist->id,
                     'name' => $artist->name,
@@ -68,6 +70,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
             'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'type' => 'LP',
             'artist_id' => $artist->id,
         ]);
 
@@ -80,6 +83,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'slug' => 'album-1',
                 'description' => 'Description 1',
                 'release_date' => '2021-01-01',
+                'type' => 'LP',
                 'artist' => [
                     'id' => $artist->id,
                     'name' => $artist->name,
@@ -96,6 +100,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'slug' => 'album-1',
                 'description' => 'Description 1',
                 'release_date' => '2021-01-01',
+                'type' => 'LP',
                 'artist' => [
                     'id' => $artist->id,
                     'name' => $artist->name,
@@ -113,6 +118,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
             'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
+            'type' => 'LP',
             'artist_id' => $artist->id,
         ]);
 
@@ -122,6 +128,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'title' => 'Album 1',
                 'description' => 'Description 1',
                 'release_date' => '2021-01-01',
+                'type' => 'LP',
                 'artist' => [
                     'id' => $artist->id,
                     'name' => $artist->name,
@@ -132,12 +139,11 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
     public function test_update_album()
     {
-        $artist = Artist::factory()->create();
-        $album = Album::create([
+        $album = Album::factory()->create([
             'title' => 'Album 1',
             'description' => 'Description 1',
             'release_date' => '2021-01-01',
-            'artist_id' => $artist->id,
+            'type' => 'LP',
         ]);
 
         $newArtist = Artist::factory()->create();
@@ -145,6 +151,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
             'title' => 'Album 2',
             'description' => 'Description 2',
             'release_date' => '2021-01-02',
+            'type' => 'EP',
             'artist_id' => $newArtist->id,
         ]);
 
@@ -155,6 +162,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'title' => 'Album 2',
                 'description' => 'Description 2',
                 'release_date' => '2021-01-02',
+                'type' => 'EP',
                 'artist' => [
                     'id' => $newArtist->id,
                     'name' => $newArtist->name,
@@ -165,13 +173,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
     public function test_update_albums_one_field()
     {
-        $artist = Artist::factory()->create();
-        $album = Album::create([
-            'title' => 'Album 1',
-            'description' => 'Description 1',
-            'release_date' => '2021-01-01',
-            'artist_id' => $artist->id,
-        ]);
+        $album = Album::factory()->create();
 
         $response = $this->patch("/albums/{$album->id}", [
             'description' => 'Description 2',
@@ -181,12 +183,13 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJson([
             'data' => [
                 'id' => $album->id,
-                'title' => 'Album 1',
+                'title' => $album->title,
                 'description' => 'Description 2',
-                'release_date' => '2021-01-01',
+                'release_date' => $album->release_date,
+                'type' => $album->type,
                 'artist' => [
-                    'id' => $artist->id,
-                    'name' => $artist->name,
+                    'id' => $album->artist->id,
+                    'name' => $album->artist->name,
                 ],
             ]
         ]);
@@ -195,13 +198,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
     public function test_delete_album()
     {
-        $arist = Artist::factory()->create();
-        $album = Album::create([
-            'title' => 'Album 1',
-            'description' => 'Description 1',
-            'release_date' => '2021-01-01',
-            'artist_id' => $arist->id,
-        ]);
+        $album = Album::factory()->create();
 
         $response = $this->delete("/albums/{$album->id}");
 

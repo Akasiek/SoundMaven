@@ -27,6 +27,7 @@ class StoreAlbumRequest extends FormRequest
             'title' => 'string|required|max:255',
             'description' => 'string|nullable',
             'release_date' => 'date|nullable',
+            'type' => 'string|nullable|in:LP,EP,Single,Compilation,Live,Soundtrack,Remix,Other',
             'artist_id' => 'uuid|exists:artists,id|required',
         ];
     }

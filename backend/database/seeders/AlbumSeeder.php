@@ -16,6 +16,7 @@ class AlbumSeeder extends CsvSeeder
             'artist_id' => 0,
             'title' => 1,
             'release_date' => 2,
+            'type' => 3,
         ];
     }
 

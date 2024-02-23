@@ -20,7 +20,12 @@ class Album extends Model
         'title',
         'description',
         'release_date',
+        'type',
         'artist_id',
+    ];
+
+    protected $attributes = [
+        'type' => 'LP',
     ];
 
     public function sluggable(): array

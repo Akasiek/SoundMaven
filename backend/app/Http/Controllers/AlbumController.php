@@ -33,6 +33,7 @@ class AlbumController extends Controller
                 ->allowedIncludes(['tracks'])
                 ->allowedFilters([
                     'title',
+                    'type',
                     'artist.name',
                 ])
                 ->get()
