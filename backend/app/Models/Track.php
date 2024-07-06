@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\SecondsToTime;
+use Cocur\Slugify\Slugify;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -26,7 +27,12 @@ class Track extends Model
 
     public function sluggable(): array
     {
-        return ['slug' => ['source' => 'title']];
+        return ['slug' => [
+            'source' => 'title',
+            'method' => static function (string $string, string $separator): string {
+                return (new Slugify(['separator' => $separator]))->slugify($string) ?: 'untitled';
+            }
+        ]];
     }
 
     public function album(): BelongsTo

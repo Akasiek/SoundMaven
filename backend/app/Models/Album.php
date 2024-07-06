@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Cocur\Slugify\Slugify;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,30 +31,40 @@ class Album extends Model
 
     public function sluggable(): array
     {
-        return ['slug' => ['source' => 'title']];
+        return ['slug' => [
+            'source' => 'title',
+            'method' => static function (string $string, string $separator): string {
+                return (new Slugify(['separator' => $separator]))->slugify($string) ?: 'untitled';
+            }
+        ]];
     }
 
-    public function artist(): BelongsTo
+    public
+    function artist(): BelongsTo
     {
         return $this->belongsTo(Artist::class);
     }
 
-    public function reviews(): HasMany
+    public
+    function reviews(): HasMany
     {
         return $this->hasMany(AlbumReview::class);
     }
 
-    public function genres(): BelongsToMany
+    public
+    function genres(): BelongsToMany
     {
         return $this->belongsToMany(Genre::class);
     }
 
-    public function tracks(): HasMany
+    public
+    function tracks(): HasMany
     {
         return $this->hasMany(Track::class);
     }
 
-    public function averageRating(): float
+    public
+    function averageRating(): float
     {
         return $this->reviews()->avg('rating');
     }

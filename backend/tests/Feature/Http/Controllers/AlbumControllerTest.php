@@ -137,6 +137,51 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         ]);
     }
 
+    /**
+     * This function tests how the Album model behaves when the title is hard to slugify.
+     * It should not leave the slug empty but should give it a slug of "untitled".
+     */
+    public function test_store_album_with_hard_title()
+    {
+        $artist = Artist::factory()->create();
+        $response = $this->post('/albums', [
+            // It's a reference to Sigur Rós' album "()"
+            'title' => '()',
+            'description' => 'Album with a hard title to slugify',
+            'release_date' => '2021-01-01',
+            'type' => 'LP',
+            'artist_id' => $artist->id,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'title' => '()',
+                'slug' => 'untitled',
+                'description' => 'Album with a hard title to slugify',
+            ]
+        ]);
+
+        // Add another album with the same title
+        // Make sure that the slug is unique
+        $response = $this->post('/albums', [
+            'title' => '() () ()',
+            'description' => 'Another album with a hard title to slugify',
+            'release_date' => '2021-01-01',
+            'type' => 'LP',
+            'artist_id' => $artist->id,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'title' => '() () ()',
+                'slug' => 'untitled-2',
+                'description' => 'Another album with a hard title to slugify',
+            ]
+        ]);
+    }
+
     public function test_update_album()
     {
         $album = Album::factory()->create([
