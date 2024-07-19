@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Store\StoreArtistRequest;
 use App\Http\Requests\Update\UpdateArtistRequest;
 use App\Http\Resources\ArtistResource;
-use App\Http\Resources\Collection\ArtistCollection;
+use App\Http\Resources\Collections\ArtistCollection;
 use App\Models\Artist;
 use App\Services\ArtistService;
 use Illuminate\Http\Response;

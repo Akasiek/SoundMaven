@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Store\StoreAlbumReviewRequest;
 use App\Http\Requests\Update\UpdateAlbumReviewRequest;
 use App\Http\Resources\AlbumReviewResource;
-use App\Http\Resources\Collection\AlbumReviewCollection;
+use App\Http\Resources\Collections\AlbumReviewCollection;
 use App\Models\AlbumReview;
 use App\Services\AlbumReviewService;
 use Illuminate\Http\Response;

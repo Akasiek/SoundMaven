@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Store\StoreGenreRequest;
 use App\Http\Requests\Update\UpdateGenreRequest;
-use App\Http\Resources\Collection\GenreCollection;
+use App\Http\Resources\Collections\GenreCollection;
 use App\Http\Resources\GenreResource;
 use App\Models\Genre;
 use App\Services\GenreService;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Store\StoreTrackRequest;
 use App\Http\Requests\Update\UpdateTrackRequest;
-use App\Http\Resources\Collection\TrackCollection;
+use App\Http\Resources\Collections\TrackCollection;
 use App\Http\Resources\TrackResource;
 use App\Models\Track;
 use App\Services\TrackService;
