@@ -7,9 +7,11 @@ use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
 use App\Http\Resources\Collection\AlbumCollection;
 use App\Http\Resources\Collection\AlbumReviewCollection;
+use App\Http\Resources\Collection\AlbumTagCollection;
 use App\Http\Resources\Collection\GenreCollection;
 use App\Http\Resources\Collection\TrackCollection;
 use App\Models\Album;
+use App\Models\AlbumTag;
 use App\Models\Genre;
 use App\Services\AlbumService;
 use Illuminate\Http\Response;
@@ -108,6 +110,33 @@ class AlbumController extends Controller
         $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
 
         $album->genres()->detach($genre);
+
+        return response()->noContent();
+    }
+
+    public function showTags(string $albumParam): AlbumTagCollection
+    {
+        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+
+        return new AlbumTagCollection($album->tags);
+    }
+
+    public function attachTag(string $albumParam, string $tagParam): Response
+    {
+        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $tag = AlbumTag::where(uuid_is_valid($tagParam) ? 'id' : 'slug', $tagParam)->firstOrFail();
+
+        $album->tags()->attach($tag);
+
+        return response()->noContent(HttpResponse::HTTP_CREATED);
+    }
+
+    public function detachTag(string $albumParam, string $tagParam): Response
+    {
+        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $tag = AlbumTag::where(uuid_is_valid($tagParam) ? 'id' : 'slug', $tagParam)->firstOrFail();
+
+        $album->tags()->detach($tag);
 
         return response()->noContent();
     }

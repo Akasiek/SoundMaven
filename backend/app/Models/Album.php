@@ -39,32 +39,32 @@ class Album extends Model
         ]];
     }
 
-    public
-    function artist(): BelongsTo
+    public function artist(): BelongsTo
     {
         return $this->belongsTo(Artist::class);
     }
 
-    public
-    function reviews(): HasMany
-    {
-        return $this->hasMany(AlbumReview::class);
-    }
-
-    public
-    function genres(): BelongsToMany
+    public function genres(): BelongsToMany
     {
         return $this->belongsToMany(Genre::class);
     }
 
-    public
-    function tracks(): HasMany
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(AlbumTag::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(AlbumReview::class);
+    }
+
+    public function tracks(): HasMany
     {
         return $this->hasMany(Track::class);
     }
 
-    public
-    function averageRating(): float
+    public function averageRating(): float
     {
         return $this->reviews()->avg('rating');
     }

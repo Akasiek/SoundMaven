@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Album;
+use App\Models\AlbumTag;
 use App\Models\Artist;
 use App\Models\Genre;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -156,6 +157,32 @@ class AlbumTest extends TestCase
         $this->assertEquals(6, $album->genres()->count());
     }
 
+    public function test_can_attach_tag()
+    {
+        $album = Album::factory()->create();
+        $tag = AlbumTag::factory()->create();
+
+        $album->tags()->attach($tag->id);
+
+        $this->assertDatabaseHas('album_album_tag', [
+            'album_id' => $album->id,
+            'album_tag_id' => $tag->id,
+        ]);
+    }
+
+    public function test_can_detach_tag()
+    {
+        $album = Album::factory()->create();
+        $tag = AlbumTag::factory()->create();
+
+        $album->tags()->attach($tag->id);
+        $album->tags()->detach($tag->id);
+
+        $this->assertDatabaseMissing('album_album_tag', [
+            'album_id' => $album->id,
+            'album_tag_id' => $tag->id,
+        ]);
+    }
 
     public function test_can_add_track()
     {

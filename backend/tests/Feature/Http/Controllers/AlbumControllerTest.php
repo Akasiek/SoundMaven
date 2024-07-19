@@ -3,6 +3,7 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
+use App\Models\AlbumTag;
 use App\Models\Artist;
 use App\Models\Genre;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -287,12 +288,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
     public function test_get_genres()
     {
-        $album = Album::factory()->create();
-        $album->genres()->createMany([
-            ['name' => 'Genre 1'],
-            ['name' => 'Genre 2'],
-        ]);
-
+        $album = Album::factory()->hasGenres(2)->create();
         $response = $this->get("/albums/{$album->id}/genres");
 
         $response->assertStatus(200);
@@ -324,6 +320,44 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertStatus(204);
 
         $response = $this->get("/albums/{$album->id}/genres");
+        $response->assertStatus(200);
+        $response->assertJsonCount(0, 'data');
+    }
+
+    public function test_get_tags()
+    {
+        $album = Album::factory()->hasTags(2)->create();
+        $response = $this->get("/albums/{$album->id}/tags");
+
+        $response->assertStatus(200);
+        $response->assertJsonCount(2, 'data');
+    }
+
+    public function test_add_tag()
+    {
+        $album = Album::factory()->create();
+        $tag = AlbumTag::factory()->create();
+
+        $response = $this->post("/albums/{$album->id}/tags/{$tag->id}");
+
+        $response->assertStatus(201);
+
+        $response = $this->get("/albums/{$album->id}/tags");
+        $response->assertStatus(200);
+        $response->assertJsonCount(1, 'data');
+    }
+
+    public function test_remove_tag()
+    {
+        $album = Album::factory()->create();
+        $tag = AlbumTag::factory()->create();
+        $album->tags()->attach($tag->id);
+
+        $response = $this->delete("/albums/{$album->id}/tags/{$tag->id}");
+
+        $response->assertStatus(204);
+
+        $response = $this->get("/albums/{$album->id}/tags");
         $response->assertStatus(200);
         $response->assertJsonCount(0, 'data');
     }
