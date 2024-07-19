@@ -39,8 +39,7 @@ class TrackController extends Controller
 
     public function show(string $trackParam): TrackResource
     {
-        $track = Track::where(uuid_is_valid($trackParam) ? 'id' : 'slug', $trackParam)
-            ->firstOrFail();
+        $track = Track::whereSlugOrId($trackParam)->firstOrFail();
 
         return new TrackResource($track->loadMissing(['album']));
     }
@@ -55,8 +54,7 @@ class TrackController extends Controller
 
     public function update(UpdateTrackRequest $request, string $trackParam): TrackResource
     {
-        $track = Track::where(uuid_is_valid($trackParam) ? 'id' : 'slug', $trackParam)
-            ->firstOrFail();
+        $track = Track::whereSlugOrId($trackParam)->firstOrFail();
 
         return new TrackResource(
             $this->service->update($request->validated(), $track)->loadMissing(['album'])

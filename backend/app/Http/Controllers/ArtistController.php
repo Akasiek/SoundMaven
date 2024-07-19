@@ -34,7 +34,7 @@ class ArtistController extends Controller
 
     public function show(string $param): ArtistResource
     {
-        $artist = Artist::where(uuid_is_valid($param) ? 'id' : 'slug', $param)->firstOrFail();
+        $artist = Artist::whereSlugOrId($param)->firstOrFail();
 
         return new ArtistResource($artist->loadMissing('albums'));
     }
@@ -48,7 +48,7 @@ class ArtistController extends Controller
 
     public function update(UpdateArtistRequest $request, string $param): ArtistResource
     {
-        $artist = Artist::where(uuid_is_valid($param) ? 'id' : 'slug', $param)->firstOrFail();
+        $artist = Artist::whereSlugOrId($param)->firstOrFail();
 
         return new ArtistResource(
             $this->service->update($request->validated(), $artist)->loadMissing('albums')

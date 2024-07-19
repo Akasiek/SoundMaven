@@ -35,7 +35,7 @@ class GenreController extends Controller
 
     public function show(string $genreParam): GenreResource
     {
-        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+        $genre = Genre::whereSlugOrId($genreParam)->firstOrFail();
 
         return new GenreResource($genre->loadMissing(['albums']));
     }
@@ -49,7 +49,7 @@ class GenreController extends Controller
 
     public function update(UpdateGenreRequest $request, string $genreParam): GenreResource
     {
-        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+        $genre = Genre::whereSlugOrId($genreParam)->firstOrFail();
 
         return new GenreResource(
             $this->service->update($request->validated(), $genre)->loadMissing(['albums'])
@@ -65,7 +65,7 @@ class GenreController extends Controller
 
     public function showAlbums(string $genreParam): GenreCollection
     {
-        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+        $genre = Genre::whereSlugOrId($genreParam)->firstOrFail();
 
         return new GenreCollection($genre->albums);
     }

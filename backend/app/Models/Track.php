@@ -3,20 +3,18 @@
 namespace App\Models;
 
 use App\Helpers\SecondsToTime;
+use App\Models\Abstract\AbstractModel;
 use Cocur\Slugify\Slugify;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
-class Track extends Model
+class Track extends AbstractModel
 {
-    use SoftDeletes, HasFactory, HasUuids, Sluggable, BlameableTrait;
-
+    use SoftDeletes, HasFactory, HasUuids, BlameableTrait;
 
     protected $fillable = [
         'title',

@@ -2,19 +2,18 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
+use App\Models\Abstract\AbstractModel;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
-class Genre extends Model
+class Genre extends AbstractModel
 {
-    use SoftDeletes, HasFactory, HasUuids, Sluggable, BlameableTrait;
+    use SoftDeletes, HasFactory, HasUuids, BlameableTrait;
 
     protected $fillable = [
         'name',

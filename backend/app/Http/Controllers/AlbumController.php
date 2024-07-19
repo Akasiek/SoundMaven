@@ -45,7 +45,7 @@ class AlbumController extends Controller
 
     public function show(string $albumParam): AlbumResource
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new AlbumResource($album->loadMissing(['artist', 'tracks']));
     }
@@ -59,7 +59,7 @@ class AlbumController extends Controller
 
     public function update(UpdateAlbumRequest $request, string $albumParam): AlbumResource
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new AlbumResource(
             $this->service->update($request->validated(), $album)->loadMissing(['artist', 'tracks'])
@@ -75,29 +75,29 @@ class AlbumController extends Controller
 
     public function showTracks(string $albumParam): TrackCollection
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new TrackCollection($album->tracks);
     }
 
     public function showReviews(string $albumParam): AlbumReviewCollection
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new AlbumReviewCollection($album->reviews);
     }
 
     public function showGenres(string $albumParam): GenreCollection
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new GenreCollection($album->genres);
     }
 
     public function attachGenre(string $albumParam, string $genreParam): Response
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
-        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
+        $genre = Genre::whereSlugOrId($genreParam)->firstOrFail();
 
         $album->genres()->attach($genre);
 
@@ -106,8 +106,8 @@ class AlbumController extends Controller
 
     public function detachGenre(string $albumParam, string $genreParam): Response
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
-        $genre = Genre::where(uuid_is_valid($genreParam) ? 'id' : 'slug', $genreParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
+        $genre = Genre::whereSlugOrId($genreParam)->firstOrFail();
 
         $album->genres()->detach($genre);
 
@@ -116,15 +116,15 @@ class AlbumController extends Controller
 
     public function showTags(string $albumParam): AlbumTagCollection
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new AlbumTagCollection($album->tags);
     }
 
     public function attachTag(string $albumParam, string $tagParam): Response
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
-        $tag = AlbumTag::where(uuid_is_valid($tagParam) ? 'id' : 'slug', $tagParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
+        $tag = AlbumTag::whereSlugOrId($tagParam)->firstOrFail();
 
         $album->tags()->attach($tag);
 
@@ -133,8 +133,8 @@ class AlbumController extends Controller
 
     public function detachTag(string $albumParam, string $tagParam): Response
     {
-        $album = Album::where(uuid_is_valid($albumParam) ? 'id' : 'slug', $albumParam)->firstOrFail();
-        $tag = AlbumTag::where(uuid_is_valid($tagParam) ? 'id' : 'slug', $tagParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
+        $tag = AlbumTag::whereSlugOrId($tagParam)->firstOrFail();
 
         $album->tags()->detach($tag);
 
