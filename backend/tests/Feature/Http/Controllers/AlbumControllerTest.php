@@ -7,6 +7,8 @@ use App\Models\AlbumTag;
 use App\Models\Artist;
 use App\Models\Genre;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class AlbumControllerTest extends ControllerWithAuthTestCase
 {
@@ -183,6 +185,43 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         ]);
     }
 
+    public function test_store_album_with_cover_image(): void
+    {
+        $artist = Artist::factory()->create();
+
+        Storage::fake('public');
+        $image = UploadedFile::fake()->image('album_cover.jpg');
+
+        $response = $this->post('/albums', [
+            'title' => 'Album 1',
+            'description' => 'Description 1',
+            'release_date' => '2021-01-01',
+            'type' => 'LP',
+            'artist_id' => $artist->id,
+            'cover_image' => $image,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'title' => 'Album 1',
+                'description' => 'Description 1',
+                'release_date' => '2021-01-01',
+                'type' => 'LP',
+                'artist' => [
+                    'id' => $artist->id,
+                    'name' => $artist->name,
+                ],
+            ]
+        ]);
+
+        $this->assertDatabaseHas('media', [
+            'model_type' => Album::class,
+            'model_id' => $response->json('data.id'),
+            'name' => 'album-1-cover',
+        ]);
+    }
+
     public function test_update_album()
     {
         $album = Album::factory()->create([
@@ -239,7 +278,25 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 ],
             ]
         ]);
+    }
 
+    public function test_update_album_with_cover_image(): void
+    {
+        $album = Album::factory()->create();
+
+        Storage::fake('public');
+        $image = UploadedFile::fake()->image('album_cover.jpg');
+
+        $response = $this->patch("/albums/{$album->id}", [
+            'cover_image' => $image,
+        ]);
+
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('media', [
+            'model_type' => Album::class,
+            'model_id' => $album->id,
+            'name' => "{$album->slug}-cover",
+        ]);
     }
 
     public function test_delete_album()

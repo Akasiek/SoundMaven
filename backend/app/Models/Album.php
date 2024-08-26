@@ -11,10 +11,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Album extends AbstractModel
+class Album extends AbstractModel implements HasMedia
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait;
+    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia;
 
     protected $fillable = [
         'title',
@@ -36,6 +39,37 @@ class Album extends AbstractModel
                 return (new Slugify(['separator' => $separator]))->slugify($string) ?: 'untitled';
             }
         ]];
+    }
+
+    public function registerMediaConversions(Media|null $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(1000)
+            ->height(1000)
+            ->quality(90)
+            ->format('webp')
+            ->nonQueued();
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('album-covers')->singleFile();
+    }
+
+    public function attachCoverImage(string $string): void
+    {
+        $this
+            ->addMedia($string)
+            ->preservingOriginal()
+            ->setName("{$this->slug}-cover")
+            ->setFileName("{$this->slug}-cover")
+            ->toMediaCollection('album-covers');
+    }
+
+    public function detachCoverImage(): void
+    {
+        $this->getFirstMedia('album-covers')?->delete();
     }
 
     public function artist(): BelongsTo

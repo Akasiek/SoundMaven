@@ -29,6 +29,7 @@ class StoreAlbumRequest extends FormRequest
             'release_date' => 'date|nullable',
             'type' => 'string|nullable|in:LP,EP,Single,Compilation,Live,Soundtrack,Remix,Other',
             'artist_id' => 'uuid|exists:artists,id|required',
+            'cover_image' => 'image|nullable|sometimes|max:5120',
         ];
     }
 }

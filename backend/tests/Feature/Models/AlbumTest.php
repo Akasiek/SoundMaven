@@ -64,6 +64,35 @@ class AlbumTest extends TestCase
         ]);
     }
 
+    public function test_can_attach_cover_image(): void
+    {
+        $album = Album::factory()->create();
+
+        $album->attachCoverImage('tests/Assets/album_cover.jpg');
+
+        $this->assertDatabaseHas('media', [
+            'name' => "$album->slug-cover",
+            'file_name' => "$album->slug-cover",
+            'model_id' => $album->id,
+            'model_type' => Album::class,
+            'collection_name' => 'album-covers',
+        ]);
+    }
+
+    public function test_can_detach_cover_image(): void
+    {
+        $album = Album::factory()->create();
+
+        $album->attachCoverImage('tests/Assets/album_cover.jpg');
+        $album->detachCoverImage();
+
+        $this->assertDatabaseMissing('media', [
+            'model_id' => $album->id,
+            'model_type' => Album::class,
+            'collection_name' => 'album-covers',
+        ]);
+    }
+
     public function test_can_add_review()
     {
         $album = Album::factory()->create();
