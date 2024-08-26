@@ -1,4 +1,4 @@
-name: 'scorethatlp-backend'
+name: 'soundmaven-backend'
 
 services:
     laravel.test:
