@@ -5,6 +5,8 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Artist;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 class ArtistControllerTest extends ControllerWithAuthTestCase
 {
@@ -73,6 +75,35 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
         ]);
     }
 
+    public function test_store_artist_with_background_image(): void
+    {
+        Storage::fake('public');
+        $image = UploadedFile::fake()->image('background.jpg');
+
+        $response = $this->post('/artists', [
+            'name' => 'Artist 1',
+            'description' => 'Description 1',
+            'type' => 'solo',
+            'background_image' => $image,
+        ]);
+
+        $response->assertStatus(201);
+        $response->assertJson([
+            'data' => [
+                'name' => 'Artist 1',
+                'description' => 'Description 1',
+                'type' => 'solo',
+                // Don't check 'background_image' because of random storage path
+            ]
+        ]);
+
+        $this->assertDatabaseHas('media', [
+            'model_type' => Artist::class,
+            'model_id' => $response->json('data.id'),
+            'name' => 'artist-1-background',
+        ]);
+    }
+
     public function test_update_artist()
     {
         $artist = Artist::create([
@@ -108,6 +139,41 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'description' => 'Description 2',
                 'type' => 'band',
             ]
+        ]);
+    }
+
+    public function test_update_artist_with_background_image(): void
+    {
+        Storage::fake('public');
+        $image = UploadedFile::fake()->image('background.jpg');
+
+        $artist = Artist::create([
+            'name' => 'Artist 1',
+            'description' => 'Description 1',
+            'type' => 'solo',
+        ]);
+
+        $response = $this->put("/artists/{$artist->id}", [
+            'name' => 'Artist 2',
+            'description' => 'Description 2',
+            'type' => 'band',
+            'background_image' => $image,
+        ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'data' => [
+                'name' => 'Artist 2',
+                'description' => 'Description 2',
+                'type' => 'band',
+                // Don't check 'background_image' because of random storage path
+            ]
+        ]);
+
+        $this->assertDatabaseHas('media', [
+            'model_type' => Artist::class,
+            'model_id' => $response->json('data.id'),
+            'name' => 'artist-2-background',
         ]);
     }
 

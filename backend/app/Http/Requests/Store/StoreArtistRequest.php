@@ -27,6 +27,7 @@ class StoreArtistRequest extends FormRequest
             'name' => 'string|required|max:255',
             'description' => 'string|nullable',
             'type' => 'string|in:band,solo,duo,other|required',
+            'background_image' => 'image|nullable|sometimes|max:5120',
         ];
     }
 }

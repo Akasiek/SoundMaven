@@ -26,6 +26,7 @@ class UpdateArtistRequest extends UpdateRequest
             'name' => 'string|required|max:255',
             'description' => 'string|nullable',
             'type' => 'string|in:band,solo,duo,other|required',
+            'background_image' => 'image|nullable|sometimes|max:5120',
         ];
 
         return $this->convertRulesBasedOnMethod($rules);
