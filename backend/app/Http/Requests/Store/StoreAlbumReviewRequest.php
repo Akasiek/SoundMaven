@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Store;
 
-use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreAlbumReviewRequest extends FormRequest

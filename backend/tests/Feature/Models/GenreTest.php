@@ -83,4 +83,14 @@ class GenreTest extends TestCase
 
         $this->assertEquals($parent->id, $child->parent->id);
     }
+
+    public function test_can_add_children()
+    {
+        $parent = Genre::factory()->create();
+        $child = Genre::factory()->create();
+
+        $parent->children()->save($child);
+
+        $this->assertEquals($child->id, $parent->children->first()->id);
+    }
 }

@@ -57,7 +57,7 @@ class ArtistController extends Controller
 
     public function destroy(Artist $artist): Response
     {
-        $artist->delete();
+        $this->service->delete($artist);
 
         return response()->noContent();
     }

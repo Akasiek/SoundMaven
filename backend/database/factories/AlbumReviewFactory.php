@@ -19,7 +19,7 @@ class AlbumReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'rating' => fake()->numberBetween(0, 100),
+            'rating' => fake()->numberBetween(1, 100),
             'body' => fake()->text(1024),
             'album_id' => Album::inRandomOrder()->first()?->id ?? Album::factory()->create()->id,
         ];

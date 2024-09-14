@@ -19,6 +19,7 @@ class TimeToSecondsTest extends TestCase
         $this->assertEquals(10, $helper('00:10'));
         $this->assertEquals(1, $helper('00:01'));
         $this->assertEquals(0, $helper('00:00'));
+        $this->assertEquals(0, $helper('00'));
     }
 
     /**

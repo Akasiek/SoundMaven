@@ -40,18 +40,4 @@ class AlbumService
     {
         return $model->delete();
     }
-
-    public function addTrack(array $data, Album $model): Track
-    {
-        $data['album_id'] = $model->id;
-
-        return $model->tracks()->create($data);
-    }
-
-    public function addReview(array $data, Album $model): AlbumReview
-    {
-        $data['album_id'] = $model->id;
-
-        return $model->reviews()->create($data);
-    }
 }
