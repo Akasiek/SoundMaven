@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\FileExtensionFromString;
 use App\Models\Abstract\AbstractModel;
 use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -59,11 +60,13 @@ class Album extends AbstractModel implements HasMedia
 
     public function attachCoverImage(string $string): void
     {
+        $fileExtensionFromStringHelper = new FileExtensionFromString;
+
         $this
             ->addMedia($string)
             ->preservingOriginal()
             ->setName("{$this->slug}-cover")
-            ->setFileName("{$this->slug}-cover")
+            ->setFileName("{$this->slug}-cover.{$fileExtensionFromStringHelper($string)}")
             ->toMediaCollection('album-covers');
     }
 

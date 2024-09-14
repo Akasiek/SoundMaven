@@ -72,11 +72,13 @@ class AlbumTest extends TestCase
 
         $this->assertDatabaseHas('media', [
             'name' => "$album->slug-cover",
-            'file_name' => "$album->slug-cover",
+            'file_name' => "$album->slug-cover.jpg",
             'model_id' => $album->id,
             'model_type' => Album::class,
             'collection_name' => 'album-covers',
         ]);
+
+        $album->clearMediaCollection('album-covers');
     }
 
     public function test_can_detach_cover_image(): void
