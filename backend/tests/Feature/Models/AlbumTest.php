@@ -6,13 +6,10 @@ use App\Models\Album;
 use App\Models\AlbumTag;
 use App\Models\Artist;
 use App\Models\Genre;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\RefreshingTestCase;
 
-class AlbumTest extends TestCase
+class AlbumTest extends RefreshingTestCase
 {
-    use RefreshDatabase;
-
     public function test_can_be_created()
     {
         $album = Album::factory()->create();

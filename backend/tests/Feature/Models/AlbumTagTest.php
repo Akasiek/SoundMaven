@@ -1,15 +1,12 @@
 <?php
 
-namespace Models;
+namespace Tests\Feature\Models;
 
 use App\Models\AlbumTag;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\RefreshingTestCase;
 
-class AlbumTagTest extends TestCase
+class AlbumTagTest extends RefreshingTestCase
 {
-    use RefreshDatabase;
-
     public function test_can_be_created()
     {
         $albumTag = AlbumTag::factory()->create();

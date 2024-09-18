@@ -1,15 +1,11 @@
 <?php
 
-namespace Http\Controllers;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\AlbumTag;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\Feature\Http\Controllers\ControllerWithAuthTestCase;
 
 class AlbumTagControllerTest extends ControllerWithAuthTestCase
 {
-    use RefreshDatabase;
-
     public function test_get_album_tags()
     {
         AlbumTag::factory(3)->create();

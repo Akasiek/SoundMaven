@@ -6,14 +6,11 @@ use App\Models\Album;
 use App\Models\AlbumTag;
 use App\Models\Artist;
 use App\Models\Genre;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class AlbumControllerTest extends ControllerWithAuthTestCase
 {
-    use RefreshDatabase;
-
     public function test_get_albums()
     {
         Album::factory(3)->create();

@@ -4,14 +4,11 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Artist;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 class ArtistControllerTest extends ControllerWithAuthTestCase
 {
-    use RefreshDatabase;
-
     public function test_get_artists()
     {
         Artist::factory(3)->create();

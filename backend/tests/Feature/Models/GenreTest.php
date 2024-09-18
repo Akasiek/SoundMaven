@@ -5,13 +5,10 @@ namespace Tests\Feature\Models;
 use App\Models\Album;
 use App\Models\Genre;
 use Database\Seeders\GenreSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\RefreshingTestCase;
 
-class GenreTest extends TestCase
+class GenreTest extends RefreshingTestCase
 {
-    use RefreshDatabase;
-
     public function test_can_seed()
     {
         $this->seed(GenreSeeder::class);

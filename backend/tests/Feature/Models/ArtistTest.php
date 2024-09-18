@@ -3,13 +3,10 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Artist;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\RefreshingTestCase;
 
-class ArtistTest extends TestCase
+class ArtistTest extends RefreshingTestCase
 {
-    use RefreshDatabase;
-
     public function test_can_be_created()
     {
         $artist = Artist::factory()->create();

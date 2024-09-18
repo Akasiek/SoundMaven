@@ -3,12 +3,9 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\AlbumReview;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AlbumReviewControllerTest extends ControllerWithAuthTestCase
 {
-    use RefreshDatabase;
-
     public function test_get_reviews()
     {
         AlbumReview::factory(3)->create();

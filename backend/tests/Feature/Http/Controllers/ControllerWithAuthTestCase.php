@@ -3,10 +3,13 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class ControllerWithAuthTestCase extends TestCase
 {
+    use RefreshDatabase;
+
     protected $defaultHeaders = [
         'Accept' => 'application/json',
     ];

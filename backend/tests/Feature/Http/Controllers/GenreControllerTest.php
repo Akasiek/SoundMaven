@@ -4,12 +4,9 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Genre;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GenreControllerTest extends ControllerWithAuthTestCase
 {
-    use RefreshDatabase;
-
     public function test_get_genres()
     {
         Genre::factory(3)->create([

@@ -20,10 +20,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return "Hi!";
-});
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(AlbumController::class)->prefix('albums')->group(function () {
         Route::get('/', [AlbumController::class, 'index']);

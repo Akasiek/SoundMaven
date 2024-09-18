@@ -4,12 +4,9 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Album;
 use App\Models\Track;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TrackControllerTest extends ControllerWithAuthTestCase
 {
-    use RefreshDatabase;
-
     public function test_get_tracks()
     {
         Track::factory(3)->create();

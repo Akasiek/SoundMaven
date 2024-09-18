@@ -3,13 +3,10 @@
 namespace Tests\Feature\Models;
 
 use App\Models\AlbumReview;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\RefreshingTestCase;
 
-class AlbumReviewTest extends TestCase
+class AlbumReviewTest extends RefreshingTestCase
 {
-    use RefreshDatabase;
-
     public function test_can_be_created()
     {
         $albumReview = AlbumReview::factory()->create();
