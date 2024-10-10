@@ -20,23 +20,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/401', fn () => response()->json(['message' => 'Unauthorized'], 401))->name('401');
+
+Route::controller(AlbumController::class)->prefix('albums')->group(function () {
+    Route::get('/', [AlbumController::class, 'index']);
+    Route::get('/{albumParam}', [AlbumController::class, 'show']);
+    Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
+    Route::get('/{albumParam}/reviews', [AlbumController::class, 'showReviews']);
+    Route::get('/{albumParam}/genres', [AlbumController::class, 'showGenres']);
+    Route::get('/{albumParam}/tags', [AlbumController::class, 'showTags']);
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::controller(AlbumController::class)->prefix('albums')->group(function () {
-        Route::get('/', [AlbumController::class, 'index']);
         Route::post('/', [AlbumController::class, 'store']);
-        Route::get('/{albumParam}', [AlbumController::class, 'show']);
         Route::put('/{albumParam}', [AlbumController::class, 'update']);
         Route::patch('/{albumParam}', [AlbumController::class, 'update']);
         Route::delete('/{album}', [AlbumController::class, 'destroy']);
 
-        Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
-        Route::get('/{albumParam}/reviews', [AlbumController::class, 'showReviews']);
-
-        Route::get('/{albumParam}/genres', [AlbumController::class, 'showGenres']);
         Route::post('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'attachGenre']);
         Route::delete('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'detachGenre']);
 
-        Route::get('/{albumParam}/tags', [AlbumController::class, 'showTags']);
         Route::post('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'attachTag']);
         Route::delete('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'detachTag']);
     });
