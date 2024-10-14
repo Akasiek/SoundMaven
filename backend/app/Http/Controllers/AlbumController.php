@@ -33,11 +33,8 @@ class AlbumController extends Controller
             QueryBuilder::for(Album::class)
                 ->with(['artist'])
                 ->allowedIncludes(['tracks'])
-                ->allowedFilters([
-                    'title',
-                    'type',
-                    'artist.name',
-                ])
+                ->allowedFilters(['title', 'release_date', 'type', 'artist.name',])
+                ->allowedSorts(['title', 'release_date', 'type', 'artist.name'])
                 ->paginate()
         );
     }

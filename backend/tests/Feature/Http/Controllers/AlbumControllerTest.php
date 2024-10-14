@@ -36,6 +36,49 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response->assertJsonPath('meta.total', 31);
     }
 
+    public function test_album_sorting(): void
+    {
+        Album::factory()->create(['title' => 'Album 1', 'release_date' => '2021-01-01']);
+        Album::factory()->create(['title' => 'Album 2', 'release_date' => '2022-01-02']);
+        Album::factory()->create(['title' => 'Album 3', 'release_date' => '2020-01-03']);
+
+        $response = $this->get('/albums?sort=title');
+        $response->assertJsonPath('data.0.title', 'Album 1');
+        $response->assertJsonPath('data.1.title', 'Album 2');
+        $response->assertJsonPath('data.2.title', 'Album 3');
+
+        $response = $this->get('/albums?sort=-title');
+        $response->assertJsonPath('data.0.title', 'Album 3');
+        $response->assertJsonPath('data.1.title', 'Album 2');
+        $response->assertJsonPath('data.2.title', 'Album 1');
+
+        $response = $this->get('/albums?sort=release_date');
+        $response->assertJsonPath('data.0.title', 'Album 3');
+        $response->assertJsonPath('data.1.title', 'Album 1');
+        $response->assertJsonPath('data.2.title', 'Album 2');
+
+        $response = $this->get('/albums?sort=-release_date');
+        $response->assertJsonPath('data.0.title', 'Album 2');
+        $response->assertJsonPath('data.1.title', 'Album 1');
+        $response->assertJsonPath('data.2.title', 'Album 3');
+    }
+
+    public function test_album_filtering(): void
+    {
+        Album::factory()->create(['title' => 'Album 1', 'type' => 'LP']);
+        Album::factory()->create(['title' => 'Album 2', 'type' => 'EP']);
+        Album::factory()->create(['title' => 'Album 3', 'type' => 'LP']);
+
+        $response = $this->get('/albums?filter[type]=LP');
+        $response->assertJsonCount(2, 'data');
+        $response->assertJsonPath('data.0.title', 'Album 1');
+        $response->assertJsonPath('data.1.title', 'Album 3');
+
+        $response = $this->get('/albums?filter[type]=EP');
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.title', 'Album 2');
+    }
+
     public function test_cannot_see_deleted_albums()
     {
         Album::factory(3)->create();
