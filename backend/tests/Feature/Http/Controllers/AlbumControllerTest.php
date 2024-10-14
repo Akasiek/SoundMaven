@@ -65,7 +65,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
     public function test_album_filtering(): void
     {
-        Album::factory()->create(['title' => 'Album 1', 'type' => 'LP']);
+        $a1 = Album::factory()->create(['title' => 'Album 1', 'type' => 'LP']);
         Album::factory()->create(['title' => 'Album 2', 'type' => 'EP']);
         Album::factory()->create(['title' => 'Album 3', 'type' => 'LP']);
 
@@ -77,6 +77,11 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
         $response = $this->get('/albums?filter[type]=EP');
         $response->assertJsonCount(1, 'data');
         $response->assertJsonPath('data.0.title', 'Album 2');
+
+        $response = $this->get("/albums?filter[artist.name]={$a1->artist->name}");
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.title', 'Album 1');
     }
 
     public function test_cannot_see_deleted_albums()
