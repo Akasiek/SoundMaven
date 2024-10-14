@@ -14,6 +14,8 @@ class AlbumReviewControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('meta.per_page', 25);
+        $response->assertJsonPath('meta.total', 3);
     }
 
     public function test_cannot_see_deleted_reviews()

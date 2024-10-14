@@ -24,12 +24,11 @@ class GenreController extends Controller
     {
         return new GenreCollection(
             QueryBuilder::for(Genre::class)
-                ->allowedIncludes(['albums'])
-                ->allowedFilters([
-                    'name',
-                    'album.name',
-                ])
-                ->get()
+                ->with(['albums'])
+                ->withCount(['albums'])
+                ->allowedFilters(['name', 'albums.title', 'albums.artist.name'])
+                ->allowedSorts(['name', 'albums_count', 'created_at', 'updated_at'])
+                ->paginate()
         );
     }
 

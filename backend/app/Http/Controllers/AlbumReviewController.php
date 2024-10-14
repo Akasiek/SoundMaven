@@ -25,11 +25,9 @@ class AlbumReviewController extends Controller
         return new AlbumReviewCollection(
             QueryBuilder::for(AlbumReview::class)
                 ->allowedIncludes(['album', 'creator'])
-                ->allowedFilters([
-                    'creator.name',
-                    'album.title',
-                ])
-                ->get()
+                ->allowedFilters(['rating', 'album_id', 'created_by', 'album.title', 'creator.name'])
+                ->allowedSorts(['rating', 'created_at'])
+                ->paginate()
         );
     }
 

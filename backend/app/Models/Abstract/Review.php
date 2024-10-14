@@ -12,6 +12,8 @@ abstract class Review extends Model
 {
     use SoftDeletes, HasFactory, HasUuids, BlameableTrait;
 
+    protected $perPage = 25;
+
     protected $fillable = [
         'rating',
         'body',

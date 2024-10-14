@@ -25,10 +25,9 @@ class ArtistController extends Controller
         return new ArtistCollection(
             QueryBuilder::for(Artist::class)
                 ->with(['albums'])
-                ->allowedFilters([
-                    'name',
-                ])
-                ->get()
+                ->allowedFilters(['name', 'type', 'albums.title', 'albums.id'])
+                ->allowedSorts(['name', 'type', 'created_at', 'updated_at'])
+                ->paginate()
         );
     }
 

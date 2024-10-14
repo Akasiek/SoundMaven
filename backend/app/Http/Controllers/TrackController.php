@@ -24,16 +24,10 @@ class TrackController extends Controller
     {
         return new TrackCollection(
             QueryBuilder::for(Track::class)
-                ->allowedIncludes(['album'])
-                ->allowedFilters([
-                    'title',
-                    'slug',
-                    'album.title',
-                    'album.slug',
-                    'album.artist.name',
-                    'album.artist.slug',
-                ])
-                ->get()
+                ->with(['album'])
+                ->allowedFilters(['title', 'slug', 'album.title', 'album.slug', 'album.artist.name', 'album.artist.slug'])
+                ->allowedSorts(['title', 'length', 'order'])
+                ->paginate()
         );
     }
 

@@ -17,6 +17,52 @@ class GenreControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('meta.per_page', 25);
+        $response->assertJsonPath('meta.total', 3);
+    }
+
+    public function test_genres_sort(): void
+    {
+        $g = Genre::factory()->create(['name' => 'Genre 1', 'parent_id' => null]);
+        Genre::factory()->create(['name' => 'Genre 2', 'parent_id' => null]);
+        Genre::factory()->create(['name' => 'Genre 3', 'parent_id' => null]);
+
+        $response = $this->get('/genres?sort=-name');
+
+        $response->assertJsonPath('data.0.name', 'Genre 3');
+        $response->assertJsonPath('data.1.name', 'Genre 2');
+        $response->assertJsonPath('data.2.name', 'Genre 1');
+
+        $g->albums()->saveMany([
+            Album::factory()->make(),
+            Album::factory()->make(),
+        ]);
+
+        $response = $this->get('/genres?sort=-albums_count');
+
+        $response->assertJsonPath('data.0.name', 'Genre 1');
+        $response->assertJsonPath('data.1.name', 'Genre 2');
+        $response->assertJsonPath('data.2.name', 'Genre 3');
+    }
+
+    public function test_genre_filter(): void
+    {
+        $g = Genre::factory()->create(['name' => 'Genre 1', 'parent_id' => null]);
+        Genre::factory()->create(['name' => 'Genre 2', 'parent_id' => null]);
+        Genre::factory()->create(['name' => 'Genre 3', 'parent_id' => null]);
+
+        $response = $this->get('/genres?filter[name]=Genre 1');
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.name', 'Genre 1');
+
+        $g->albums()->create(Album::factory()->make(['title' => 'Album 1'])->toArray());
+
+        $response = $this->get('/genres?filter[albums.title]=Album 1');
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.name', 'Genre 1');
+
     }
 
     public function test_cannot_see_deleted_genres()

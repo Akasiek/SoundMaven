@@ -19,6 +19,45 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('meta.per_page', 25);
+        $response->assertJsonPath('meta.total', 3);
+    }
+
+    public function test_artists_sort(): void
+    {
+        Artist::factory()->create(['name' => 'Artist 1']);
+        Artist::factory()->create(['name' => 'Artist 2']);
+        Artist::factory()->create(['name' => 'Artist 3']);
+
+        $response = $this->get('/artists?sort=name');
+
+        $response->assertJsonPath('data.0.name', 'Artist 1');
+        $response->assertJsonPath('data.1.name', 'Artist 2');
+        $response->assertJsonPath('data.2.name', 'Artist 3');
+    }
+
+    public function test_artists_filter(): void
+    {
+        $a = Artist::factory()->create(['name' => 'Artist 1', 'type' => 'solo']);
+        Artist::factory()->create(['name' => 'Artist 2', 'type' => 'band']);
+        Artist::factory()->create(['name' => 'Artist 3', 'type' => 'solo']);
+
+        $response = $this->get('/artists?filter[type]=solo');
+
+        $response->assertJsonCount(2, 'data');
+        $response->assertJsonPath('data.0.name', 'Artist 1');
+        $response->assertJsonPath('data.1.name', 'Artist 3');
+
+        $response = $this->get('/artists?filter[type]=band');
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.name', 'Artist 2');
+
+        $a->albums()->create(['title' => 'Album 1']);
+        $response = $this->get("/artists?filter[albums.title]={$a->albums->first()->title}");
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.name', 'Artist 1');
     }
 
     public function test_cannot_see_deleted_artists()

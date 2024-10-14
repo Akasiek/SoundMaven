@@ -15,6 +15,48 @@ class TrackControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+        $response->assertJsonPath('meta.per_page', 25);
+        $response->assertJsonPath('meta.total', 3);
+    }
+
+    public function test_tracks_sort(): void
+    {
+        Track::factory()->create(['title' => 'Track 1', 'order' => 2]);
+        Track::factory()->create(['title' => 'Track 2', 'order' => 3]);
+        Track::factory()->create(['title' => 'Track 3', 'order' => 1]);
+
+        $response = $this->get('/tracks?sort=-title');
+
+        $response->assertJsonPath('data.0.title', 'Track 3');
+        $response->assertJsonPath('data.1.title', 'Track 2');
+        $response->assertJsonPath('data.2.title', 'Track 1');
+
+        $response = $this->get('/tracks?sort=order');
+
+        $response->assertJsonPath('data.0.title', 'Track 3');
+        $response->assertJsonPath('data.1.title', 'Track 1');
+        $response->assertJsonPath('data.2.title', 'Track 2');
+    }
+
+    public function test_tracks_filter(): void
+    {
+        $a1 = Album::factory()->create(['title' => 'Album 1']);
+        $a2 = Album::factory()->create(['title' => 'Album 2']);
+
+        Track::factory()->create(['title' => 'Track 1', 'album_id' => $a1->id]);
+        Track::factory()->create(['title' => 'Track 2', 'album_id' => $a2->id]);
+        Track::factory()->create(['title' => 'Track 3', 'album_id' => $a1->id]);
+
+        $response = $this->get('/tracks?filter[album.title]=Album 1');
+
+        $response->assertJsonCount(2, 'data');
+        $response->assertJsonPath('data.0.title', 'Track 1');
+        $response->assertJsonPath('data.1.title', 'Track 3');
+
+        $response = $this->get('/tracks?filter[title]=Track 3');
+
+        $response->assertJsonCount(1, 'data');
+        $response->assertJsonPath('data.0.title', 'Track 3');
     }
 
     public function test_cannot_see_deleted_tracks()
