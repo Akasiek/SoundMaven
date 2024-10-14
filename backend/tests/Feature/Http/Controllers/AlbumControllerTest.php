@@ -19,6 +19,21 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
+        $response->assertJsonStructure([
+            'data',
+            'links',
+            'meta',
+        ]);
+        $response->assertJsonPath('meta.per_page', 25);
+        $response->assertJsonPath('meta.total', 3);
+
+        // Add another 28 albums
+        Album::factory(28)->create();
+
+        $response = $this->get('/albums');
+
+        $response->assertJsonCount(25, 'data');
+        $response->assertJsonPath('meta.total', 31);
     }
 
     public function test_cannot_see_deleted_albums()

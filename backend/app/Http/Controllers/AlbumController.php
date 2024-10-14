@@ -38,7 +38,7 @@ class AlbumController extends Controller
                     'type',
                     'artist.name',
                 ])
-                ->get()
+                ->paginate()
         );
     }
 

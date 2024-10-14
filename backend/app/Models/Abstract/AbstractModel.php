@@ -9,6 +9,8 @@ abstract class AbstractModel extends Model
 {
     use Sluggable;
 
+    protected $perPage = 25;
+
     public static function whereSlugOrId(string $param)
     {
         return static::where(uuid_is_valid($param) ? 'id' : 'slug', $param);
