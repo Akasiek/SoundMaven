@@ -54,7 +54,7 @@ abstract class CsvSeeder extends Seeder
     /**
      * @throws Exception
      */
-    private function mapCsvData(): array
+    protected function mapCsvData(): array
     {
         $mappedData = [];
         $data = $this->loadCsvFile();
@@ -75,7 +75,7 @@ abstract class CsvSeeder extends Seeder
         return $mappedData;
     }
 
-    private function mapSpecialValues($data): array
+    protected function mapSpecialValues($data): array
     {
         $specialValueMappings = $this->specialValueMappings();
 
@@ -94,7 +94,7 @@ abstract class CsvSeeder extends Seeder
     /**
      * @throws Exception
      */
-    private function seedFromCsv(): void
+    protected function seedFromCsv(): void
     {
         $data = $this->mapCsvData();
         $data = $this->mapSpecialValues($data);
@@ -104,6 +104,5 @@ abstract class CsvSeeder extends Seeder
                 throw new Exception('Cannot create seeded model');
             }
         }
-
     }
 }
