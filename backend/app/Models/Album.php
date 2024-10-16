@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Helpers\FileExtensionFromString;
 use App\Models\Abstract\AbstractModel;
 use Cocur\Slugify\Slugify;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -74,6 +75,14 @@ class Album extends AbstractModel implements HasMedia
     {
         $this->getFirstMedia('album-covers')?->delete();
     }
+
+    protected function coverImage(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getFirstMediaUrl('album-covers', 'thumb'),
+        );
+    }
+
 
     public function artist(): BelongsTo
     {
