@@ -83,7 +83,6 @@ class Album extends AbstractModel implements HasMedia
         );
     }
 
-
     public function artist(): BelongsTo
     {
         return $this->belongsTo(Artist::class);
