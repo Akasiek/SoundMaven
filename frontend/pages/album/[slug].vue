@@ -19,5 +19,6 @@ useHead({
 <template>
   <main v-if="album" class="py-12">
     <AlbumViewHero :album="album" />
+    <AlbumViewTrackList :album="album" />
   </main>
 </template>

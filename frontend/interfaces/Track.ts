@@ -5,6 +5,7 @@ export interface SimpleTrack {
   title: string;
   slug: string;
   length: string;
+  length_in_minutes: string;
   order: string;
   created_at: string;
   updated_at: string;
