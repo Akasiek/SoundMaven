@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Album;
 use App\Models\Artist;
+use App\Models\Genre;
 use Exception;
 
 class AlbumSeeder extends CsvSeeder
@@ -19,6 +20,7 @@ class AlbumSeeder extends CsvSeeder
             'release_date' => 2,
             'type' => 3,
             'cover_image' => 4,
+            'genres' => 5,
         ];
     }
 
@@ -26,6 +28,10 @@ class AlbumSeeder extends CsvSeeder
     {
         return [
             'artist_id' => fn($value) => Artist::where('name', $value)->first()->id,
+            'genres' => fn($value) => $value ? array_map(
+                fn($genre) => Genre::where('name', $genre)->first()->id,
+                explode('|', $value)
+            ) : [],
         ];
     }
 
@@ -36,9 +42,10 @@ class AlbumSeeder extends CsvSeeder
 
         foreach ($data as $row) {
             $coverImage = $row['cover_image'];
-            $rowWithoutCover = array_filter($row, fn($key) => $key !== 'cover_image', ARRAY_FILTER_USE_KEY);
+            $genres = $row['genres'];
+            $filteredRow = array_filter($row, fn($key) => !in_array($key, ['cover_image', 'genres']), ARRAY_FILTER_USE_KEY);
 
-            $album = $this->model::updateOrCreate($rowWithoutCover);
+            $album = $this->model::updateOrCreate($filteredRow);
 
             if (!$album) {
                 throw new Exception('Cannot create seeded model');
@@ -47,6 +54,8 @@ class AlbumSeeder extends CsvSeeder
             if ($coverImage) {
                 $album->attachCoverImage(base_path("database/seeders/data/cover_images/$coverImage"));
             }
+
+            $album->genres()->sync($genres);
         }
 
     }
