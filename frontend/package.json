@@ -10,6 +10,8 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@fontsource-variable/lora": "^5.1.0",
+    "@fontsource-variable/montserrat": "^5.1.0",
     "@nuxt/eslint": "^0.5.7",
     "@nuxt/image": "^1.8.1",
     "@pinia/nuxt": "^0.5.4",
