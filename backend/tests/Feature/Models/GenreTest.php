@@ -17,7 +17,7 @@ class GenreTest extends RefreshingTestCase
             'name' => 'Rock',
         ]);
         $this->assertDatabaseHas('genres', [
-            'name' => 'Synth Pop',
+            'name' => 'Synth-pop',
         ]);
         $this->assertDatabaseHas('genres', [
             'name' => 'Progressive Rock',
