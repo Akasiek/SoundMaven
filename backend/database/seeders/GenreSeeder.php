@@ -19,6 +19,14 @@ class GenreSeeder extends Seeder
                 'Art Rock',
                 'Experimental Rock',
                 'Psychedelic Rock',
+                'Alternative Rock',
+                'Indie Rock',
+                'Hard Rock',
+                'Garage Rock',
+                'Garage Rock Revival',
+                'Blues Rock',
+                'Folk Rock',
+                'Glam Rock',
             ],
             'Metal' => [
                 'Heavy Metal',
@@ -26,13 +34,22 @@ class GenreSeeder extends Seeder
                 'Death Metal',
                 'Black Metal',
                 'Doom Metal',
+                'Progressive Metal',
+                'Power Metal',
+                'Groove Metal',
             ],
             'Pop' => [
                 'Dance Pop',
-                'Synth Pop',
+                'Synth-pop',
                 'Electropop',
                 'Indie Pop',
                 'Art Pop',
+            ],
+            'Ambient' => [
+                'Drone',
+            ],
+            'Synthwave' => [
+                'Darkwave',
             ],
         ];
 
