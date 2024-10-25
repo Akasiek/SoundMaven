@@ -86,7 +86,7 @@ class TrackTest extends RefreshingTestCase
             'length' => 231
         ]);
 
-        $this->assertEquals('03:51', $track->lengthInMinutes());
+        $this->assertEquals('03:51', $track->lengthInMinutes);
     }
 
     public function test_can_calculate_length_in_minutes_and_hours()
@@ -95,6 +95,6 @@ class TrackTest extends RefreshingTestCase
             'length' => 3861
         ]);
 
-        $this->assertEquals('01:04:21', $track->lengthInMinutes());
+        $this->assertEquals('01:04:21', $track->lengthInMinutes);
     }
 }
