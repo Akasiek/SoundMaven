@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { useAuthStore } from "~/store/auth";
+import type Album from "~/interfaces/Album";
 
 const config = useRuntimeConfig();
 const store = useAuthStore();
 const { isAuth } = storeToRefs(store)
 const albums = await useFetch<{
-  data: {
-    id: number;
-    title: string;
-  }[];
+  data: Album[];
 }>(`${config.public.apiUrl}/albums`);
 
 const handleLogout = async () => {
