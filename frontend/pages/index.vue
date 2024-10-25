@@ -7,7 +7,11 @@ const store = useAuthStore();
 const { isAuth } = storeToRefs(store)
 const albums = await useFetch<{
   data: Album[];
-}>(`${config.public.apiUrl}/albums`);
+}>(`${config.public.apiUrl}/albums`, {
+  query: {
+    perPage: 200,
+  },
+});
 
 const handleLogout = async () => {
   await store.logout();
@@ -16,7 +20,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <main>
+  <main class="py-8">
 
     <h1 class="text-3xl">Hello world!</h1>
 

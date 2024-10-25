@@ -4,11 +4,11 @@ import '@fontsource-variable/lora';
 </script>
 
 <template>
-  <div class="w-full font-sans bg-dark-secondary min-h-screen text-light-primary">
+  <div class="w-full font-sans bg-dark-secondary min-h-screen text-light-primary pl-64">
     <SideNav/>
 
-    <main class="max-w-5xl w-full mx-auto pl-64">
+    <section class="max-w-7xl w-full mx-auto px-4">
       <slot/>
-    </main>
+    </section>
   </div>
 </template>
