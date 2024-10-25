@@ -29,7 +29,6 @@ class GenreController extends Controller
                 ->allowedFilters(['name', 'albums.title', 'albums.artist.name'])
                 ->allowedSorts(['name', 'albums_count', 'created_at', 'updated_at'])
                 ->paginate(request('perPage'))
-                ->appends(request()->query())
         );
     }
 

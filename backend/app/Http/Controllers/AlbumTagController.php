@@ -16,12 +16,9 @@ class AlbumTagController extends Controller
             QueryBuilder::for(AlbumTag::class)
                 ->withCount('albums')
                 ->with(['albums'])
-                // ->leftJoin('album_album_tag', 'album_tags.id', '=', 'album_album_tag.album_tag_id')
-                // ->leftJoin('albums', 'album_album_tag.album_id', '=', 'albums.id')
                 ->allowedFilters(['name', 'albums.id', 'albums.title'])
                 ->allowedSorts(['name', 'albums_count'])
                 ->paginate(request('perPage'))
-                ->appends(request()->query())
         );
     }
 
