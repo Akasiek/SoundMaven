@@ -27,7 +27,8 @@ class TrackController extends Controller
                 ->with(['album'])
                 ->allowedFilters(['title', 'slug', 'album.title', 'album.slug', 'album.artist.name', 'album.artist.slug'])
                 ->allowedSorts(['title', 'length', 'order'])
-                ->paginate()
+                ->paginate(request('perPage'))
+                ->appends(request()->query())
         );
     }
 

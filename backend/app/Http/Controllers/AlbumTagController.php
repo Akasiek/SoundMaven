@@ -20,7 +20,8 @@ class AlbumTagController extends Controller
                 // ->leftJoin('albums', 'album_album_tag.album_id', '=', 'albums.id')
                 ->allowedFilters(['name', 'albums.id', 'albums.title'])
                 ->allowedSorts(['name', 'albums_count'])
-                ->paginate()
+                ->paginate(request('perPage'))
+                ->appends(request()->query())
         );
     }
 

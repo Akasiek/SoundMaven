@@ -35,7 +35,8 @@ class AlbumController extends Controller
                 ->allowedIncludes(['tracks', 'genres'])
                 ->allowedFilters(['title', 'release_date', 'type', 'artist.name'])
                 ->allowedSorts(['title', 'release_date', 'type', 'artist.name'])
-                ->paginate()
+                ->paginate(request('perPage'))
+                ->appends(request()->query())
         );
     }
 

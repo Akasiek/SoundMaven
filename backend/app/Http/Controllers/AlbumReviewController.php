@@ -27,7 +27,8 @@ class AlbumReviewController extends Controller
                 ->allowedIncludes(['album', 'creator'])
                 ->allowedFilters(['rating', 'album_id', 'created_by', 'album.title', 'creator.name'])
                 ->allowedSorts(['rating', 'created_at'])
-                ->paginate()
+                ->paginate(request('perPage'))
+                ->appends(request()->query())
         );
     }
 
