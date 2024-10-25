@@ -32,7 +32,7 @@ class AlbumController extends Controller
         return new AlbumCollection(
             QueryBuilder::for(Album::class)
                 ->with(['artist'])
-                ->allowedIncludes(['tracks'])
+                ->allowedIncludes(['tracks', 'genres'])
                 ->allowedFilters(['title', 'release_date', 'type', 'artist.name'])
                 ->allowedSorts(['title', 'release_date', 'type', 'artist.name'])
                 ->paginate()
@@ -44,13 +44,13 @@ class AlbumController extends Controller
     {
         $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
-        return new AlbumResource($album->loadMissing(['artist', 'tracks']));
+        return new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres']));
     }
 
     public function store(StoreAlbumRequest $request): AlbumResource
     {
         return new AlbumResource(
-            $this->service->create($request->validated())->loadMissing(['artist', 'tracks'])
+            $this->service->create($request->validated())->loadMissing(['artist', 'tracks', 'genres'])
         );
     }
 
@@ -59,7 +59,7 @@ class AlbumController extends Controller
         $album = Album::whereSlugOrId($albumParam)->firstOrFail();
 
         return new AlbumResource(
-            $this->service->update($request->validated(), $album)->loadMissing(['artist', 'tracks'])
+            $this->service->update($request->validated(), $album)->loadMissing(['artist', 'tracks', 'genres'])
         );
     }
 

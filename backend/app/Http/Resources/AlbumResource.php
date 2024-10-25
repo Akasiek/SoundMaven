@@ -22,6 +22,7 @@ class AlbumResource extends JsonResource
             'cover_image' => $this->cover_image,
             'artist' => ArtistResource::make($this->whenLoaded('artist')),
             'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
+            'genres' => GenreResource::collection($this->whenLoaded('genres')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
