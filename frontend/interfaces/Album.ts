@@ -1,5 +1,6 @@
 import type { SimpleArtist } from "~/interfaces/Artist";
 import type { SimpleTrack } from "~/interfaces/Track";
+import type { SimpleGenre } from "~/interfaces/Genre";
 
 export interface SimpleAlbum {
   id: string; // uuid
@@ -16,4 +17,5 @@ export interface SimpleAlbum {
 export default interface Album extends SimpleAlbum {
   artist: SimpleArtist;
   tracks: SimpleTrack[];
+  genres: SimpleGenre[];
 }
