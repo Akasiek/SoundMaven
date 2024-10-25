@@ -26,22 +26,22 @@ const handleLogout = async () => {
       User is {{ isAuth ? 'logged in' : 'not logged in' }}
     </p>
 
-    <nuxt-link v-if="!isAuth" href="/login" class="bg-green-300 py-2 px-4 rounded m-4 inline-block">
+    <NuxtLink v-if="!isAuth" to="/login" class="bg-green-300 py-2 px-4 rounded m-4 inline-block">
       Login
-    </nuxt-link>
+    </NuxtLink>
     <button v-else class="bg-red-300 py-2 px-4 rounded m-4 inline-block" @click="handleLogout">
       Logout
     </button>
 
-    <nuxt-link href="/about">
+    <NuxtLink to="/about">
       About
-    </nuxt-link>
+    </NuxtLink>
 
     <div class="my-8 px-4">
       <h2 class="text-2xl mb-2">Albums</h2>
       <ul>
         <li v-for="album in albums.data.value?.data" :key="album.id">
-          {{ album.title }}
+          <NuxtLink :to="`/album/${album.slug}`">{{ album.title }}</NuxtLink>
         </li>
       </ul>
     </div>
