@@ -1,17 +1,8 @@
 <script lang="ts" setup>
 import { useAuthStore } from "~/store/auth";
-import type Album from "~/interfaces/Album";
 
-const config = useRuntimeConfig();
 const store = useAuthStore();
 const { isAuth } = storeToRefs(store)
-const albums = await useFetch<{
-  data: Album[];
-}>(`${config.public.apiUrl}/albums`, {
-  query: {
-    perPage: 200,
-  },
-});
 
 const handleLogout = async () => {
   await store.logout();
@@ -39,14 +30,7 @@ const handleLogout = async () => {
       About
     </NuxtLink>
 
-    <div class="my-8 px-4">
-      <h2 class="text-2xl mb-2">Albums</h2>
-      <ul>
-        <li v-for="album in albums.data.value?.data" :key="album.id">
-          <NuxtLink :to="`/album/${album.slug}`">{{ album.title }}</NuxtLink>
-        </li>
-      </ul>
-    </div>
+
   </main>
 
 </template>
