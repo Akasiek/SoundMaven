@@ -7,7 +7,7 @@ import '@fontsource-variable/lora';
   <div class="w-full font-sans bg-dark-secondary min-h-screen text-light-primary pl-64">
     <SideNav/>
 
-    <section class="max-w-7xl w-full mx-auto px-4">
+    <section class="max-w-5xl w-full mx-auto px-4">
       <slot/>
     </section>
   </div>
