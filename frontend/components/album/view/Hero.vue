@@ -21,7 +21,7 @@ const { album } = defineProps<{
             <span class="italic">
               {{ genre.name }}
             </span>
-          <template v-if="index !== album.genres.length - 1"> •</template>
+          <template v-if="index !== album.genres.length - 1"> • </template>
         </template>
       </p>
     </div>
