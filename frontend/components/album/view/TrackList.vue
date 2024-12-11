@@ -8,7 +8,7 @@ const { album } = defineProps<{
 
 <template>
   <section v-if="album.tracks.length > 0" class="my-12">
-    <h1 class="text-4xl font-black">
+    <h1 class="text-3xl font-black tracking-tight">
       Tracks
     </h1>
 
@@ -16,7 +16,7 @@ const { album } = defineProps<{
 
     <ol class="list-decimal list-inside font-serif py-4">
       <template v-for="(track, index) in album.tracks" :key="track.id">
-        <li class="flex justify-between items-center align-baseline text-lg">
+        <li class="flex justify-between items-center align-baseline">
           <span class="mr-2"> {{ index + 1 }}. </span>
           <span class="font-bold w-full"> {{ track.title }} </span>
           <span class="ml-auto"> {{ track.length_in_minutes }} </span>

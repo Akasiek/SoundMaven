@@ -8,12 +8,12 @@ const { album } = defineProps<{
 
 <template>
   <section id="hero" class="flex gap-10">
-    <NuxtImg v-if="album.cover_image" class="h-80" :src="album.cover_image" :alt="`${album.title} album cover`"/>
+    <NuxtImg v-if="album.cover_image" class="h-72" :src="album.cover_image" :alt="`${album.title} album cover`"/>
 
     <div class="font-serif my-auto">
-      <h2 class="text-2xl"> {{ album.artist.name }} </h2>
-      <h1 class="text-4xl font-bold mb-2"> {{ album.title }} </h1>
-      <h4 class="text-lg text-zinc-400 mb-2">
+      <h2 class="text-xl"> {{ album.artist.name }} </h2>
+      <h1 class="text-3xl font-bold mb-2"> {{ album.title }} </h1>
+      <h4 class="text-base text-zinc-400 mb-2">
         {{ album.release_date }} | {{ album.type }}
       </h4>
       <p v-if="album.genres">
