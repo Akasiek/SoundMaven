@@ -1,0 +1,33 @@
+meta {
+  name: Login
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "kamil@kamilpomykala.dev",
+    "password": "kamil999"
+  }
+}
+
+body:form-urlencoded {
+  email: kamil@kamilpomykala.dev
+  password: kamil999
+}
+
+script:post-response {
+  // const setCookieHeader = res.headers.get('set-cookie')[0];
+  
+  // const xsrfTokenMatch  = setCookieHeader.match(/XSRF-TOKEN=([^;]+)/);
+  
+  // const xsrfToken = decodeURIComponent(xsrfTokenMatch[1]);
+  
+  // bru.setEnvVar('X-XSRF-TOKEN',xsrfToken);
+}

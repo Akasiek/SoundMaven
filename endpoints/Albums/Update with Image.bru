@@ -1,0 +1,24 @@
+meta {
+  name: Update with Image
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/albums/pablo-honey?_method=patch
+  body: multipartForm
+  auth: none
+}
+
+params:query {
+  _method: patch
+}
+
+headers {
+  Content-Type: multipart/form-data
+}
+
+body:multipart-form {
+  cover_image: @file(/home/akasiek/Downloads/6c337c911b71f3d7a6788114a129de8e.800x800x1.webp)
+  ~title: Pablo Honey
+}
