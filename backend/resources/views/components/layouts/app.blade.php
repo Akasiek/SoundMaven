@@ -8,7 +8,10 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="font-sans">
-    {{ $slot }}
+<body class="font-serif grid grid-cols-[auto_1fr] bg-zinc-900 text-zinc-100">
+    @livewire(\App\Livewire\SideNavigation::class)
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+        {{ $slot }}
+    </main>
 </body>
 </html>
