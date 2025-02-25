@@ -2,4 +2,4 @@
 
 use App\Livewire\{Welcome};
 
-Route::get('/', Welcome::class);
+Route::get('/', Welcome::class)->name('home');
