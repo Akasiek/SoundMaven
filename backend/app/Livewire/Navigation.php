@@ -13,7 +13,7 @@ class Navigation extends Component
     {
         $this->links = [
             ['name' => 'Home', 'route' => route('home')],
-            ['name' => 'Artists', 'route' => route('home')],
+            ['name' => 'Artists', 'route' => route('artist.index')],
             ['name' => 'Contact', 'route' => route('home')],
         ];
     }
