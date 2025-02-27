@@ -16,6 +16,10 @@ class Welcome extends Component
     public function mount()
     {
         $this->albums = Album::limit(10)->get();
+    }
 
+    public function render()
+    {
+        return view('pages.welcome');
     }
 }
