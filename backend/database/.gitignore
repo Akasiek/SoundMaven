@@ -1,2 +1,3 @@
 *.sqlite*
 seeders/data/cover_images/
+seeders/data/artist_background_images/
