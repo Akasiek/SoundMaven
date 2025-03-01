@@ -44,6 +44,22 @@ return [
             'throw' => false,
         ],
 
+        'artist_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/artist_images'),
+            'url' => env('APP_URL').'/storage/artist_images',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'album_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/album_images'),
+            'url' => env('APP_URL').'/storage/album_images',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
@@ -71,6 +87,8 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('storage/artist_images') => storage_path('app/artist_images'),
+        public_path('storage/album_images') => storage_path('app/album_images'),
     ],
 
 ];

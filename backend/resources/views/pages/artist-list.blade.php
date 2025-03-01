@@ -4,7 +4,7 @@
             <a class="block" href="{{ route('artist.show', $artist) }}">
 
                 <div class="w-full h-48 aspect-video overflow-hidden">
-                    <img src="{{$artist->background_image}}" alt="{{ $artist->name }}" class="w-full h-full object-cover object-center">
+                    <img src="{{$artist->background_image_preview}}" alt="{{ $artist->name }}" class="w-full h-full object-cover object-center">
                 </div>
                 {{ $artist->name }}
             </a>

@@ -56,7 +56,7 @@ class Album extends AbstractModel implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('album-covers')->singleFile();
+        $this->addMediaCollection('album-covers')->useDisk('album_images')->singleFile();
     }
 
     public function attachCoverImage(string $string): void
@@ -66,8 +66,8 @@ class Album extends AbstractModel implements HasMedia
         $this
             ->addMedia($string)
             ->preservingOriginal()
-            ->setName("{$this->slug}-cover")
-            ->setFileName("{$this->slug}-cover.{$fileExtensionFromStringHelper($string)}")
+            ->setName("$this->slug-cover")
+            ->setFileName("$this->slug-cover.{$fileExtensionFromStringHelper($string)}")
             ->toMediaCollection('album-covers');
     }
 

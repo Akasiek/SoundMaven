@@ -13,6 +13,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Str;
 
 class Artist extends AbstractModel implements HasMedia
 {
@@ -29,6 +30,11 @@ class Artist extends AbstractModel implements HasMedia
         return ['slug' => ['source' => 'name']];
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('artist-backgrounds')->useDisk('artist_images')->singleFile();
+    }
+
     public function registerMediaConversions(Media|null $media = null): void
     {
         $this
@@ -37,22 +43,26 @@ class Artist extends AbstractModel implements HasMedia
             ->quality(90)
             ->format('webp')
             ->nonQueued();
-    }
 
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('artist-backgrounds')->singleFile();
+        $this
+            ->addMediaConversion('preview')
+            ->width(300)
+            ->quality(80)
+            ->format('webp')
+            ->nonQueued();
     }
 
     public function attachBackgroundImage(string $string): void
     {
         $fileExtensionFromStringHelper = new FileExtensionFromString;
 
+        $randomString = Str::random();
+
         $this
             ->addMedia($string)
             ->preservingOriginal()
-            ->setName("{$this->slug}-background")
-            ->setFileName("{$this->slug}-background.{$fileExtensionFromStringHelper($string)}")
+            ->setName("$this->slug-background")
+            ->setFileName("$this->slug-$randomString-background.{$fileExtensionFromStringHelper($string)}")
             ->toMediaCollection('artist-backgrounds');
     }
 
@@ -64,7 +74,14 @@ class Artist extends AbstractModel implements HasMedia
     protected function backgroundImage(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMediaUrl('artist-backgrounds', 'thumb'),
+            get: fn() => $this->getFirstMediaUrl('artist-backgrounds', 'thumb'),
+        );
+    }
+
+    protected function backgroundImagePreview(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getFirstMediaUrl('artist-backgrounds', 'preview'),
         );
     }
 
