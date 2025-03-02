@@ -20,79 +20,82 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/401', fn () => response()->json(['message' => 'Unauthorized'], 401))->name('401');
+// Route::get('/401', fn () => response()->json(['message' => 'Unauthorized'], 401))->name('401');
 
-Route::controller(AlbumController::class)->prefix('albums')->group(function () {
-    Route::get('/', [AlbumController::class, 'index']);
-    Route::get('/{albumParam}', [AlbumController::class, 'show']);
-    Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
-    Route::get('/{albumParam}/reviews', [AlbumController::class, 'showReviews']);
-    Route::get('/{albumParam}/genres', [AlbumController::class, 'showGenres']);
-    Route::get('/{albumParam}/tags', [AlbumController::class, 'showTags']);
-});
+Route::prefix('/api')->group(function () {
 
-Route::middleware('auth:sanctum')->group(function () {
     Route::controller(AlbumController::class)->prefix('albums')->group(function () {
-        Route::post('/', [AlbumController::class, 'store']);
-        Route::put('/{albumParam}', [AlbumController::class, 'update']);
-        Route::patch('/{albumParam}', [AlbumController::class, 'update']);
-        Route::delete('/{album}', [AlbumController::class, 'destroy']);
-
-        Route::post('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'attachGenre']);
-        Route::delete('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'detachGenre']);
-
-        Route::post('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'attachTag']);
-        Route::delete('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'detachTag']);
+        Route::get('/', [AlbumController::class, 'index']);
+        Route::get('/{albumParam}', [AlbumController::class, 'show']);
+        Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
+        Route::get('/{albumParam}/reviews', [AlbumController::class, 'showReviews']);
+        Route::get('/{albumParam}/genres', [AlbumController::class, 'showGenres']);
+        Route::get('/{albumParam}/tags', [AlbumController::class, 'showTags']);
     });
 
-    Route::controller(ArtistController::class)->prefix('artists')->group(function () {
-        Route::get('/', [ArtistController::class, 'index']);
-        Route::post('/', [ArtistController::class, 'store']);
-        Route::get('/{param}', [ArtistController::class, 'show']);
-        Route::put('/{param}', [ArtistController::class, 'update']);
-        Route::patch('/{param}', [ArtistController::class, 'update']);
-        Route::delete('/{artist}', [ArtistController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::controller(AlbumController::class)->prefix('albums')->group(function () {
+            Route::post('/', [AlbumController::class, 'store']);
+            Route::put('/{albumParam}', [AlbumController::class, 'update']);
+            Route::patch('/{albumParam}', [AlbumController::class, 'update']);
+            Route::delete('/{album}', [AlbumController::class, 'destroy']);
+
+            Route::post('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'attachGenre']);
+            Route::delete('/{albumParam}/genres/{genreParam}', [AlbumController::class, 'detachGenre']);
+
+            Route::post('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'attachTag']);
+            Route::delete('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'detachTag']);
+        });
+
+        Route::controller(ArtistController::class)->prefix('artists')->group(function () {
+            Route::get('/', [ArtistController::class, 'index']);
+            Route::post('/', [ArtistController::class, 'store']);
+            Route::get('/{param}', [ArtistController::class, 'show']);
+            Route::put('/{param}', [ArtistController::class, 'update']);
+            Route::patch('/{param}', [ArtistController::class, 'update']);
+            Route::delete('/{artist}', [ArtistController::class, 'destroy']);
+        });
+
+        Route::controller(TrackController::class)->prefix('tracks')->group(function () {
+            Route::get('/', [TrackController::class, 'index']);
+            Route::post('/', [TrackController::class, 'store']);
+            Route::get('/{trackParam}', [TrackController::class, 'show']);
+            Route::put('/{trackParam}', [TrackController::class, 'update']);
+            Route::patch('/{trackParam}', [TrackController::class, 'update']);
+            Route::delete('/{track}', [TrackController::class, 'destroy']);
+        });
+
+        Route::controller(GenreController::class)->prefix('genres')->group(function () {
+            Route::get('/', [GenreController::class, 'index']);
+            Route::post('/', [GenreController::class, 'store']);
+            Route::get('/{genreParam}', [GenreController::class, 'show']);
+            Route::put('/{genreParam}', [GenreController::class, 'update']);
+            Route::patch('/{genreParam}', [GenreController::class, 'update']);
+            Route::delete('/{genre}', [GenreController::class, 'destroy']);
+
+            Route::get('/{genreParam}/albums', [GenreController::class, 'showAlbums']);
+        });
+
+        Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function () {
+            Route::get('/', [AlbumReviewController::class, 'index']);
+            Route::post('/', [AlbumReviewController::class, 'store']);
+            Route::get('/{albumReview}', [AlbumReviewController::class, 'show']);
+            Route::put('/{albumReview}', [AlbumReviewController::class, 'update']);
+            Route::patch('/{albumReview}', [AlbumReviewController::class, 'update']);
+            Route::delete('/{albumReview}', [AlbumReviewController::class, 'destroy']);
+        });
+
+        Route::controller(AlbumTagController::class)->prefix('album-tags')->group(function () {
+            Route::get('/', [AlbumTagController::class, 'index']);
+            Route::post('/', [AlbumTagController::class, 'store']);
+            Route::get('/{albumTag}', [AlbumTagController::class, 'show']);
+            Route::put('/{albumTag}', [AlbumTagController::class, 'update']);
+            Route::patch('/{albumTag}', [AlbumTagController::class, 'update']);
+            Route::delete('/{albumTag}', [AlbumTagController::class, 'destroy']);
+        });
     });
 
-    Route::controller(TrackController::class)->prefix('tracks')->group(function () {
-        Route::get('/', [TrackController::class, 'index']);
-        Route::post('/', [TrackController::class, 'store']);
-        Route::get('/{trackParam}', [TrackController::class, 'show']);
-        Route::put('/{trackParam}', [TrackController::class, 'update']);
-        Route::patch('/{trackParam}', [TrackController::class, 'update']);
-        Route::delete('/{track}', [TrackController::class, 'destroy']);
+    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+        return $request->user();
     });
-
-    Route::controller(GenreController::class)->prefix('genres')->group(function () {
-        Route::get('/', [GenreController::class, 'index']);
-        Route::post('/', [GenreController::class, 'store']);
-        Route::get('/{genreParam}', [GenreController::class, 'show']);
-        Route::put('/{genreParam}', [GenreController::class, 'update']);
-        Route::patch('/{genreParam}', [GenreController::class, 'update']);
-        Route::delete('/{genre}', [GenreController::class, 'destroy']);
-
-        Route::get('/{genreParam}/albums', [GenreController::class, 'showAlbums']);
-    });
-
-    Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function () {
-        Route::get('/', [AlbumReviewController::class, 'index']);
-        Route::post('/', [AlbumReviewController::class, 'store']);
-        Route::get('/{albumReview}', [AlbumReviewController::class, 'show']);
-        Route::put('/{albumReview}', [AlbumReviewController::class, 'update']);
-        Route::patch('/{albumReview}', [AlbumReviewController::class, 'update']);
-        Route::delete('/{albumReview}', [AlbumReviewController::class, 'destroy']);
-    });
-
-    Route::controller(AlbumTagController::class)->prefix('album-tags')->group(function () {
-        Route::get('/', [AlbumTagController::class, 'index']);
-        Route::post('/', [AlbumTagController::class, 'store']);
-        Route::get('/{albumTag}', [AlbumTagController::class, 'show']);
-        Route::put('/{albumTag}', [AlbumTagController::class, 'update']);
-        Route::patch('/{albumTag}', [AlbumTagController::class, 'update']);
-        Route::delete('/{albumTag}', [AlbumTagController::class, 'destroy']);
-    });
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
 });
