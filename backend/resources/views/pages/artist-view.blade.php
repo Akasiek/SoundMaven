@@ -14,6 +14,6 @@
     </section>
 
     <section>
-
+        @livewire(\App\Livewire\AlbumList::class, ['albums' => $artist->albums, 'showArtist' => false])
     </section>
 </main>
