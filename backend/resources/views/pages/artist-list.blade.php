@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto">
+<main class="max-w-7xl mx-auto">
     <div class="grid grid-cols-4 gap-x-10 gap-y-10">
         @foreach ($artists as $artist)
             <a class="block" href="{{ route('artist.show', $artist) }}">
@@ -12,4 +12,4 @@
     </div>
 
     {{--    {{ $artists->links() }}--}}
-</div>
+</main>

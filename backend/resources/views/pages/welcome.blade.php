@@ -1,6 +1,4 @@
-<?php
-?>
-<div class="w-full">
+<main class="w-full">
     <h1 class="text-7xl font-black">
         Welcome
     </h1>
@@ -15,4 +13,4 @@
         @endforeach
         </ul>
     </div>
-</div>
+</main>

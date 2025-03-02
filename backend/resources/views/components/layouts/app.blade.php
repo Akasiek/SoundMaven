@@ -11,8 +11,6 @@
 
 <body class="font-serif bg-zinc-900 text-zinc-100 mt-18 px-4 sm:px-6 lg:px-8">
     @livewire(\App\Livewire\Navigation::class)
-    <main>
-        {{ $slot }}
-    </main>
+    {{ $slot }}
 </body>
 </html>
