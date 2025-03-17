@@ -79,7 +79,7 @@ class Album extends AbstractModel implements HasMedia
     protected function coverImage(): Attribute
     {
         return Attribute::make(
-            get: fn () => $this->getFirstMediaUrl('album-covers', 'thumb'),
+            get: fn() => $this->getFirstMediaUrl('album-covers', 'thumb'),
         );
     }
 
@@ -108,8 +108,37 @@ class Album extends AbstractModel implements HasMedia
         return $this->hasMany(Track::class);
     }
 
-    public function averageRating(): float
+    public function averageRating(): Attribute
     {
-        return $this->reviews()->avg('rating');
+        return Attribute::make(
+            get: fn() => (int)$this->reviews()->avg('rating') ?: "Ø",
+        );
+    }
+
+    /**
+     * Get the TailwindCSS class for the rating color based on the average rating.
+     *
+     * This method calculates the average rating of the album and returns a CSS class
+     * that represents the color associated with the rating range.
+     *
+     * @return Attribute
+     */
+    public function ratingColor(): Attribute
+    {
+        $avg = $this->averageRating;
+
+        if ($avg === 'Ø') {
+            $color = 'text-gray-400';
+        } elseif ($avg < 30) {
+            $color = 'text-red-400';
+        } elseif ($avg < 60) {
+            $color = 'text-yellow-400';
+        } else {
+            $color = 'text-green-400';
+        }
+
+        return Attribute::make(
+            get: fn() => $color,
+        );
     }
 }
