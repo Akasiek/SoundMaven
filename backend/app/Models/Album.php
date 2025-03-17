@@ -131,7 +131,7 @@ class Album extends AbstractModel implements HasMedia
             $color = 'text-gray-400';
         } elseif ($avg < 30) {
             $color = 'text-red-400';
-        } elseif ($avg < 60) {
+        } elseif ($avg < 70) {
             $color = 'text-yellow-400';
         } else {
             $color = 'text-green-400';
