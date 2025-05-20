@@ -28,7 +28,3 @@ const links = [
         </div>
     </nav>
 </template>
-
-<style scoped>
-
-</style>
