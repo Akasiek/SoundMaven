@@ -19,9 +19,16 @@ class TrackResource extends JsonResource
             'length' => $this->length,
             'length_in_minutes' => $this->length_in_minutes,
             'order' => $this->order,
-            'album' => new AlbumResource($this->whenLoaded('album')),
+
+            'album' => AlbumResource::make($this->whenLoaded('album')),
+
+            'creator' => UserResource::make($this->whenLoaded('creator')),
+            'updater' => UserResource::make($this->whenLoaded('updater')),
+
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ];
     }
 }

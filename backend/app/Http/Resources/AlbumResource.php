@@ -20,11 +20,20 @@ class AlbumResource extends JsonResource
             'release_date' => $this->release_date,
             'type' => $this->type,
             'cover_image' => $this->cover_image,
+            'average_rating' => $this->average_rating,
+            'rating_color' => $this->rating_color,
+
             'artist' => ArtistResource::make($this->whenLoaded('artist')),
             'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
             'genres' => GenreResource::collection($this->whenLoaded('genres')),
+
+            'creator' => UserResource::make($this->whenLoaded('creator')),
+            'updater' => UserResource::make($this->whenLoaded('updater')),
+
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'created_by' => $this->created_by,
+            'updated_by' => $this->updated_by,
         ];
     }
 }
