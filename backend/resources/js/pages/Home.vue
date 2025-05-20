@@ -17,7 +17,7 @@ defineProps<Props>();
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-4 gap-x-5 gap-y-10 pt-10">
                 <template v-for="album in albums.data" :key="album.id">
-                    <AlbumCard :album :showArtist="true"/>
+                    <AlbumCard :album/>
                 </template>
             </div>
         </div>

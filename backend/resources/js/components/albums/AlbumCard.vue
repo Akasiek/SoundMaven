@@ -1,7 +1,8 @@
 <script setup lang="ts">
 defineProps<{
     album: ExtendedAlbum;
-    showArtist: boolean;
+    showArtist?: boolean;
+    showDate?: boolean;
 }>();
 </script>
 
@@ -19,16 +20,16 @@ defineProps<{
     </div>
 
     <div
-      class="grid grid-cols-[1fr_auto] px-3 mt-4 py-2 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition duration-300 ease-in-out">
+      class="grid grid-cols-[1fr_auto] px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition duration-300 ease-in-out">
       <div class="space-y-1">
         <h2 class="text-lg font-bold">{{ album.title }}</h2>
-        <h3 v-if="showArtist" class="text-base">{{ album.artist.name }}</h3>
-        <p class="text-sm font-sans text-zinc-400">
+        <h3 v-show="showArtist || true" class="text-base">{{ album.artist.name }}</h3>
+        <p class="text-sm font-sans text-zinc-400" v-show="showDate || false">
           {{ new Date(album.release_date).toLocaleDateString() }}
         </p>
       </div>
 
-      <div :class="`px-4 py-2 text-3xl font-black flex justify-center leading-none ${album.rating_color}`">
+      <div :class="`px-4 py-3 text-3xl font-black flex justify-center leading-none ${album.rating_color}`">
         {{ album.average_rating }}
       </div>
     </div>
