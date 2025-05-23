@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
+import { Head, useForm } from '@inertiajs/vue3';
+import { LoaderCircle } from 'lucide-vue-next';
 import IslandLayout from "@/layouts/IslandLayout.vue";
-import { useForm } from '@inertiajs/vue3';
 import { Input } from "@/components/shadcn/ui/input";
 import InputError from "@/components/inputs/InputError.vue";
 import TextLink from "@/components/TextLink.vue";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
-import { LoaderCircle } from 'lucide-vue-next';
 import { Button } from "@/components/shadcn/ui/button";
 
 import Symbol from "@/assets/symbol.svg"
@@ -27,6 +27,8 @@ const submit = () => {
 </script>
 
 <template>
+    <Head title="Login" />
+
     <div class="flex justify-between items-center mb-8">
 
         <h1 class="text-3xl font-bold">
