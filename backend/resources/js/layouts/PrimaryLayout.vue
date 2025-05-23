@@ -9,7 +9,7 @@ import { Head } from "@inertiajs/vue3";
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
         <link rel="apple-touch-icon" href="/favicon.png">
     </Head>
-    <div class="font-serif bg-zinc-900 text-zinc-100 min-h-screen">
+    <div class="dark font-serif bg-zinc-900 text-zinc-100 min-h-screen">
         <slot/>
     </div>
 </template>
