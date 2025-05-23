@@ -45,7 +45,6 @@ const submit = () => {
                 <Input
                     id="email"
                     type="email"
-                    class="border-zinc-600"
                     required
                     autofocus
                     :tabindex="1"
@@ -67,7 +66,6 @@ const submit = () => {
                 <Input
                     id="password"
                     type="password"
-                    class="border-zinc-600"
                     required
                     :tabindex="2"
                     autocomplete="current-password"
@@ -79,7 +77,7 @@ const submit = () => {
 
             <div class="flex items-center justify-between">
                 <Label for="remember" class="flex items-center space-x-3">
-                    <Checkbox id="remember" v-model="form.remember" :tabindex="3" class="border-zinc-600 border-2"/>
+                    <Checkbox id="remember" v-model="form.remember" :tabindex="3"/>
                     <span class="mb-0.5">Remember me</span>
                 </Label>
             </div>
