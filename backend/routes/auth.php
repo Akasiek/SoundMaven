@@ -1,17 +1,26 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Auth\{EmailVerificationController, LoginController, RegisterController, ResetPasswordController};
 
-Route::controller(AuthController::class)->group(function () {
-    Route::middleware('guest')->group(function () {
-        Route::get('register', 'displayRegister')->name('register');
-        Route::post('register', 'register');
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisterController::class, 'displayRegisterForm'])->name('register');
+    Route::post('register', [RegisterController::class, 'register'])->name('register.request');
 
-        Route::get('login', 'displayLogin')->name('login');
-        Route::post('login', 'login');
+    Route::get('login', [LoginController::class, 'displayLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('login.request');
+
+    Route::controller(ResetPasswordController::class)->group(function () {
+        Route::get('forgot-password', 'displayForgotPasswordForm')->name('forgot-password');
+        Route::post('forgot-password', 'forgotPassword')->name('forgot-password.request');
+        Route::get('reset-password/{token}', 'displayResetPasswordForm')->name('reset-password');
+        Route::post('reset-password', 'resetPassword')->name('reset-password.request');
     });
+});
 
-    Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
+    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+    Route::controller(EmailVerificationController::class)->group(function () {
         Route::get('/email/verify', 'displayVerificationEmailPrompt')
             ->name('verification.notice');
         Route::get('/email/verify/{id}/{hash}', 'verifyEmail')
@@ -22,10 +31,3 @@ Route::controller(AuthController::class)->group(function () {
             ->name('verification.send');
     });
 });
-
-Route::get('/profile', function () {
-    // Only verified users may access this route...
-    return Inertia\Inertia::render('profile/Index', [
-        'user' => auth()->user(),
-    ]);
-})->middleware(['auth', 'verified']);
