@@ -1,10 +1,20 @@
 <script setup lang="ts">
 
+import { Link, usePage } from '@inertiajs/vue3'
+import { SharedData, User } from "@/types";
+import NavAvatar from "@/components/NavAvatar.vue";
+
+
 const links = [
     { name: 'Home', url: '/' },
     { name: 'Artists', url: '/artists' },
     { name: 'Contact', url: '/contact' },
 ];
+
+const page = usePage<SharedData>();
+const user = page.props.auth.user as User;
+
+
 </script>
 
 <template>
@@ -15,15 +25,24 @@ const links = [
                 <img src="/images/logo.svg" alt="Logo">
             </a>
 
-            <div class="flex gap-x-5">
-                <a
+            <div class="flex items-center gap-x-5">
+                <Link
                     v-for="link in links"
                     :key="link.name"
                     :href="link.url"
-                    class="font-bold text-zinc-100 hover:text-zinc-300 hover:underline"
+                    class="font-bold hover:text-zinc-300 hover:underline"
                 >
                     {{ link.name }}
-                </a>
+                </Link>
+
+                <hr class="border-l border-zinc-600 h-6">
+
+                <NavAvatar v-if="user" :user="user"/>
+                <div v-else>
+                    <Link :href="route('login')" class="font-bold hover:text-zinc-300 hover:underline">
+                        Log In
+                    </Link>
+                </div>
             </div>
         </div>
     </nav>
