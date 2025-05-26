@@ -8,7 +8,6 @@ import InputError from "@/components/inputs/InputError.vue";
 import TextLink from "@/components/TextLink.vue";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Button } from "@/components/shadcn/ui/button";
-
 import Symbol from "@/assets/symbol.svg"
 
 defineOptions({layout: null});
@@ -58,7 +57,7 @@ const submit = () => {
                 <div class="grid gap-2">
                     <div class="flex items-center justify-between">
                         <Label for="password">Password</Label>
-                         <TextLink :href="route('forgot-password')" class="text-sm text-zinc-400" :tabindex="5">
+                         <TextLink :href="route('password.request')" class="text-sm text-zinc-400" :tabindex="5">
                              Forgot password?
                          </TextLink>
                     </div>

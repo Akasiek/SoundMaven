@@ -7,6 +7,8 @@ import { Input } from '@/components/shadcn/ui/input';
 import { Label } from '@/components/shadcn/ui/label';
 import InputError from "@/components/inputs/InputError.vue";
 
+defineOptions({layout: null});
+
 interface Props {
     token: string;
     email: string;
@@ -22,7 +24,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('reset-password.request'), {
+    form.post(route('password.store'), {
         onFinish: () => {
             form.reset('password', 'password_confirmation');
         },
