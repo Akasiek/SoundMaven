@@ -23,7 +23,7 @@ defineProps<{
             class="grid grid-cols-[1fr_auto] px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition duration-300 ease-in-out">
             <div class="space-y-1">
                 <h2 class="text-lg font-bold">{{ album.title }}</h2>
-                <a v-show="showArtist || true" :href="`/artist/${album.artist.slug}`" class="hover:underline">
+                <a v-show="showArtist || true" :href="route('artists.show', album.artist.slug)" class="hover:underline">
                     <h3 class="text-base">{{ album.artist.name }}</h3>
                 </a>
                 <p class="text-sm font-sans text-zinc-400" v-show="showDate || false">

@@ -31,11 +31,15 @@ class ArtistController extends Controller
         );
     }
 
-    public function show(string $param): ArtistResource
+    public function show(string $param): \Inertia\Response
     {
-        $artist = Artist::whereSlugOrId($param)->firstOrFail();
+        $artist = Artist::whereSlugOrId($param)
+            ->with(['albums'])
+            ->firstOrFail();
 
-        return new ArtistResource($artist->loadMissing('albums'));
+        return inertia('artist/Show', [
+            'artist' => new ArtistResource($artist),
+        ]);
     }
 
     public function store(StoreArtistRequest $request): ArtistResource
