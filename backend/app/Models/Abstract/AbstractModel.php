@@ -3,6 +3,7 @@
 namespace App\Models\Abstract;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractModel extends Model
@@ -11,7 +12,7 @@ abstract class AbstractModel extends Model
 
     protected $perPage = 25;
 
-    public static function whereSlugOrId(string $param)
+    public static function whereSlugOrId(string $param): Builder
     {
         return static::where(uuid_is_valid($param) ? 'id' : 'slug', $param);
     }
