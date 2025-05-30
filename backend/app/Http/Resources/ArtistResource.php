@@ -19,6 +19,7 @@ class ArtistResource extends JsonResource
             'description' => $this->description,
             'type' => $this->type,
             'background_image' => $this->background_image,
+            'background_image_preview' => $this->background_image_preview,
 
             'albums' => AlbumResource::collection($this->whenLoaded('albums')),
 
