@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import AlbumList from "@/components/albums/AlbumList.vue";
 
-
-defineProps<{ artist: { data: Artist } }>();
+defineProps<{ artist: { data: ExtendedArtist } }>();
 </script>
 
 <template>
@@ -19,8 +19,8 @@ defineProps<{ artist: { data: Artist } }>();
       </div>
     </section>
 
-    <section class="my-12">
-      <!-- <AlbumList :albums="artist.data.albums" :show-artist="false" /> -->
+    <section class="pt-24 pb-12">
+       <AlbumList :albums="artist.data.albums" :show-artist="false" :show-date="true"/>
     </section>
   </main>
 
