@@ -6,7 +6,7 @@ import NavAvatar from "@/components/NavAvatar.vue";
 
 
 const links = [
-    { name: 'Home', url: '/' },
+    { name: 'Home', url: route('home') },
     { name: 'Artists', url: route('artists.list') },
     { name: 'Contact', url: '/contact' },
 ];
