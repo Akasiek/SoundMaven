@@ -9,7 +9,7 @@ Route::controller(HomeController::class)->group(function () {
 });
 
 Route::controller(ArtistController::class)->prefix('artists')->group(function() {
-    // Route::get('/artists', 'index')->name('artists.index');
+    Route::get('/', 'index')->name('artists.list');
     Route::get('/{param}', 'show')->name('artists.show');
 });
 
