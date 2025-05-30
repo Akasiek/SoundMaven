@@ -21,7 +21,7 @@ class ArtistController extends Controller
     public function index(): \Inertia\Response
     {
         return inertia('artist/List', ['artists' => ArtistResource::collection(
-            Artist::with(['albums'])->paginate(request('perPage', 10))
+            Artist::with(['albums'])->paginate(request('perPage', 24))
         )]);
     }
 
