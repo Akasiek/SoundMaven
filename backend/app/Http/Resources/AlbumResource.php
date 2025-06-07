@@ -20,6 +20,7 @@ class AlbumResource extends JsonResource
             'release_date' => $this->release_date,
             'type' => $this->type,
             'cover_image' => $this->cover_image,
+            'cover_image_preview' => $this->cover_image_preview,
             'average_rating' => $this->average_rating,
             'rating_color' => $this->rating_color,
 

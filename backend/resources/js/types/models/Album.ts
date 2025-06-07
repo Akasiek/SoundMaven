@@ -6,6 +6,7 @@ interface Album {
     release_date: string;
     type: string;
     cover_image: string;
+    cover_image_preview: string;
     average_rating: number;
     rating_color: string;
 

@@ -52,6 +52,14 @@ class Album extends AbstractModel implements HasMedia
             ->quality(90)
             ->format('webp')
             ->nonQueued();
+
+        $this
+            ->addMediaConversion('preview')
+            ->width(500)
+            ->height(500)
+            ->quality(80)
+            ->format('webp')
+            ->nonQueued();
     }
 
     public function registerMediaCollections(): void
@@ -80,6 +88,13 @@ class Album extends AbstractModel implements HasMedia
     {
         return Attribute::make(
             get: fn() => $this->getFirstMediaUrl('album-covers', 'thumb'),
+        );
+    }
+
+    protected function coverImagePreview(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getFirstMediaUrl('album-covers', 'preview'),
         );
     }
 
