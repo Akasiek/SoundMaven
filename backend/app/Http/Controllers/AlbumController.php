@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
-use App\Http\Resources\Collections\AlbumCollection;
 use App\Http\Resources\Collections\AlbumReviewCollection;
 use App\Http\Resources\Collections\AlbumTagCollection;
 use App\Http\Resources\Collections\GenreCollection;
@@ -15,7 +14,7 @@ use App\Models\AlbumTag;
 use App\Models\Genre;
 use App\Services\AlbumService;
 use Illuminate\Http\Response;
-use Spatie\QueryBuilder\QueryBuilder;
+use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class AlbumController extends Controller
@@ -27,24 +26,27 @@ class AlbumController extends Controller
         $this->service = $service;
     }
 
-    public function index(): AlbumCollection
+    public function index(): \Inertia\Response
     {
-        return new AlbumCollection(
-            QueryBuilder::for(Album::class)
-                ->with(['artist'])
-                ->allowedIncludes(['tracks', 'genres'])
-                ->allowedFilters(['title', 'release_date', 'type', 'artist.name'])
-                ->allowedSorts(['title', 'release_date', 'type', 'artist.name'])
-                ->paginate(request('perPage'))
+        $albums = AlbumResource::collection(
+            Album::with(['artist'])
+                ->paginate(request('perPage', 24))
         );
+
+        return Inertia::render('album/List', [
+            'albums' => $albums,
+        ]);
+
     }
 
 
-    public function show(string $albumParam): AlbumResource
+    public function show(string $albumParam): \Inertia\Response
     {
-        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
+        $album = Album::whereSlugOrId($albumParam)->with(['artist', 'reviews', 'genres'])->firstOrFail();
 
-        return new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres']));
+        return Inertia::render('album/Show', [
+            'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])),
+        ]);
     }
 
     public function store(StoreAlbumRequest $request): AlbumResource
