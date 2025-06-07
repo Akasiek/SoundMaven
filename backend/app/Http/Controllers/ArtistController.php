@@ -25,9 +25,9 @@ class ArtistController extends Controller
         )]);
     }
 
-    public function show(string $param): \Inertia\Response
+    public function show(string $artistParam): \Inertia\Response
     {
-        $artist = Artist::whereSlugOrId($param)
+        $artist = Artist::whereSlugOrId($artistParam)
             ->with(['albums'])
             ->firstOrFail();
 

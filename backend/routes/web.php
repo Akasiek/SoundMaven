@@ -10,7 +10,7 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(ArtistController::class)->prefix('artists')->group(function() {
     Route::get('/', 'index')->name('artists.list');
-    Route::get('/{param}', 'show')->name('artists.show');
+    Route::get('/{artistParam}', 'show')->name('artists.show');
 });
 
 include __DIR__ . '/auth.php';
