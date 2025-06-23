@@ -20,7 +20,7 @@ const discs = album.tracks.reduce((acc, { disc, ...track }) => {
         <ol class="pl-5 list-decimal text-zinc-400 space-y-2 text-base">
           <li v-for="track in tracks" :key="track.id">
             <span class="text-zinc-50">{{ track.title }}</span>
-            <span v-if="track.length_in_minutes" class="text-zinc-400"> ({{ track.length_in_minutes }})</span>
+            <span v-if="track.length_formatted" class="text-zinc-400"> ({{ track.length_formatted }})</span>
           <hr class="border-zinc-700 mt-2 -ml-5">
           </li>
         </ol>

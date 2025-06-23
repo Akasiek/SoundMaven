@@ -44,7 +44,7 @@ class Track extends AbstractModel
         return $query->orderBy('order')->where('album_id', $albumId);
     }
 
-    public function lengthInMinutes(): Attribute
+    public function lengthFormatted(): Attribute
     {
         return Attribute::make(
             get: fn ($value, array $attributes) => (new SecondsToTime)($attributes['length'])

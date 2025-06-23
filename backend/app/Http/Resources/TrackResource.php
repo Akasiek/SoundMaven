@@ -17,7 +17,7 @@ class TrackResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'length' => $this->length,
-            'length_in_minutes' => $this->length_in_minutes,
+            'length_formatted' => $this->length_formatted,
             'order' => $this->order,
             'disc' => $this->disc,
 
