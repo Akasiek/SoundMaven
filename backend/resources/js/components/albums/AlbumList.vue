@@ -12,7 +12,3 @@ defineProps<{ albums: ExtendedAlbum[] | Album[], showArtist?: boolean, showDate?
     </div>
   </div>
 </template>
-
-<style scoped>
-
-</style>

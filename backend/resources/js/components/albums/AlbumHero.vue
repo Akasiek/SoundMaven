@@ -56,7 +56,3 @@ defineProps<{ album: ExtendedAlbum }>();
     </div>
   </section>
 </template>
-
-<style scoped>
-
-</style>
