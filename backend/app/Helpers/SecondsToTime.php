@@ -15,6 +15,11 @@ class SecondsToTime
             : $this->convertToTimeWithMinutes();
     }
 
+    public function convert(int $seconds): string
+    {
+        return $this->__invoke($seconds);
+    }
+
     private function convertToTimeWithHours(): string
     {
         $hours = $this->getHours();
