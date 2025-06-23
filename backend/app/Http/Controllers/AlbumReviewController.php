@@ -8,6 +8,7 @@ use App\Http\Resources\AlbumReviewResource;
 use App\Http\Resources\Collections\AlbumReviewCollection;
 use App\Models\AlbumReview;
 use App\Services\AlbumReviewService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -36,11 +37,12 @@ class AlbumReviewController extends Controller
         return new AlbumReviewResource($albumReview->loadMissing(['album', 'creator']));
     }
 
-    public function store(StoreAlbumReviewRequest $request): AlbumReviewResource
+    public function store(StoreAlbumReviewRequest $request): RedirectResponse
     {
-        return new AlbumReviewResource(
-            $this->service->create($request->validated())->loadMissing(['album', 'creator'])
-        );
+        $this->service->create($request->validated());
+
+        return redirect()->route('albums.show', $request->album_id)
+            ->with('success', 'Album review created successfully.');
     }
 
     public function update(UpdateAlbumReviewRequest $request, AlbumReview $albumReview): AlbumReviewResource

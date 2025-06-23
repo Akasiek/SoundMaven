@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlbumController;
+use App\Http\Controllers\AlbumReviewController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,10 @@ Route::controller(ArtistController::class)->prefix('artists')->group(function() 
 Route::controller(AlbumController::class)->prefix('albums')->group(function() {
     Route::get('/', 'index')->name('albums.list');
     Route::get('/{albumParam}', 'show')->name('albums.show');
+});
+
+Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function() {
+    Route::post('/', 'store')->name('album-reviews.store');
 });
 
 include __DIR__ . '/auth.php';

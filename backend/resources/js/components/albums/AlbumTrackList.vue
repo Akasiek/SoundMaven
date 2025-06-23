@@ -10,7 +10,7 @@ const discs = album.tracks.reduce((acc, { disc, ...track }) => {
 </script>
 
 <template>
-  <aside class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6 space-y-5" v-if="Object.keys(discs).length > 0">
+  <div class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6 space-y-5" v-if="Object.keys(discs).length > 0">
     <h2 class="text-2xl font-bold"> Tracks </h2>
     <div class="space-y-5">
       <div v-for="(tracks, discNumber) in discs" :key="discNumber" class="space-y-2">
@@ -27,5 +27,5 @@ const discs = album.tracks.reduce((acc, { disc, ...track }) => {
     <div class="text-zinc-400">
       Total length: <span class="font-bold text-zinc-50"> {{ album.total_length_formatted }} </span>
     </div>
-  </aside>
+  </div>
 </template>

@@ -23,7 +23,7 @@ class StoreAlbumReviewRequest extends FormRequest
     {
         return [
             'rating' => 'integer|min:1|max:100|required',
-            'body' => 'string|sometimes',
+            'body' => 'string|sometimes|nullable',
             'album_id' => [
                 'uuid',
                 'exists:albums,id',
@@ -32,6 +32,13 @@ class StoreAlbumReviewRequest extends FormRequest
                     ->where('created_by', Auth::id())
                     ->whereNull('deleted_at'),
             ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'album_id.unique' => 'You have already reviewed this album.',
         ];
     }
 }

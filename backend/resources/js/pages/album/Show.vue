@@ -2,6 +2,7 @@
 
 import AlbumHero from "@/components/albums/AlbumHero.vue";
 import AlbumTrackList from "@/components/albums/AlbumTrackList.vue";
+import AlbumUserReviewForm from "@/components/albums/AlbumUserReviewForm.vue";
 
 const props = defineProps<{ album: { data: ExtendedAlbum } }>();
 const album = props.album.data;
@@ -12,13 +13,13 @@ const album = props.album.data;
     <AlbumHero :album="album"/>
   </div>
 
-  <div class="grid grid-cols-[2fr_1fr] gap-12 container mx-auto mt-12">
+  <section class="grid grid-cols-[2fr_1fr] gap-12 container mx-auto mt-12">
+    <aside id="left-panel">
+      <AlbumUserReviewForm :album="album"/>
+    </aside>
 
-    <section class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6">
-
-    </section>
-
-    <AlbumTrackList :album="album"/>
-
-  </div>
+    <aside id="right-panel">
+      <AlbumTrackList :album="album"/>
+    </aside>
+  </section>
 </template>
