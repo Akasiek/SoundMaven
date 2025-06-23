@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\FileExtensionFromString;
+use App\Helpers\SecondsToTime;
 use App\Models\Abstract\AbstractModel;
 use Cocur\Slugify\Slugify;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -155,5 +156,14 @@ class Album extends AbstractModel implements HasMedia
         return Attribute::make(
             get: fn() => $color,
         );
+    }
+
+    public function totalLength(bool $inMinutes = false): Attribute
+    {
+        $totalLength = $this->tracks->sum('length');
+        return Attribute::make(
+            get: fn() =>  $inMinutes ? new SecondsToTime()->convert($totalLength) : $totalLength,
+        );
+
     }
 }
