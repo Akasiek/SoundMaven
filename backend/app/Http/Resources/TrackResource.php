@@ -19,6 +19,7 @@ class TrackResource extends JsonResource
             'length' => $this->length,
             'length_in_minutes' => $this->length_in_minutes,
             'order' => $this->order,
+            'disc' => $this->disc,
 
             'album' => AlbumResource::make($this->whenLoaded('album')),
 

@@ -30,6 +30,7 @@ class UpdateTrackRequest extends UpdateRequest
             'title' => 'string|max:255|required',
             'length' => 'integer|min:0|required',
             'order' => 'integer|min:0|required|unique:tracks,order,NULL,id,album_id,' . $this->album_id,
+            'disc' => 'integer|min:1|nullable',
             'album_id' => 'uuid|exists:albums,id|required',
         ];
 
