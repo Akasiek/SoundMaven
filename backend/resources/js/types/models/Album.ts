@@ -9,6 +9,8 @@ interface Album {
     cover_image_preview: string;
     average_rating: number;
     rating_color: string;
+    total_length: number;
+    total_length_in_minutes: string; // in "MM:SS" ("HH:MM:SS" if needed) format
 
     created_at: string;
     updated_at: string;

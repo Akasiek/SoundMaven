@@ -23,7 +23,8 @@ class AlbumResource extends JsonResource
             'cover_image_preview' => $this->cover_image_preview,
             'average_rating' => $this->average_rating,
             'rating_color' => $this->rating_color,
-            'full_length' => $this->whenLoaded('tracks') ? $this->tracks->sum('duration') : null,
+            'total_length' => $this->whenLoaded('tracks') ? $this->total_length : null,
+            'total_length_in_minutes' => $this->whenLoaded('tracks') ? $this->total_length_in_minutes : null,
 
             'artist' => ArtistResource::make($this->whenLoaded('artist')),
             'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
