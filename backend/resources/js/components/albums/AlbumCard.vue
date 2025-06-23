@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Link } from "@inertiajs/vue3";
+
 defineProps<{
   album: ExtendedAlbum | Album;
   showArtist?: boolean;
@@ -7,7 +9,7 @@ defineProps<{
 </script>
 
 <template>
-  <a :href="route('albums.show', album.slug)" class="block group transition duration-300 ease-in-out">
+  <Link :href="route('albums.show', album.slug)" class="block group transition duration-300 ease-in-out">
     <div
       class="w-full aspect-square overflow-hidden relative transition duration-300 ease-in-out border-2 rounded-md border-zinc-800 group-hover:border-zinc-600">
       <img v-if="album.cover_image" :src="album.cover_image" :alt="album.title" class="w-full h-full object-cover object-center"/>
@@ -24,13 +26,13 @@ defineProps<{
       <div class="space-y-1">
         <h2 class="sm:text-lg font-bold">{{ album.title }}</h2>
 
-        <a
+        <Link
           v-if="showArtist && 'artist' in album"
           :href="route('artists.show', (album as ExtendedAlbum).artist.slug)"
           class="hover:underline"
         >
           <h3 class="text-sm sm:text-base">{{ (album as ExtendedAlbum).artist.name }}</h3>
-        </a>
+        </Link>
         <p class="text-xs sm:text-sm font-sans text-zinc-400" v-show="showDate || false">
           {{ new Date(album.release_date).toLocaleDateString() }}
         </p>
@@ -41,5 +43,5 @@ defineProps<{
         {{ album.average_rating }}
       </div>
     </div>
-  </a>
+  </Link>
 </template>
