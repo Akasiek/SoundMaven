@@ -2,8 +2,8 @@ interface Track {
   id: string;
   title: string;
   slug: string;
-  length: number; // in seconds
-  length_in_minutes: number; // in minutes
+  length: number;
+  length_in_minutes: string; // in "MM:SS" ("HH:MM:SS" if needed) format
   order: number;
   disc: number;
 
