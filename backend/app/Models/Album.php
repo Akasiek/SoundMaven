@@ -165,16 +165,16 @@ class Album extends AbstractModel implements HasMedia
         );
     }
 
-    public function totalLengthInMinutes(): Attribute
+    public function totalLengthFormatted(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->getTotalLength(true),
         );
     }
 
-    private function getTotalLength(bool $inMinutes = false): mixed
+    private function getTotalLength(bool $formatted = false): mixed
     {
         $totalLength = $this->tracks->sum('length');
-        return $inMinutes ? new SecondsToTime()->convert($totalLength) : $totalLength;
+        return $formatted ? new SecondsToTime()->convert($totalLength) : $totalLength;
     }
 }

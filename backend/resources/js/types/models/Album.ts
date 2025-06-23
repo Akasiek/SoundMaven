@@ -10,7 +10,7 @@ interface Album {
     average_rating: number;
     rating_color: string;
     total_length: number;
-    total_length_in_minutes: string; // in "MM:SS" ("HH:MM:SS" if needed) format
+    total_length_formatted: string; // in "MM:SS" ("HH:MM:SS" if needed) format
 
     created_at: string;
     updated_at: string;
