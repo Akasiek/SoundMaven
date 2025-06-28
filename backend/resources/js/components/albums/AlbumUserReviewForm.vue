@@ -76,6 +76,9 @@ const submit = () => {
 
     </form>
   </div>
+  <div v-else class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6">
+    <Link :href="route('login')" class="underline">Log in</Link> to write a review.
+  </div>
 </template>
 
 <style scoped>
