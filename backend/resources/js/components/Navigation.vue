@@ -3,6 +3,7 @@
 import { Link, usePage } from '@inertiajs/vue3'
 import { SharedData, User } from "@/types";
 import NavAvatar from "@/components/NavAvatar.vue";
+import { ref, watch } from "vue";
 
 
 const links = [
@@ -12,8 +13,11 @@ const links = [
 ];
 
 const page = usePage<SharedData>();
-const user = page.props?.auth?.user as User | null;
+const user = ref<User | null>(page.props?.auth?.user ?? null);
 
+watch(() => page.props?.auth?.user, (newUser) => {
+  user.value = newUser ?? null;
+});
 
 </script>
 
