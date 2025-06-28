@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link, router } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import { LogOut } from 'lucide-vue-next';
 import type { User } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
@@ -12,10 +12,6 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu";
 
 defineProps<{ user: User; }>();
-
-const handleLogout = () => {
-  router.flushAll();
-};
 </script>
 
 <template>
@@ -30,7 +26,7 @@ const handleLogout = () => {
       <!-- TODO -->
       <DropdownMenuSeparator class="bg-zinc-700"/>
       <DropdownMenuItem :as-child="true">
-        <Link class="block w-full" method="post" :href="route('logout')" @click="handleLogout" as="button">
+        <Link class="block w-full" method="post" :href="route('logout')" as="button">
           <LogOut class="mr-2 h-4 w-4 text-zinc-50"/>
           Log out
         </Link>

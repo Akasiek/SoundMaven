@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { useForm, usePage } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { Button } from "@/components/shadcn/ui/button";
-import { SharedData, User } from "@/types";
 import { Textarea } from "@/components/shadcn/ui/textarea";
 import { Input } from "@/components/shadcn/ui/input";
 import InputError from "@/components/inputs/InputError.vue";
 import { LoaderCircle } from "lucide-vue-next";
 import { useRoute } from "ziggy-js";
+import { useAuthUser } from "@/composables/useAuthUser";
+import { SharedData } from "@/types";
 
 const route = useRoute();
 const page = usePage<SharedData>();
-const user = page.props?.auth?.user as User | null;
+
+const user = useAuthUser();
 const { album } = defineProps<{ album: ExtendedAlbum }>();
 
 const form = useForm({
@@ -27,7 +29,7 @@ const submit = () => {
 </script>
 
 <template>
-  <div id="user-review" class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6" v-show="user">
+  <div id="user-review" class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6" v-if="user">
     <h2 class="text-2xl font-bold mb-4">Your Review</h2>
 
     <form @submit.prevent="submit" class="space-y-5">

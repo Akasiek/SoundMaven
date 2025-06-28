@@ -1,9 +1,8 @@
 <script setup lang="ts">
 
-import { Link, usePage } from '@inertiajs/vue3'
-import { SharedData, User } from "@/types";
+import { Link } from '@inertiajs/vue3'
 import NavAvatar from "@/components/NavAvatar.vue";
-import { ref, watch } from "vue";
+import { useAuthUser } from "@/composables/useAuthUser";
 
 
 const links = [
@@ -12,12 +11,7 @@ const links = [
   { name: 'Contact', url: '/contact' },
 ];
 
-const page = usePage<SharedData>();
-const user = ref<User | null>(page.props?.auth?.user ?? null);
-
-watch(() => page.props?.auth?.user, (newUser) => {
-  user.value = newUser ?? null;
-});
+const user = useAuthUser();
 
 </script>
 
