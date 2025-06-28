@@ -13,7 +13,7 @@ const album = props.album.data;
     <AlbumHero :album="album"/>
   </div>
 
-  <section class="grid grid-cols-[2fr_1fr] gap-12 container mx-auto mt-12">
+  <section class="grid grid-cols-[2fr_1fr] gap-8 container mx-auto mt-8">
     <aside id="left-panel">
       <AlbumUserReviewForm :album="album"/>
     </aside>
