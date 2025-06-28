@@ -13,9 +13,15 @@ class LoginController
 {
     public function displayLoginForm(Request $request): Response
     {
-        return Inertia::render('auth/Login', [
-            'status' => $request->session()->get('status'),
-        ]);
+        $lastVisitedPage = parse_url(url()->previous('/'), PHP_URL_HOST) === request()->getHost()
+            ? url()->previous('/')
+            : '/';
+
+        if ($request->session()->has('url.intended')) {
+            $request->session()->put('url.intended', $lastVisitedPage);
+        }
+
+        return Inertia::render('auth/Login', ['status' => $request->session()->get('status')]);
     }
 
     public function login(LoginRequest $request): RedirectResponse
@@ -24,7 +30,7 @@ class LoginController
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home', absolute: false));
+        return redirect()->intended();
     }
 
     public function logout(Request $request): RedirectResponse
