@@ -1,6 +1,7 @@
 interface Artist {
   id: string; // UUID
   name: string;
+  original_name: string;
   slug: string;
   description: string;
   type: string;

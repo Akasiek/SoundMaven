@@ -85,6 +85,14 @@ class Artist extends AbstractModel implements HasMedia
         );
     }
 
+    public function cleanName(): Attribute
+    {
+        // If &nbsp; is present, replace it with a non-breaking space
+        return Attribute::make(
+            get: fn() => str_replace('&nbsp;', ' ', $this->attributes['name']),
+        );
+    }
+
     public function albums(): HasMany
     {
         return $this->hasMany(Album::class);

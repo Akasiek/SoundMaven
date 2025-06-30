@@ -14,7 +14,8 @@ class ArtistResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'name' => $this->clean_name,
+            'original_name' => $this->name,
             'slug' => $this->slug,
             'description' => $this->description,
             'type' => $this->type,
