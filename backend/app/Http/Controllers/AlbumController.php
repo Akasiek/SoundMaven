@@ -42,10 +42,13 @@ class AlbumController extends Controller
 
     public function show(string $albumParam): \Inertia\Response
     {
+        /** @var Album $album */
         $album = Album::whereSlugOrId($albumParam)->with(['artist', 'reviews', 'genres'])->firstOrFail();
+        $currentUserReview = $album->reviews()->where('created_by', auth()->id())->first();
 
         return Inertia::render('album/Show', [
             'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])),
+            'currentUserReview' => $currentUserReview ?: null,
         ]);
     }
 
