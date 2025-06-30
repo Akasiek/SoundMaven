@@ -5,7 +5,6 @@ namespace App\Http\Requests\Store;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
 
 class StoreAlbumReviewRequest extends FormRequest
 {
@@ -28,10 +27,9 @@ class StoreAlbumReviewRequest extends FormRequest
                 'uuid',
                 'exists:albums,id',
                 'required',
-                Rule::unique('album_reviews', 'album_id')
-                    ->where('created_by', Auth::id())
-                    ->whereNull('deleted_at'),
             ],
+            // User cannot review the same album more than once
+            // It is handled by the AlbumReviewService
         ];
     }
 
