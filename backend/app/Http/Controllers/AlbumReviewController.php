@@ -41,7 +41,7 @@ class AlbumReviewController extends Controller
     {
         $this->service->create($request->validated());
 
-        return redirect()->route('albums.show', $request->album_id)
+        return redirect()->back()
             ->with('success', 'Album review created successfully.');
     }
 
