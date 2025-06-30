@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
+import { getNonBreakingSpaces } from "@/composables/getNonBreakingSpaces";
 
 defineProps<{
   album: ExtendedAlbum | Album;
@@ -33,7 +34,7 @@ defineProps<{
           :href="route('artists.show', (album as ExtendedAlbum).artist.slug)"
           class="hover:underline line-clamp-2"
         >
-          <h3 class="text-sm sm:text-base">{{ (album as ExtendedAlbum).artist.name }}</h3>
+          <h3 class="text-sm sm:text-base">{{ getNonBreakingSpaces((album as ExtendedAlbum).artist.original_name) }}</h3>
         </Link>
         <p class="text-xs sm:text-sm font-sans text-zinc-400" v-show="showDate || false">
           {{ new Date(album.release_date).toLocaleDateString() }}

@@ -1,5 +1,9 @@
 <script setup lang="ts">
-defineProps<{ artist: Artist }>()
+import { getNonBreakingSpacesAsRef } from "@/composables/getNonBreakingSpaces";
+
+const { artist } = defineProps<{ artist: Artist }>()
+
+const name = getNonBreakingSpacesAsRef(artist.original_name);
 </script>
 
 <template>
@@ -13,8 +17,8 @@ defineProps<{ artist: Artist }>()
     </div>
 
     <div class="absolute inset-x-0 bottom-10 mx-16">
-      <h1 class="text-6xl font-black text-white mb-12">
-        {{ artist.name }}
+      <h1 class="text-6xl font-black text-white mb-12 max-w-3xl">
+        {{ name }}
       </h1>
     </div>
   </section>
