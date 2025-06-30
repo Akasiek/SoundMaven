@@ -22,14 +22,16 @@ defineProps<{
     </div>
 
     <div
-      class="grid grid-cols-[1fr_auto] px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition duration-300 ease-in-out">
-      <div class="space-y-1">
-        <h2 class="sm:text-lg font-bold">{{ album.title }}</h2>
+      class="grid grid-cols-[1fr_auto] gap-x-2.5 px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition duration-300 ease-in-out">
+      <div class="space-y-1 w-full">
+        <h2 class="sm:text-lg font-bold line-clamp-2" :title="album.title">
+          {{ album.title }}
+        </h2>
 
         <Link
           v-if="showArtist && 'artist' in album"
           :href="route('artists.show', (album as ExtendedAlbum).artist.slug)"
-          class="hover:underline"
+          class="hover:underline line-clamp-2"
         >
           <h3 class="text-sm sm:text-base">{{ (album as ExtendedAlbum).artist.name }}</h3>
         </Link>
@@ -39,7 +41,7 @@ defineProps<{
 
       </div>
 
-      <div :class="`px-4 py-3 text-xl sm:text-2xl md:text-3xl font-black flex justify-center leading-none ${album.rating_color}`">
+      <div :class="`pr-2 py-2.5 text-xl sm:text-2xl md:text-[28px] font-black flex justify-center leading-none ${album.rating_color}`">
         {{ album.average_rating }}
       </div>
     </div>
