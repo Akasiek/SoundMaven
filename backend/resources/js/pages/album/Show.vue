@@ -12,7 +12,7 @@ const props = defineProps<{ album: { data: ExtendedAlbum }, currentUserReview: n
     <AlbumHero :album="props.album.data"/>
   </div>
 
-  <section class="grid grid-cols-[2fr_1fr] gap-8 container mx-auto mt-8">
+  <section class="grid grid-cols-[2fr_1fr] gap-8 container mx-auto mt-8 mb-16">
     <aside id="left-panel">
       <AlbumUserReviewForm :album="props.album.data" :currentUserReview="props.currentUserReview"/>
     </aside>
