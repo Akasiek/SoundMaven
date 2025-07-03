@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Album;
 use App\Models\AlbumReview;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,6 +23,7 @@ class AlbumReviewFactory extends Factory
             'rating' => fake()->numberBetween(1, 100),
             'body' => fake()->text(1024),
             'album_id' => Album::inRandomOrder()->first()?->id ?? Album::factory()->create()->id,
+            'created_by' => User::inRandomOrder()->first()?->id ?? User::factory()->create()->id,
         ];
     }
 }
