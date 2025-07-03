@@ -46,10 +46,14 @@ class AlbumController extends Controller
         /** @var Album $album */
         $album = Album::whereSlugOrId($albumParam)->firstOrFail();
         $currentUserReview = $album->reviews()->where('created_by', auth()->id())->first();
+        $latestRatings = $album->reviews()->whereNull('body')->with('creator')->orderBy('created_at', 'desc')->take(5)->get();
+        $latestReviews = $album->reviews()->whereNotNull('body')->with('creator')->orderBy('created_at', 'desc')->take(5)->get();
 
         return Inertia::render('album/Show', [
-            'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'reviews', 'genres'])),
+            'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])),
             'currentUserReview' => $currentUserReview ? new AlbumReviewResource($currentUserReview) : null,
+            'latestRatings' => AlbumReviewResource::collection($latestRatings),
+            'latestReviews' => AlbumReviewResource::collection($latestReviews),
         ]);
     }
 

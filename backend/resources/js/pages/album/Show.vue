@@ -5,7 +5,12 @@ import AlbumTrackList from "@/components/albums/Show/AlbumTrackList.vue";
 import AlbumUserReviewForm from "@/components/albums/Show/AlbumUserReviewForm.vue";
 import AlbumLatestRatings from "@/components/albums/Show/AlbumLatestRatings.vue";
 
-defineProps<{ album: { data: ExtendedAlbum }, currentUserReview: null | { data: AlbumReview } }>();
+defineProps<{
+  album: { data: ExtendedAlbum },
+  currentUserReview: null | { data: AlbumReview },
+  latestRatings: { data: ExtendedAlbumReview[] },
+  latestReviews: { data: ExtendedAlbumReview[] }
+}>();
 </script>
 
 <template>
