@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
+use App\Http\Resources\AlbumReviewResource;
 use App\Http\Resources\Collections\AlbumReviewCollection;
 use App\Http\Resources\Collections\AlbumTagCollection;
 use App\Http\Resources\Collections\GenreCollection;
@@ -48,7 +49,7 @@ class AlbumController extends Controller
 
         return Inertia::render('album/Show', [
             'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'reviews', 'genres'])),
-            'currentUserReview' => $currentUserReview ?: null,
+            'currentUserReview' => $currentUserReview ? new AlbumReviewResource($currentUserReview) : null,
         ]);
     }
 
