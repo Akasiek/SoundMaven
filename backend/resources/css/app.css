@@ -7,6 +7,10 @@
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
+@source inline('text-{red,yellow,green}-{400,500}');
+@source inline('border-{red,yellow,green}-{400,500}');
+@source inline('bg-{red,yellow,green}-{400,500}');
+
 @theme {
     --font-sans: "Inter", "sans-serif";
     --font-serif: "Literata", "serif";
