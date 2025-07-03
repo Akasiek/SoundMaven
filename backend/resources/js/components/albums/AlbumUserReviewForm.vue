@@ -42,7 +42,7 @@ const getRatingColor = (rating: string) => {
 
 <template>
   <div id="user-review" class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6" v-if="user">
-    <h2 class="text-2xl font-bold mb-4">Your Review</h2>
+    <h2 class="mb-4">Your Review</h2>
 
     <form @submit.prevent="submit" class="space-y-5">
       <div class="grid grid-cols-[1fr_auto] gap-5">

@@ -132,4 +132,16 @@
     body {
         @apply bg-background text-foreground;
     }
+
+    h1 {
+        @apply lg:text-3xl md:text-2xl sm:text-xl text-lg font-bold;
+    }
+
+    h2 {
+        @apply lg:text-2xl md:text-xl sm:text-lg text-base font-bold;
+    }
+
+    h3 {
+        @apply lg:text-xl md:text-lg sm:text-base text-sm font-bold;
+    }
 }
