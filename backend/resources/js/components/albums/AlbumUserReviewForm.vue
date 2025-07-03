@@ -8,6 +8,7 @@ import InputError from "@/components/inputs/InputError.vue";
 import { LoaderCircle } from "lucide-vue-next";
 import { useRoute } from "ziggy-js";
 import { useAuthUser } from "@/composables/useAuthUser";
+import { getRatingColor as getRatingColorName } from "@/composables/getRatingColor";
 import { SharedData } from "@/types";
 
 const route = useRoute();
@@ -31,13 +32,16 @@ const submit = () => {
   });
 };
 
-const getRatingColor = (rating: string) => {
-  if (rating === '' || Number.isNaN(rating)) return '!bg-transparent text-zinc-50';
-
-  if (parseInt(rating) < 30) return '!bg-red-400 text-zinc-900';
-  else if (parseInt(rating) < 70) return '!bg-yellow-400 text-zinc-900';
-  else return '!bg-green-400 text-zinc-900';
-};
+const getRatingColor = (rating: string | number) => {
+    const colors = {
+      red: '!bg-red-400 text-zinc-900',
+      yellow: '!bg-yellow-400 text-zinc-900',
+      green: '!bg-green-400 text-zinc-900',
+      zinc: '!bg-transparent text-zinc-50',
+      default: '!bg-transparent text-zinc-50',
+    };
+    return colors[getRatingColorName(rating)] || colors.default;
+  };
 </script>
 
 <template>
