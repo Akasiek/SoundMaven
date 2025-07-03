@@ -29,6 +29,7 @@ class AlbumResource extends JsonResource
             'artist' => ArtistResource::make($this->whenLoaded('artist')),
             'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
             'genres' => GenreResource::collection($this->whenLoaded('genres')),
+            'reviews' => AlbumReviewResource::collection($this->whenLoaded('reviews')),
 
             'creator' => UserResource::make($this->whenLoaded('creator')),
             'updater' => UserResource::make($this->whenLoaded('updater')),
