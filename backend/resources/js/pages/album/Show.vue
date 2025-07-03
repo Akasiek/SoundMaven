@@ -19,12 +19,13 @@ defineProps<{
   </div>
 
   <section class="grid grid-cols-[2fr_1fr] gap-8 container mx-auto mt-8 mb-16">
-    <aside id="left-panel">
+    <aside id="left-panel" class="space-y-8">
       <AlbumUserReviewForm :album="album.data" :currentUserReview="currentUserReview?.data || null"/>
     </aside>
 
-    <aside id="right-panel">
+    <aside id="right-panel" class="space-y-8">
       <AlbumTrackList :album="album.data"/>
+      <AlbumLatestRatings :latest-ratings="latestRatings.data"/>
     </aside>
   </section>
 </template>
