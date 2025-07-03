@@ -39,7 +39,10 @@ defineProps<{ album: ExtendedAlbum }>();
         </div>
 
         <div :class="`flex items-center justify-center mb-4 mt-2 text-6xl mr-5 font-black leading-none ${album.rating_color}`">
-          {{ album.average_rating }}
+          <div class="flex items-end">
+            {{ album.average_rating }}
+            <span class="ml-1 text-zinc-500 text-lg">/100</span>
+          </div>
         </div>
       </div>
 
