@@ -4,6 +4,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AlbumReviewController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function () {
@@ -22,6 +23,10 @@ Route::controller(AlbumController::class)->prefix('albums')->group(function() {
 
 Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function() {
     Route::post('/', 'store')->name('album-reviews.store');
+});
+
+Route::controller(UserController::class)->prefix('users')->group(function() {
+    Route::get('/{user:slug}', 'show')->name('users.show');
 });
 
 include __DIR__ . '/auth.php';
