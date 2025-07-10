@@ -37,14 +37,10 @@ class AlbumController extends Controller
         return Inertia::render('album/List', [
             'albums' => $albums,
         ]);
-
     }
 
-
-    public function show(string $albumParam): \Inertia\Response
+    public function show(Album $album): \Inertia\Response
     {
-        /** @var Album $album */
-        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
         $currentUserReview = $album->reviews()->where('created_by', auth()->id())->first();
         $latestRatings = $album->reviews()->whereNull('body')->with('creator')->orderBy('created_at', 'desc')->take(5)->get();
         $latestReviews = $album->reviews()->whereNotNull('body')->with('creator')->orderBy('created_at', 'desc')->take(5)->get();

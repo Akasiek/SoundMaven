@@ -25,14 +25,10 @@ class ArtistController extends Controller
         )]);
     }
 
-    public function show(string $artistParam): \Inertia\Response
+    public function show(Artist $artist): \Inertia\Response
     {
-        $artist = Artist::whereSlugOrId($artistParam)
-            ->with(['albums'])
-            ->firstOrFail();
-
         return inertia('artist/Show', [
-            'artist' => new ArtistResource($artist),
+            'artist' => new ArtistResource($artist->loadMissing(['albums'])),
         ]);
     }
 

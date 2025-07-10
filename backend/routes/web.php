@@ -12,12 +12,12 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(ArtistController::class)->prefix('artists')->group(function() {
     Route::get('/', 'index')->name('artists.list');
-    Route::get('/{artistParam}', 'show')->name('artists.show');
+    Route::get('/{artist:slug}', 'show')->name('artists.show');
 });
 
 Route::controller(AlbumController::class)->prefix('albums')->group(function() {
     Route::get('/', 'index')->name('albums.list');
-    Route::get('/{albumParam}', 'show')->name('albums.show');
+    Route::get('/{album:slug}', 'show')->name('albums.show');
 });
 
 Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function() {
