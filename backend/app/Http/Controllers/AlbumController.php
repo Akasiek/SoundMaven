@@ -42,8 +42,16 @@ class AlbumController extends Controller
     public function show(Album $album): \Inertia\Response
     {
         $currentUserReview = $album->reviews()->where('created_by', auth()->id())->first();
-        $latestRatings = $album->reviews()->whereNull('body')->with('creator')->orderBy('created_at', 'desc')->take(5)->get();
-        $latestReviews = $album->reviews()->whereNotNull('body')->with('creator')->orderBy('created_at', 'desc')->take(5)->get();
+        $latestRatings = $album->reviews()->with('creator')
+            ->whereNull('body')
+            ->whereNot('created_by', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->take(5)->get();
+        $latestReviews = $album->reviews()->with('creator')
+            ->whereNotNull('body')
+            ->whereNot('created_by', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->take(5)->get();
 
         return Inertia::render('album/Show', [
             'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])),
