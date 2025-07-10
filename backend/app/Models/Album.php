@@ -39,7 +39,7 @@ class Album extends AbstractModel implements HasMedia
         return ['slug' => [
             'source' => 'title',
             'method' => static function (string $string, string $separator): string {
-                return (new Slugify(['separator' => $separator]))->slugify($string) ?: 'untitled';
+                return new Slugify(['separator' => $separator])->slugify($string) ?: 'untitled';
             }
         ]];
     }
