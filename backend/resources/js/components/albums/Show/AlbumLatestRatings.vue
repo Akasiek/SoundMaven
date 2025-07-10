@@ -7,7 +7,7 @@ defineProps<{ latestRatings: ExtendedAlbumReview[] }>();
 </script>
 
 <template>
-  <div id="users-ratings" class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6">
+  <div id="users-ratings" class="bg-zinc-850 border-2 border-zinc-800 shadow-xl rounded-lg p-6" v-if="latestRatings.length > 0">
     <h2 class="mb-4">Latest ratings</h2>
     <ul class="space-y-3">
       <li v-for="(rating, index) in latestRatings" :key="rating.id">
