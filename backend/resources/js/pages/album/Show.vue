@@ -4,6 +4,7 @@ import AlbumHero from "@/components/albums/AlbumHero.vue";
 import AlbumTrackList from "@/components/albums/Show/AlbumTrackList.vue";
 import AlbumUserReviewForm from "@/components/albums/Show/AlbumUserReviewForm.vue";
 import AlbumLatestRatings from "@/components/albums/Show/AlbumLatestRatings.vue";
+import AlbumLatestReviews from "@/components/albums/Show/AlbumLatestReviews.vue";
 
 defineProps<{
   album: { data: ExtendedAlbum },
@@ -21,6 +22,7 @@ defineProps<{
   <section class="grid grid-cols-[2fr_1fr] gap-8 container mx-auto mt-8 mb-16">
     <aside id="left-panel" class="space-y-8">
       <AlbumUserReviewForm :album="album.data" :currentUserReview="currentUserReview?.data || null"/>
+      <AlbumLatestReviews :latest-reviews="latestReviews.data"/>
     </aside>
 
     <aside id="right-panel" class="space-y-8">
