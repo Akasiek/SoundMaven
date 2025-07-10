@@ -21,7 +21,7 @@ class AlbumReviewFactory extends Factory
     {
         return [
             'rating' => fake()->numberBetween(1, 100),
-            'body' => fake()->text(1024),
+            'body' => $this->faker->boolean() ? fake()->paragraphs(rand(1, 6), true) : null,
             'album_id' => Album::inRandomOrder()->first()?->id ?? Album::factory()->create()->id,
             'created_by' => User::inRandomOrder()->first()?->id ?? User::factory()->create()->id,
         ];
