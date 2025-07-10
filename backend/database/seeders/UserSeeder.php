@@ -19,8 +19,8 @@ class UserSeeder extends Seeder
             return;
         }
 
-        $email = env('ADMIN_EMAIL');
-        $password = env('ADMIN_PASSWORD');
+        $email = config('app.admin.email');
+        $password = config('app.admin.password');
 
         if (empty($email) || empty($password)) {
             throw new Exception('Admin credentials not set in .env file or application is cached');
