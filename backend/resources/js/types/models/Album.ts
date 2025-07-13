@@ -23,4 +23,5 @@ interface ExtendedAlbum extends Album {
   tracks: Track[];
   genres: Genre[];
   reviews: AlbumReview[];
+  reviews_count: number;
 }

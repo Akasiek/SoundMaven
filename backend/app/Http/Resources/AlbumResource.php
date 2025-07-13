@@ -30,6 +30,7 @@ class AlbumResource extends JsonResource
             'tracks' => TrackResource::collection($this->whenLoaded('tracks')),
             'genres' => GenreResource::collection($this->whenLoaded('genres')),
             'reviews' => AlbumReviewResource::collection($this->whenLoaded('reviews')),
+            'reviews_count' => $this->whenLoaded('reviews') ? $this->reviews_count : null,
 
             'creator' => UserResource::make($this->whenLoaded('creator')),
             'updater' => UserResource::make($this->whenLoaded('updater')),
