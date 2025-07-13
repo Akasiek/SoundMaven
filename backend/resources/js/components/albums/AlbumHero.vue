@@ -7,7 +7,7 @@ defineProps<{ album: ExtendedAlbum }>();
 </script>
 
 <template>
-  <DefaultSection>
+  <DefaultSection class="flex gap-10">
     <div class="xl:h-120 xl:w-120 h-96 w-96 aspect-square object-center object-contain border-2 border-zinc-800 rounded-md overflow-hidden relative">
       <img v-if="album.cover_image_preview" :src="album.cover_image_preview" :alt="`${album.title} cover`"
            class="w-full h-full object-cover object-center">
