@@ -27,21 +27,34 @@ const submit = () => {
   form.post(route('album-reviews.store'), {
     preserveScroll: true,
     onSuccess: () => {
-      router.reload({ only: ['album'] });
+      router.reload();
     }
   });
 };
 
+const deleteReview = () => {
+  if (currentUserReview) {
+    form.delete(route('album-reviews.destroy', currentUserReview.id), {
+      preserveScroll: true,
+      onSuccess: () => {
+        form.defaults({ body: '', rating: '' });
+        form.reset('body', 'rating');
+        router.reload();
+      }
+    });
+  }
+};
+
 const getRatingColor = (rating: string | number) => {
-    const colors = {
-      red: '!bg-red-400 text-zinc-900',
-      yellow: '!bg-yellow-400 text-zinc-900',
-      green: '!bg-green-400 text-zinc-900',
-      zinc: '!bg-transparent text-zinc-50',
-      default: '!bg-transparent text-zinc-50',
-    };
-    return colors[getRatingColorName(rating)] || colors.default;
+  const colors = {
+    red: '!bg-red-400 text-zinc-900',
+    yellow: '!bg-yellow-400 text-zinc-900',
+    green: '!bg-green-400 text-zinc-900',
+    zinc: '!bg-transparent text-zinc-50',
+    default: '!bg-transparent text-zinc-50',
   };
+  return colors[getRatingColorName(rating)] || colors.default;
+};
 </script>
 
 <template>
@@ -83,12 +96,15 @@ const getRatingColor = (rating: string | number) => {
 
       <p v-if="page.props?.success" class="text-green-500"> {{ page.props.success }} </p>
 
-      </p>
-
-      <Button type="submit" :disabled="form.processing">
-        {{ `${currentUserReview ? "Update" : "Submit"} Review` }}
-        <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin"/>
-      </Button>
+      <div class="space-x-2">
+        <Button type="submit" :disabled="form.processing">
+          {{ `${currentUserReview ? "Update" : "Submit"}` }}
+          <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin"/>
+        </Button>
+        <Button type="button" variant="destructive" v-if="currentUserReview" @click="deleteReview" :disabled="form.processing" class="cursor-pointer">
+          Delete
+        </Button>
+      </div>
 
     </form>
   </div>

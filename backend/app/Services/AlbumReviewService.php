@@ -29,6 +29,10 @@ class AlbumReviewService
 
     public function delete(AlbumReview $model): bool
     {
+        if ($model->created_by !== auth()->id()) {
+            abort(403, 'You do not have permission to delete this review.');
+        }
+
         return $model->delete();
     }
 }

@@ -23,6 +23,7 @@ Route::controller(AlbumController::class)->prefix('albums')->group(function() {
 
 Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function() {
     Route::post('/', 'store')->name('album-reviews.store');
+    Route::delete('/{albumReview}', 'destroy')->name('album-reviews.destroy');
 });
 
 Route::controller(UserController::class)->prefix('users')->group(function() {
