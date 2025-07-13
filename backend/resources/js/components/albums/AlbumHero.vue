@@ -38,9 +38,9 @@ defineProps<{ album: ExtendedAlbum }>();
           <hr class="border-zinc-700 border h-full">
         </div>
 
-        <div :class="`flex items-center justify-center mb-4 mt-2 text-6xl mr-5 font-black leading-none ${album.rating_color}`">
+        <div class="flex items-center justify-center mb-4 mt-2 text-6xl mr-5 font-black leading-none">
           <div class="flex items-end">
-            {{ album.average_rating }}
+            <span :class="`${album.rating_color}`">{{ album.average_rating }}</span>
             <span class="ml-1 text-zinc-500 text-lg">/100</span>
           </div>
         </div>
