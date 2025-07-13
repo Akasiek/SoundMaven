@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\Update;
 
+use App\Enums\AlbumTypes;
 use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Validation\Rule;
 
 class UpdateAlbumRequest extends UpdateRequest
 {
@@ -26,7 +28,7 @@ class UpdateAlbumRequest extends UpdateRequest
             'title' => 'string|required|max:255',
             'description' => 'string|nullable',
             'release_date' => 'date|nullable',
-            'type' => 'string|nullable|in:LP,EP,Single,Compilation,Live,Soundtrack,Remix,Other',
+            'type' => ['string', 'nullable', Rule::in(AlbumTypes::class)],
             'artist_id' => 'uuid|exists:artists,id|required',
             'cover_image' => 'image|nullable|sometimes|max:5120',
         ];

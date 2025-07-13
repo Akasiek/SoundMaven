@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AlbumTypes;
 use App\Helpers\FileExtensionFromString;
 use App\Helpers\SecondsToTime;
 use App\Models\Abstract\AbstractModel;
@@ -32,6 +33,10 @@ class Album extends AbstractModel implements HasMedia
 
     protected $attributes = [
         'type' => 'LP',
+    ];
+
+    protected $casts = [
+        'type' => AlbumTypes::class,
     ];
 
     public function sluggable(): array
@@ -161,7 +166,7 @@ class Album extends AbstractModel implements HasMedia
     public function totalLength(): Attribute
     {
         return Attribute::make(
-            get: fn() =>  $this->getTotalLength(),
+            get: fn() => $this->getTotalLength(),
         );
     }
 
