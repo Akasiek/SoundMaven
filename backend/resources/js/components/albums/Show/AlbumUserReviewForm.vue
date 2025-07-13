@@ -81,8 +81,7 @@ const getRatingColor = (rating: string | number) => {
 
       <InputError :message="form.errors.album_id"/>
 
-      <p v-if="page.props?.success" class="text-green-500">
-        {{ page.props.success }}
+      <p v-if="page.props?.success" class="text-green-500"> {{ page.props.success }} </p>
 
       </p>
 
