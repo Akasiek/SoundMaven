@@ -7,6 +7,8 @@ use App\Http\Requests\Update\UpdateArtistRequest;
 use App\Http\Resources\ArtistResource;
 use App\Models\Artist;
 use App\Services\ArtistService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 class ArtistController extends Controller
@@ -53,5 +55,19 @@ class ArtistController extends Controller
         $this->service->delete($artist);
 
         return response()->noContent();
+    }
+
+    public function fetchRaw(Request $request): JsonResponse
+    {
+        $artists = Artist::query()
+            ->when($request->has('search'), function ($query) use ($request) {
+                $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->input('search')) . '%']);
+            })
+            ->paginate($request->input('perPage', 24));
+
+        return response()->json($artists->map(fn(Artist $artist) => [
+            'id' => $artist->id,
+            'name' => $artist->name,
+        ]));
     }
 }

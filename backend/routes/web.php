@@ -13,6 +13,7 @@ Route::controller(HomeController::class)->group(function () {
 
 Route::controller(ArtistController::class)->prefix('artists')->group(function() {
     Route::get('/', 'index')->name('artists.list');
+    Route::get('/fetch', 'fetchRaw')->name('artists.fetchRaw');
     Route::get('/{artist:slug}', 'show')->name('artists.show');
 });
 
