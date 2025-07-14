@@ -152,3 +152,96 @@
         @apply lg:text-xl md:text-lg sm:text-base text-sm font-bold;
     }
 }
+
+/*
+---
+Vue Select Styles
+---
+*/
+:root,
+:host {
+    /* Search Input */
+    --vs-search-input-color: inherit;
+    --vs-search-input-bg: rgb(255, 255, 255);
+    --vs-search-input-placeholder-color: inherit;
+
+    /* Font */
+    --vs-font-size: var(--text-sm);
+    --vs-line-height: var(--leading-normal);
+
+    /* Disabled State */
+    --vs-state-disabled-bg: rgb(248, 248, 248);
+    --vs-state-disabled-color: var(--vs-colors--light);
+    --vs-state-disabled-controls-color: var(--vs-colors--light);
+    --vs-state-disabled-cursor: not-allowed;
+
+    /* Borders */
+    --vs-border-color: var(--color-zinc-700);
+    --vs-border-width: 1px;
+    --vs-border-style: solid;
+    --vs-border-radius: var(--radius-md);
+
+    /* Actions: house the component controls */
+    --vs-actions-padding: 4px 6px 0 3px;
+
+    /* Component Controls: Clear, Open Indicator */
+    --vs-controls-color: var(--color-zinc-600);
+    --vs-controls-size: 0.75;
+    --vs-controls--deselect-text-shadow: 0 1px 0 #fff;
+
+    /* Selected */
+    --vs-selected-color: var(--color-zinc-50);
+    --vs-selected-border-color: var(--vs-border-color);
+    --vs-selected-border-style: var(--vs-border-style);
+    --vs-selected-border-width: var(--vs-border-width);
+
+    /* Dropdown */
+    --vs-dropdown-bg: var(--color-zinc-800);
+    --vs-dropdown-color: inherit;
+    --vs-dropdown-box-shadow: none;
+
+    /* Options */
+    --vs-dropdown-option-color: var(--color-zinc-50);
+    --vs-dropdown-option-padding: 0.4rem 0.65rem 0.5rem;
+
+    /* Active State */
+    --vs-dropdown-option--active-bg: var(--color-zinc-50);
+    --vs-dropdown-option--active-color: var(--color-zinc-900);
+}
+
+.v-select {
+    font-size: var(--text-sm) !important;
+    line-height: var(--vs-line-height);
+}
+
+.vs__dropdown-menu {
+    border-radius: var(--radius-md);
+    margin-top: 0.5rem;
+    padding: 0.25rem 0.25rem;
+}
+
+.vs--open .vs__dropdown-toggle {
+    border-bottom-color: var(--color-zinc-700);
+    border-bottom-left-radius: var(--radius-md);
+    border-bottom-right-radius: var(--radius-md);
+}
+
+.vs__dropdown-toggle {
+    background: var(--color-zinc-800);
+}
+
+.vs__selected {
+    margin: 4px 3px 0;
+}
+
+.vs__dropdown-option {
+    border-radius: var(--radius-md);
+}
+
+.vs__spinner {
+    font-size: 4px;
+    border-top-color: var(--color-zinc-700);
+    border-right-color: var(--color-zinc-500);
+    border-bottom-color: var(--color-zinc-700);
+    border-left-color: var(--color-zinc-500);
+}
