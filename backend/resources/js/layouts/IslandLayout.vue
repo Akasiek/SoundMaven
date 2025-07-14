@@ -10,7 +10,7 @@ const props = defineProps<{
 <template>
     <PrimaryLayout>
         <div class="w-full min-h-screen flex items-center justify-center">
-            <main :class="cn('bg-zinc-800 p-8 rounded-lg shadow-lg w-full border border-zinc-700',
+            <main :class="cn('bg-zinc-850 p-8 rounded-lg shadow-lg w-full border border-zinc-700',
                 'max-w-sm',
                 props.class)"
             >
