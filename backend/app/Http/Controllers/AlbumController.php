@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\AlbumTypes;
 use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Resources\AlbumResource;
@@ -14,6 +15,7 @@ use App\Models\Album;
 use App\Models\AlbumTag;
 use App\Models\Genre;
 use App\Services\AlbumService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
@@ -61,11 +63,19 @@ class AlbumController extends Controller
         ]);
     }
 
-    public function store(StoreAlbumRequest $request): AlbumResource
+    public function displayCreateForm(): \Inertia\Response
     {
-        return new AlbumResource(
-            $this->service->create($request->validated())->loadMissing(['artist', 'tracks', 'genres'])
-        );
+        return Inertia::render('album/Create', [
+            'types' => AlbumTypes::cases(),
+        ]);
+    }
+
+    public function store(StoreAlbumRequest $request): RedirectResponse
+    {
+        $album = $this->service->create($request->validated());
+
+        return redirect()->route('albums.show', $album->slug)
+            ->with('success', __('Album created successfully.'));
     }
 
     public function update(UpdateAlbumRequest $request, string $albumParam): AlbumResource

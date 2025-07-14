@@ -19,6 +19,10 @@ Route::controller(ArtistController::class)->prefix('artists')->group(function() 
 
 Route::controller(AlbumController::class)->prefix('albums')->group(function() {
     Route::get('/', 'index')->name('albums.list');
+    Route::post('/', 'store')->name('albums.store');
+
+    Route::get('/create', 'displayCreateForm')->name('albums.create');
+
     Route::get('/{album:slug}', 'show')->name('albums.show');
 });
 
