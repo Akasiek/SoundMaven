@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -21,7 +22,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Album extends AbstractModel implements HasMedia
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia;
+    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia, Searchable;
 
     protected $fillable = [
         'title',
@@ -47,6 +48,23 @@ class Album extends AbstractModel implements HasMedia
                 return new Slugify(['separator' => $separator])->slugify($string) ?: 'untitled';
             }
         ]];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'albums_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'artist_name' => $this->artist?->name,
+            'track_titles' => $this->tracks->pluck('title')->toArray(),
+            'created_at' => $this->created_at->timestamp,
+        ];
     }
 
     public function registerMediaConversions(Media|null $media = null): void

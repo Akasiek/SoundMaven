@@ -181,6 +181,40 @@ return [
         ],
         // 'max_total_results' => env('TYPESENSE_MAX_TOTAL_RESULTS', 1000),
         'model-settings' => [
+            \App\Models\Album::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        [
+                            'name' => 'id',
+                            'type' => 'string',
+                        ],
+                        [
+                            'name' => 'title',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'slug',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'artist_name',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'track_titles',
+                            'type' => 'string[]'
+                        ],
+                        [
+                            'name' => 'created_at',
+                            'type' => 'int64'
+                        ]
+                    ],
+                    'default_sorting_field' => 'created_at',
+                ],
+                'search-parameters' => [
+                    'query_by' => 'title,slug,artist_name,track_titles',
+                ],
+            ]
             // User::class => [
             //     'collection-schema' => [
             //         'fields' => [
