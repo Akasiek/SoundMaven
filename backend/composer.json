@@ -17,6 +17,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/scout": "^10.16",
         "laravel/tinker": "^2.10",
+        "php-http/curl-client": "^2.3",
         "richan-fongdasen/eloquent-blameable": "^1.9.0",
         "spatie/laravel-medialibrary": "^11.0.0",
         "spatie/laravel-query-builder": "^6.0",
