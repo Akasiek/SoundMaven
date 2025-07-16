@@ -133,7 +133,11 @@ const handleImageUpload = (event: Event): void => {
 
             <div v-if="imagePreviewUrl">
               <p class="text-sm text-zinc-500 mb-2">Selected Image Preview:</p>
-              <img :src="imagePreviewUrl" alt="Selected Image Preview" class="border-2 border-zinc-700 rounded-md w-full"/>
+              <div class="w-full h-full">
+
+              <img :src="imagePreviewUrl" alt="Selected Image Preview"
+                   class="border-2 border-zinc-700 rounded-md object-center object-cover aspect-square"/>
+              </div>
             </div>
           </div>
         </div>
