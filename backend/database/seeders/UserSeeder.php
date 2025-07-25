@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserRoles;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Seeder;
@@ -26,10 +27,11 @@ class UserSeeder extends Seeder
             throw new Exception('Admin credentials not set in .env file or application is cached');
         }
 
-        $admin = User::factory()->createOne([
+        User::factory()->createOne([
             'name' => 'admin',
             'email' => $email,
             'password' => bcrypt($password),
+            'role' => UserRoles::ADMIN,
         ]);
     }
 }
