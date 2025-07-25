@@ -78,6 +78,14 @@ class AlbumController extends Controller
             ->with('success', __('Album created successfully.'));
     }
 
+    public function displayUpdateForm(Album $album): \Inertia\Response
+    {
+        return Inertia::render('album/Update', [
+            'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])),
+            'types' => AlbumTypes::cases(),
+        ]);
+    }
+
     public function update(UpdateAlbumRequest $request, string $albumParam): AlbumResource
     {
         $album = Album::whereSlugOrId($albumParam)->firstOrFail();

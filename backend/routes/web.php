@@ -22,6 +22,7 @@ Route::controller(AlbumController::class)->prefix('albums')->group(function() {
     Route::post('/', 'store')->name('albums.store');
 
     Route::get('/create', 'displayCreateForm')->name('albums.create');
+    Route::get('/{album:slug}/update', 'displayUpdateForm')->name('albums.edit');
 
     Route::get('/{album:slug}', 'show')->name('albums.show');
 });
