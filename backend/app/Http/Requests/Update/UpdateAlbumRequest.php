@@ -35,4 +35,11 @@ class UpdateAlbumRequest extends UpdateRequest
 
         return $this->convertRulesBasedOnMethod($rules);
     }
+
+    public function attributes(): array
+    {
+        return array_merge(parent::attributes(), [
+            'artist_id' => 'artist',
+        ]);
+    }
 }
