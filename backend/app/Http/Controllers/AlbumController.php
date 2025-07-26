@@ -86,13 +86,12 @@ class AlbumController extends Controller
         ]);
     }
 
-    public function update(UpdateAlbumRequest $request, string $albumParam): AlbumResource
+    public function update(UpdateAlbumRequest $request, Album $album): RedirectResponse
     {
-        $album = Album::whereSlugOrId($albumParam)->firstOrFail();
+        $this->service->update($request->validated(), $album);
 
-        return new AlbumResource(
-            $this->service->update($request->validated(), $album)->loadMissing(['artist', 'tracks', 'genres'])
-        );
+        return redirect()->route('albums.show', $album->slug)
+            ->with('success', __('Album updated successfully.'));
     }
 
     public function destroy(Album $album): Response
