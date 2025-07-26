@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import DefaultSection from "@/components/DefaultSection.vue";
 import { Input } from "@/components/shadcn/ui/input";
 import { Label } from "@/components/shadcn/ui/label";
 import { Button } from "@/components/shadcn/ui/button";
 import { LoaderCircle, X } from "lucide-vue-next";
+import InputError from "@/components/inputs/InputError.vue";
 
 const { album } = defineProps<{ types: string[], album?: { data: ExtendedAlbum } }>();
 
-const isUpdate = ref<boolean>(!!album);
+const isUpdate = !!album && !!album.data;
 const imagePreviewUrl = ref<string | null>(null);
 const artistOptions = ref<{ id: string, label: string }[]>([]);
 
@@ -19,29 +20,43 @@ const form = useForm<{
   type: string; // e.g., 'LP', 'EP', etc.
   artist: { id: string, label: string } | null; // Artist object or null if not selected
   artist_id?: string; // Optional artist ID for form submission
-  // cover_image: File | null; // File object for the cover image
-  cover_image: File | undefined; // File object for the cover image
+  cover_image: File | null; // File object for the cover image
 }>({
   title: album?.data.title || '',
   release_date: album?.data.release_date || new Date().toISOString().slice(0, 10), // Default to today
   type: album?.data.type || 'LP',
   artist: album?.data.artist ? { id: album.data.artist.id, label: album.data.artist.name } : null,
   artist_id: album?.data.artist ? album.data.artist.id : undefined,
-  cover_image: undefined,
+  cover_image: null,
 });
 
 const submit = () => {
-  if (form.artist) {
-    form.artist_id = form.artist.id;
-  }
+  form.artist_id = form.artist?.id;
+  const formRoute = isUpdate
+    ? route('albums.update', { album: album.data.slug })
+    : route('albums.store');
 
-  form.post(route('albums.store'), {
+  router.post(formRoute, {
+    ...form.data(),
+    _method: isUpdate ? 'put' : 'post',
+  }, {
     onSuccess: () => form.reset(),
     onError: (errors) => {
-      console.error('Form submission errors:', errors);
-      // Handle errors as needed, e.g., show a notification or display error messages
+      console.error('Form submission errors:', errors, form);
     },
   });
+
+  // isUpdate ? form.put(formRoute, {
+  //   onSuccess: () => form.reset(),
+  //   onError: (errors) => {
+  //     console.error('Form submission errors:', errors,  form);
+  //   },
+  // }) : form.post(formRoute, {
+  //   onSuccess: () => form.reset(),
+  //   onError: (errors) => {
+  //     console.error('Form submission errors:', errors, form);
+  //   },
+  // });
 };
 
 const fetchArtists = async (search: string, loading: (loading: boolean) => void) => {
@@ -65,6 +80,7 @@ onMounted(() => {
 
 const handleImageUpload = (event: Event): void => {
   const file = (event.target as HTMLInputElement)?.files?.[0] || null;
+  form.cover_image = file;
   if (!file) {
     return;
   }
@@ -80,7 +96,7 @@ const handleImageUpload = (event: Event): void => {
 };
 
 const clearImage = () => {
-  form.cover_image = undefined;
+  form.cover_image = null;
   imagePreviewUrl.value = null;
   (document.getElementById('cover_image') as HTMLInputElement)!.value = '';
 };
@@ -103,6 +119,7 @@ const clearImage = () => {
               autofocus
               required
             />
+            <InputError :message="form.errors.title"/>
           </div>
 
           <div class="grid gap-2">
@@ -113,11 +130,13 @@ const clearImage = () => {
               v-model="form.release_date"
               required
             />
+            <InputError :message="form.errors.release_date"/>
           </div>
 
           <div class="grid gap-2 col-span-2">
             <Label for="artist">Artist</Label>
             <v-select id="artist" @search="fetchArtists" v-model="form.artist" :options="artistOptions" :clearable="false"/>
+            <InputError :message="form.errors.artist_id"/>
           </div>
 
           <div class="grid gap-2">
@@ -129,29 +148,28 @@ const clearImage = () => {
             <Label for="cover_image">Cover Image</Label>
             <div class="flex items-center gap-2">
 
-            <Input
-              id="cover_image"
-              type="file"
-              accept="image/*"
-              @change="handleImageUpload"
-            />
-            <Button
-              type="button"
-              variant="destructive"
-              @click="clearImage"
-              v-if="imagePreviewUrl"
-            >
-              <X class="h-5 w-5"/>
-            </Button>
+              <Input
+                id="cover_image"
+                type="file"
+                accept="image/*"
+                @change="handleImageUpload"
+              />
+              <Button
+                type="button"
+                variant="destructive"
+                @click="clearImage"
+                v-if="imagePreviewUrl"
+              >
+                <X class="h-5 w-5"/>
+              </Button>
             </div>
 
 
             <div v-if="imagePreviewUrl">
               <p class="text-sm text-zinc-500 mb-2">Selected Image Preview:</p>
               <div class="w-full h-full">
-
                 <img :src="imagePreviewUrl" alt="Selected Image Preview"
-                     class="border-2 border-zinc-700 rounded-md object-center object-cover aspect-square"/>
+                     class="border-2 border-zinc-700 rounded-md object-center object-cover aspect-square w-full"/>
               </div>
             </div>
 
