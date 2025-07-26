@@ -45,18 +45,6 @@ const submit = () => {
       console.error('Form submission errors:', errors, form);
     },
   });
-
-  // isUpdate ? form.put(formRoute, {
-  //   onSuccess: () => form.reset(),
-  //   onError: (errors) => {
-  //     console.error('Form submission errors:', errors,  form);
-  //   },
-  // }) : form.post(formRoute, {
-  //   onSuccess: () => form.reset(),
-  //   onError: (errors) => {
-  //     console.error('Form submission errors:', errors, form);
-  //   },
-  // });
 };
 
 const fetchArtists = async (search: string, loading: (loading: boolean) => void) => {
