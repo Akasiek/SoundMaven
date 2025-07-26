@@ -21,12 +21,13 @@ Route::controller(AlbumController::class)->prefix('albums')->group(function () {
     Route::get('/', 'index')->name('albums.list');
     Route::post('/', 'store')->name('albums.store');
 
-    Route::get('/create', 'displayCreateForm')->name('albums.create');
+    Route::middleware('isMaintainer')->group(function () {
+        Route::get('/create', 'displayCreateForm')->name('albums.create');
+        Route::put('/{album:slug}', 'update')->name('albums.update');
+        Route::get('/{album:slug}/update', 'displayUpdateForm')->name('albums.edit');
+    });
 
     Route::get('/{album:slug}', 'show')->name('albums.show');
-    Route::put('/{album:slug}', 'update')->name('albums.update');
-
-    Route::get('/{album:slug}/update', 'displayUpdateForm')->name('albums.edit');
 });
 
 Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function () {
