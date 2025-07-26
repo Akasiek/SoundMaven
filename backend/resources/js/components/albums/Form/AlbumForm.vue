@@ -130,6 +130,7 @@ const clearImage = () => {
           <div class="grid gap-2">
             <Label for="type">Type</Label>
             <v-select id="type" v-model="form.type" :options="types" :clearable="false"/>
+            <InputError :message="form.errors.type"/>
           </div>
 
           <div class="grid gap-2 col-span-3">
@@ -164,6 +165,8 @@ const clearImage = () => {
             <p v-if="isUpdate" class="text-sm text-yellow-600">
               Uploading a new image will replace the current album cover.
             </p>
+
+            <InputError :message="form.errors.cover_image"/>
           </div>
         </div>
 
