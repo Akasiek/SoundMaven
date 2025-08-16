@@ -22,6 +22,7 @@ class Track extends AbstractModel
         'length',
         'order',
         'album_id',
+        'disc'
     ];
 
     public function sluggable(): array

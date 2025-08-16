@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\AlbumTypes;
 use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
+use App\Http\Requests\Update\UpdateAlbumTracksRequest;
 use App\Http\Resources\AlbumResource;
 use App\Http\Resources\AlbumReviewResource;
 use App\Http\Resources\Collections\AlbumReviewCollection;
@@ -99,6 +100,14 @@ class AlbumController extends Controller
         $this->service->delete($album);
 
         return response()->noContent();
+    }
+
+    public function updateTracks(Album $album, UpdateAlbumTracksRequest $request): RedirectResponse
+    {
+        $this->service->updateTracks($request->validated(), $album);
+
+        return redirect()->route('albums.show', $album->slug)
+            ->with('success', __('Tracks updated successfully.'));
     }
 
     public function showTracks(string $albumParam): TrackCollection

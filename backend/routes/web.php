@@ -25,6 +25,7 @@ Route::controller(AlbumController::class)->prefix('albums')->group(function () {
         Route::get('/create', 'displayCreateForm')->name('albums.create');
         Route::put('/{album:slug}', 'update')->name('albums.update');
         Route::get('/{album:slug}/update', 'displayUpdateForm')->name('albums.edit');
+        Route::put('/{album:slug}/tracks/edit', 'updateTracks')->name('albums.updateTracks');
     });
 
     Route::get('/{album:slug}', 'show')->name('albums.show');
