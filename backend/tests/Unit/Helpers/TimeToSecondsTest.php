@@ -17,7 +17,7 @@ class TimeToSecondsTest extends TestCase
 
         $this->assertEquals(50, $helper('00:50'));
         $this->assertEquals(10, $helper('00:10'));
-        $this->assertEquals(1, $helper('00:01'));
+        $this->assertEquals(1, $helper('0:01'));
         $this->assertEquals(0, $helper('00:00'));
         $this->assertEquals(0, $helper('00'));
     }
@@ -29,6 +29,7 @@ class TimeToSecondsTest extends TestCase
     {
         $helper = new TimeToSeconds;
 
+        $this->assertEquals(300, $helper('5:0'));
         $this->assertEquals(300, $helper('05:00'));
         $this->assertEquals(273, $helper('04:33'));
         $this->assertEquals(983, $helper('16:23'));
@@ -43,7 +44,7 @@ class TimeToSecondsTest extends TestCase
         $helper = new TimeToSeconds;
 
         $this->assertEquals(3600, $helper('01:00:00'));
-        $this->assertEquals(3601, $helper('01:00:01'));
+        $this->assertEquals(3601, $helper('1:0:1'));
         $this->assertEquals(3661, $helper('01:01:01'));
         $this->assertEquals(1238382, $helper('343:59:42'));
     }

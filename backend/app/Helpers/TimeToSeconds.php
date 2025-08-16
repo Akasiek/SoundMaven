@@ -11,12 +11,22 @@ class TimeToSeconds
     /**
      * @throws Exception
      */
+    public static function convert(string $time): int
+    {
+        $instance = new self();
+        return $instance($time);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function __invoke(string $time): int
     {
         $this->setTime($time);
 
         return $this->convertToSeconds();
     }
+
 
     /**
      * @throws Exception
