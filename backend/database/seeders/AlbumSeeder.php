@@ -12,6 +12,11 @@ class AlbumSeeder extends CsvSeeder
     protected string $fileName = 'database/seeders/data/albums.csv';
     protected string $model = Album::class;
 
+    public function run(bool $seedImages = true): void
+    {
+        $this->seedFromCsv();
+    }
+
     protected function getMapping(): array
     {
         return [
@@ -35,7 +40,7 @@ class AlbumSeeder extends CsvSeeder
         ];
     }
 
-    protected function seedFromCsv(): void
+    protected function seedFromCsv(bool $seedImages = true): void
     {
         $data = $this->mapCsvData();
         $data = $this->mapSpecialValues($data);
@@ -51,12 +56,11 @@ class AlbumSeeder extends CsvSeeder
                 throw new Exception('Cannot create seeded model');
             }
 
-            if ($coverImage) {
+            if ($seedImages && $coverImage) {
                 $album->attachCoverImage(base_path("database/seeders/data/cover_images/$coverImage"));
             }
 
             $album->genres()->sync($genres);
         }
-
     }
 }

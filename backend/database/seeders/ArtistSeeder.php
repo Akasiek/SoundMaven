@@ -10,13 +10,15 @@ class ArtistSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run(bool $seedImages = true): void
     {
         $data = $this->getArtistData();
 
         foreach ($data as $artist) {
             $model = Artist::updateOrCreate(['name' => $artist['name']], ['type' => $artist['type']]);
-            $model->attachBackgroundImage(base_path("database/seeders/data/artist_background_images/{$artist['image']}"));
+            if ($seedImages && isset($artist['image'])) {
+                $model->attachBackgroundImage(base_path("database/seeders/data/artist_background_images/{$artist['image']}"));
+            }
         }
     }
 
