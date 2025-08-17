@@ -16,7 +16,7 @@ const user = useAuthUser();
 </script>
 
 <template>
-  <nav class="fixed inset-x-0 top-0 w-full h-18 bg-zinc-800 px-4 sm:px-6 lg:px-8 z-50" id="top-nav">
+  <nav class="fixed inset-x-0 top-0 w-full h-18 bg-zinc-800 px-4 sm:px-6 lg:px-8 z-30" id="top-nav">
     <div class="container w-full mx-auto flex justify-between items-center h-full">
 
       <Link prefetch class="block w-48" :href="route('home')">
