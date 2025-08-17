@@ -4,11 +4,16 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\AlbumReviewController;
 use App\Http\Controllers\ArtistController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+});
+
+Route::controller(SearchController::class)->prefix('search')->group(function () {
+    Route::get('/', 'search')->name('search');
 });
 
 Route::controller(ArtistController::class)->prefix('artists')->group(function () {
