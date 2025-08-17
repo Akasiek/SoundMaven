@@ -30,7 +30,7 @@ class Track extends AbstractModel
         return ['slug' => [
             'source' => 'title',
             'method' => static function (string $string, string $separator): string {
-                return (new Slugify(['separator' => $separator]))->slugify($string) ?: 'untitled';
+                return new Slugify(['separator' => $separator])->slugify($string) ?: 'untitled';
             }
         ]];
     }
