@@ -48,7 +48,7 @@ class Track extends AbstractModel
             'title' => $this->title,
             'slug' => $this->slug,
             'album_title' => $this->album->title,
-            'length' => $this->length,
+            'length_formatted' => $this->length_formatted,
             'created_at' => $this->created_at->timestamp,
         ];
     }

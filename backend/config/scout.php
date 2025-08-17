@@ -275,8 +275,8 @@ return [
                             'type' => 'string'
                         ],
                         [
-                            'name' => 'length',
-                            'type' => 'int32'
+                            'name' => 'length_formatted',
+                            'type' => 'string'
                         ],
                         [
                             'name' => 'created_at',
@@ -291,7 +291,7 @@ return [
                     'default_sorting_field' => 'created_at',
                 ],
                 'search-parameters' => [
-                    'query_by' => 'title,slug,album_title,length',
+                    'query_by' => 'title,slug,album_title,length_formatted',
                 ],
             ]
         ],
