@@ -61,7 +61,7 @@ class Album extends AbstractModel implements HasMedia
             'id' => $this->id,
             'title' => $this->title,
             'slug' => $this->slug,
-            'artist_name' => $this->artist?->name,
+            'artist_name' => $this->artist->name,
             'track_titles' => $this->tracks->pluck('title')->toArray(),
             'created_at' => $this->created_at->timestamp,
         ];
