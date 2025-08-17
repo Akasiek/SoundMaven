@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation.vue";
 import PrimaryLayout from "@/layouts/PrimaryLayout.vue";
 import Footer from "@/components/Footer.vue";
 import { onMounted, ref } from "vue";
+import QuickReviewModal from "@/components/QuickReviewModal.vue";
 
 const mainHeight = ref(0);
 
@@ -20,6 +21,7 @@ onMounted(() => {
 
 <template>
   <PrimaryLayout>
+    <QuickReviewModal/>
     <Navigation/>
     <main class="mt-18 px-4 sm:px-6 lg:px-8" :style="{ minHeight: `${mainHeight ?? 0}px` }">
       <slot/>
