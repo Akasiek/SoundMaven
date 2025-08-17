@@ -11,11 +11,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class Track extends AbstractModel
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait;
+    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, Searchable;
 
     protected $fillable = [
         'title',
@@ -33,6 +34,23 @@ class Track extends AbstractModel
                 return new Slugify(['separator' => $separator])->slugify($string) ?: 'untitled';
             }
         ]];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'tracks_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'slug' => $this->slug,
+            'album_title' => $this->album->title,
+            'length' => $this->length,
+            'created_at' => $this->created_at->timestamp,
+        ];
     }
 
     public function album(): BelongsTo

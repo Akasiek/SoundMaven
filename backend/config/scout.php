@@ -207,36 +207,93 @@ return [
                         [
                             'name' => 'created_at',
                             'type' => 'int64'
-                        ]
+                        ],
+                        [
+                            'name' => '__soft_deleted',
+                            'type' => 'int32',
+                            'optional' => true,
+                        ],
                     ],
                     'default_sorting_field' => 'created_at',
                 ],
                 'search-parameters' => [
                     'query_by' => 'title,slug,artist_name,track_titles',
                 ],
+            ],
+            \App\Models\Artist::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        [
+                            'name' => 'id',
+                            'type' => 'string',
+                        ],
+                        [
+                            'name' => 'name',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'slug',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'album_titles',
+                            'type' => 'string[]'
+                        ],
+                        [
+                            'name' => 'created_at',
+                            'type' => 'int64'
+                        ],
+                        [
+                            'name' => '__soft_deleted',
+                            'type' => 'int32',
+                            'optional' => true,
+                        ],
+                    ],
+                    'default_sorting_field' => 'created_at',
+                ],
+                'search-parameters' => [
+                    'query_by' => 'name,slug,description,album_titles',
+                ],
+            ],
+            \App\Models\Track::class => [
+                'collection-schema' => [
+                    'fields' => [
+                        [
+                            'name' => 'id',
+                            'type' => 'string',
+                        ],
+                        [
+                            'name' => 'title',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'slug',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'album_title',
+                            'type' => 'string'
+                        ],
+                        [
+                            'name' => 'length',
+                            'type' => 'int32'
+                        ],
+                        [
+                            'name' => 'created_at',
+                            'type' => 'int64'
+                        ],
+                        [
+                            'name' => '__soft_deleted',
+                            'type' => 'int32',
+                            'optional' => true,
+                        ],
+                    ],
+                    'default_sorting_field' => 'created_at',
+                ],
+                'search-parameters' => [
+                    'query_by' => 'title,slug,album_title,length',
+                ],
             ]
-            // User::class => [
-            //     'collection-schema' => [
-            //         'fields' => [
-            //             [
-            //                 'name' => 'id',
-            //                 'type' => 'string',
-            //             ],
-            //             [
-            //                 'name' => 'name',
-            //                 'type' => 'string',
-            //             ],
-            //             [
-            //                 'name' => 'created_at',
-            //                 'type' => 'int64',
-            //             ],
-            //         ],
-            //         'default_sorting_field' => 'created_at',
-            //     ],
-            //     'search-parameters' => [
-            //         'query_by' => 'name'
-            //     ],
-            // ],
         ],
     ],
 

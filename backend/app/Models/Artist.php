@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -17,7 +18,7 @@ use Str;
 
 class Artist extends AbstractModel implements HasMedia
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia;
+    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia, Searchable;
 
     protected $fillable = [
         'name',
@@ -28,6 +29,22 @@ class Artist extends AbstractModel implements HasMedia
     public function sluggable(): array
     {
         return ['slug' => ['source' => 'name']];
+    }
+
+    public function searchableAs(): string
+    {
+        return 'artists_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+            'album_titles' => $this->albums->pluck('title')->toArray(),
+            'created_at' => $this->created_at->timestamp,
+        ];
     }
 
     public function registerMediaCollections(): void
