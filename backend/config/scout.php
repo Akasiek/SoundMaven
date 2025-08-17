@@ -252,7 +252,7 @@ return [
                     'default_sorting_field' => 'created_at',
                 ],
                 'search-parameters' => [
-                    'query_by' => 'name,slug,description,album_titles',
+                    'query_by' => 'name,slug,album_titles',
                 ],
             ],
             \App\Models\Track::class => [
