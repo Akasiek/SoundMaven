@@ -9,8 +9,11 @@ const name = getNonBreakingSpacesAsRef(artist.original_name);
 </script>
 
 <template>
-  <Link :href="route('artists.show', artist.slug)"
-        class="block border-2 border-zinc-800 overflow-hidden rounded-md hover:border-zinc-600 transition duration-300 ease-in-out hover:scale-102">
+  <Link
+    prefetch
+    :href="route('artists.show', artist.slug)"
+    class="block border-2 border-zinc-800 overflow-hidden rounded-md hover:border-zinc-600 transition duration-300 ease-in-out hover:scale-102"
+  >
     <div class="w-full h-48 aspect-video overflow-hidden relative">
       <img :src="artist.background_image_preview" :alt="artist.name" class="w-full h-full object-cover object-center">
       <div class="absolute inset-0 bg-gradient-to-t to-50% from-zinc-900 to-transparent"></div>
@@ -22,7 +25,3 @@ const name = getNonBreakingSpacesAsRef(artist.original_name);
     </div>
   </Link>
 </template>
-
-<style scoped>
-
-</style>

@@ -10,7 +10,7 @@ defineProps<{
 </script>
 
 <template>
-  <Link :href="route('albums.show', album.slug)" class="block group transition duration-300 ease-in-out">
+  <Link prefetch :href="route('albums.show', album.slug)" class="block group transition duration-300 ease-in-out">
     <div
       class="w-full aspect-square overflow-hidden relative transition duration-300 ease-in-out border-2 rounded-md border-zinc-800 group-hover:border-zinc-600">
       <img v-if="album.cover_image" :src="album.cover_image" :alt="album.title" class="w-full h-full object-cover object-center"/>
@@ -30,6 +30,7 @@ defineProps<{
         </h2>
 
         <Link
+          prefetch
           v-if="showArtist && 'artist' in album"
           :href="route('artists.show', (album as ExtendedAlbum).artist.slug)"
           class="hover:underline line-clamp-2"
