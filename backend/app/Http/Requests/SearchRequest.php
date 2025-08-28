@@ -17,7 +17,7 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'query' => ['required', 'string', 'max:255'],
+            'query' => ['required', 'string', 'max:255', 'min:3'],
             'type' => ['nullable', 'string', Rule::in(SearchTypeEnum::cases())],
         ];
     }
