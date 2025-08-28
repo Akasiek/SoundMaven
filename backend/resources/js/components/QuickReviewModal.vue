@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { MessageCirclePlus, X } from "lucide-vue-next";
+import { Star, X } from "lucide-vue-next";
 import InputError from "@/components/inputs/InputError.vue";
 import { Label } from "@/components/shadcn/ui/label";
 import { Input } from "@/components/shadcn/ui/input";
@@ -33,10 +34,10 @@ watch(form, () => {
   <button
     @click="showModal = !showModal"
     class="
-      fixed bottom-12 right-16 w-14 h-14 p-2.5 bg-green-500 z-50 flex items-center justify-center rounded-full shadow-[0_0_0] hover:shadow-[0_0_1rem]
+      fixed bottom-12 right-16 w-14 h-14 p-3 bg-green-500 z-50 flex items-center justify-center rounded-full shadow-[0_0_0] hover:shadow-[0_0_1rem]
       transition-all duration-300 ease-in-out shadow-green-500/75 cursor-pointer
     ">
-    <MessageCirclePlus class="h-full w-full"/>
+    <Star class="h-full w-full"/>
   </button>
   <Transition
     enter-active-class="data-[state=open]:animate-in data-[state=open]:fade-in-0 duration-200"
