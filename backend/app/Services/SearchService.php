@@ -41,16 +41,22 @@ class SearchService
 
     public function searchAlbum(string $query): AlbumCollection
     {
-        return AlbumCollection::make(Album::search($query)->get());
+        return AlbumCollection::make(
+            Album::search($query)->get()->load(['artist', 'tracks'])
+        );
     }
 
     public function searchArtist(string $query): ArtistCollection
     {
-        return ArtistCollection::make(Artist::search($query)->get());
+        return ArtistCollection::make(
+            Artist::search($query)->get()->load(['albums'])
+        );
     }
 
     public function searchTrack(string $query): TrackCollection
     {
-        return TrackCollection::make(Track::search($query)->get());
+        return TrackCollection::make(
+            Track::search($query)->get()->load(['album', 'album.artist'])
+        );
     }
 }
