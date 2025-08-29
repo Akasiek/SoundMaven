@@ -18,7 +18,8 @@
     --font-sans: "Inter", "sans-serif";
     --font-serif: "Literata", "serif";
     --breakpoint-xs: 30rem;
-    --color-zinc-850: oklch(0.242 0.006 285.959);
+    --color-zinc-850: oklch(24.2% 0.006 285.959);
+    --color-zinc-750: oklch(32.2% 0.0095 285.919);
 }
 
 @theme inline {
