@@ -42,7 +42,7 @@ class SearchService
     public function searchAlbum(string $query): AlbumCollection
     {
         return AlbumCollection::make(
-            Album::search($query)->get()->load(['artist', 'tracks'])
+            Album::search($query)->get()->load(['artist', 'tracks', 'currentUserReview'])
         );
     }
 

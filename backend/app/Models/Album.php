@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use RichanFongdasen\EloquentBlameable\BlameableTrait;
@@ -145,6 +146,11 @@ class Album extends AbstractModel implements HasMedia
     public function tracks(): HasMany
     {
         return $this->hasMany(Track::class);
+    }
+
+    public function currentUserReview(): HasOne
+    {
+        return $this->hasOne(AlbumReview::class)->where('created_by', auth()->id());
     }
 
     public function averageRating(): Attribute

@@ -23,5 +23,6 @@ interface ExtendedAlbum extends Album {
   tracks: Track[];
   genres: Genre[];
   reviews: AlbumReview[];
+  current_user_review: AlbumReview | null;
   reviews_count: number;
 }

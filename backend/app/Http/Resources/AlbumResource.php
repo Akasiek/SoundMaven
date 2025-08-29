@@ -32,6 +32,8 @@ class AlbumResource extends JsonResource
             'reviews' => AlbumReviewResource::collection($this->whenLoaded('reviews')),
             'reviews_count' => $this->whenLoaded('reviews') ? $this->reviews_count : null,
 
+            'current_user_review' => AlbumReviewResource::make($this->whenLoaded('currentUserReview')),
+
             'creator' => UserResource::make($this->whenLoaded('creator')),
             'updater' => UserResource::make($this->whenLoaded('updater')),
 
