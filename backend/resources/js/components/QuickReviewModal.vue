@@ -8,7 +8,7 @@ import debounce from "lodash.debounce";
 import axios from "axios";
 import { useMagicKeys } from "@vueuse/core";
 
-const KEYS = { SEARCH: 's', ESCAPE: 'Escape' } as const;
+const KEYS = { SEARCH: 'q', ESCAPE: 'Escape' } as const;
 
 const showModal = ref(false);
 const queryResults = ref<{ data: { album: ExtendedAlbum[] } } | null>(null);
