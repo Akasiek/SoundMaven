@@ -131,10 +131,12 @@
 @layer base {
     * {
         @apply border-border outline-ring/50;
+        color-scheme: dark;
     }
 
     body {
         @apply bg-background text-foreground;
+        color-scheme: dark;
     }
 
     h1 {
