@@ -12,10 +12,11 @@ import { getRatingColor as getRatingColorName } from "@/composables/getRatingCol
 import { SharedData } from "@/types";
 import { HTMLAttributes, watch } from "vue";
 import { cn } from "@/lib/utils";
+import { useEventBus } from "@vueuse/core";
 
 const route = useRoute();
 const page = usePage<SharedData>();
-const emit = defineEmits(['reloadSearch']);
+const bus = useEventBus<string>('reloadSearch');
 
 const user = useAuthUser();
 const { album, currentUserReview, isInModal = false, class: className } = defineProps<{
@@ -54,7 +55,7 @@ const submit = () => {
   form.post(route('album-reviews.store'), {
     preserveScroll: true,
     onSuccess: () => {
-      emit('reloadSearch');
+      bus.emit('reloadSearch');
       router.reload();
     }
   });
@@ -67,7 +68,7 @@ const deleteReview = () => {
       onSuccess: () => {
         form.defaults({ body: '', rating: '' });
         form.reset('body', 'rating');
-        emit('reloadSearch');
+        bus.emit('reloadSearch');
         router.reload();
       }
     });

@@ -6,7 +6,7 @@ import { Input } from "@/components/shadcn/ui/input";
 import { useForm } from "@inertiajs/vue3";
 import debounce from "lodash.debounce";
 import axios from "axios";
-import { useMagicKeys } from "@vueuse/core";
+import { useEventBus, useMagicKeys } from "@vueuse/core";
 import AlbumUserReviewForm from "@/components/albums/Show/AlbumUserReviewForm.vue";
 
 const KEYS = { SEARCH: 'q', ESCAPE: 'Escape' } as const;
@@ -111,11 +111,14 @@ const clearChosenAlbum = () => {
   focusSearchInput();
 }
 
-const reloadSearch = async () => {
+// Some components may want to trigger a search reload
+const bus = useEventBus<string>('reloadSearch');
+bus.on(() => {
   if (form.query) {
     submit();
   }
-}
+});
+
 </script>
 
 <template>
@@ -237,7 +240,6 @@ const reloadSearch = async () => {
             <AlbumUserReviewForm
               :album="chosenAlbum" class="border-0 border-t-2 rounded-none" :is-in-modal="true"
               :current-user-review="chosenAlbum?.current_user_review || null"
-              @reload-search="reloadSearch"
             />
 
           </template>
