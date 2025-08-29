@@ -113,7 +113,6 @@ const clearChosenAlbum = () => {
 
 const reloadSearch = async () => {
   if (form.query) {
-    console.log('reloading search');
     submit();
   }
 }
