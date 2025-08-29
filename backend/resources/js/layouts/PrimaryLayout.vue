@@ -13,7 +13,3 @@ import { Head } from "@inertiajs/vue3";
         <slot/>
     </div>
 </template>
-
-<style scoped>
-
-</style>
