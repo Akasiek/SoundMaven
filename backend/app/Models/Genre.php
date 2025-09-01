@@ -18,6 +18,7 @@ class Genre extends AbstractModel
     protected $fillable = [
         'name',
         'description',
+        'parent_id',
     ];
 
     public function sluggable(): array
