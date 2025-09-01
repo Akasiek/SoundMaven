@@ -99,7 +99,7 @@ const getRatingColor = (rating: string | number) => {
           <Textarea
             id="body"
             v-model="form.body"
-            class="border-zinc-700 min-h-20"
+            class="border-zinc-700 min-h-20 font-sans"
             placeholder="Share your thoughts about the album..."
           ></Textarea>
           <InputError :message="form.errors.body"/>

@@ -23,9 +23,9 @@ defineProps<{ album: ExtendedAlbum }>();
 
       <div class="flex my-auto gap-10 border-2 p-5 rounded-md border-zinc-700">
         <div>
-          <h1 class="text-3xl font-bold">{{ album.title }}</h1>
+          <h1 class="text-3xl font-bold font-serif">{{ album.title }}</h1>
 
-          <p class="text-zinc-300 my-2">
+          <p class="text-zinc-300 my-2 font-sans">
             <Link v-if="album.artist" :href="route('artists.show', album.artist.slug)" class="hover:underline">{{ album.artist.name }}</Link>
             <span v-else>Unknown Artist</span>
           </p>
@@ -40,7 +40,7 @@ defineProps<{ album: ExtendedAlbum }>();
         </div>
 
         <div class="flex items-center justify-center mb-4 mt-2 text-6xl mr-5 font-black leading-none">
-          <div class="flex items-end">
+          <div class="flex items-end font-serif">
             <span :class="`${album.rating_color}`">{{ album.average_rating }}</span>
             <span class="ml-1 text-zinc-500 text-lg">/100</span>
           </div>
