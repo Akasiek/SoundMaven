@@ -71,15 +71,14 @@ class Artist extends AbstractModel implements HasMedia
 
     public function attachBackgroundImage(string $string): void
     {
-        $fileExtensionFromStringHelper = new FileExtensionFromString;
-
+        $fileExtension = new FileExtensionFromString;
         $randomString = Str::random();
 
         $this
             ->addMedia($string)
             ->preservingOriginal()
             ->setName("$this->slug-background")
-            ->setFileName("$this->slug-$randomString-background.{$fileExtensionFromStringHelper($string)}")
+            ->setFileName("$this->slug-$randomString-background.{$fileExtension($string)}")
             ->toMediaCollection('artist-backgrounds');
     }
 

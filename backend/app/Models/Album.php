@@ -95,14 +95,14 @@ class Album extends AbstractModel implements HasMedia
 
     public function attachCoverImage(string $string): void
     {
-        $fileExtensionFromStringHelper = new FileExtensionFromString;
+        $fileExtension = new FileExtensionFromString;
         $randomString = Str::random();
 
         $this
             ->addMedia($string)
             ->preservingOriginal()
             ->setName("$this->slug-cover")
-            ->setFileName("$this->slug-$randomString-cover.{$fileExtensionFromStringHelper($string)}")
+            ->setFileName("$this->slug-$randomString-cover.{$fileExtension($string)}")
             ->toMediaCollection('album-covers');
     }
 
