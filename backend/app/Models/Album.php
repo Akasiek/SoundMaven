@@ -20,6 +20,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Str;
 
 class Album extends AbstractModel implements HasMedia
 {
@@ -68,6 +69,11 @@ class Album extends AbstractModel implements HasMedia
         ];
     }
 
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('album-covers')->useDisk('album_images')->singleFile();
+    }
+
     public function registerMediaConversions(Media|null $media = null): void
     {
         $this
@@ -87,26 +93,22 @@ class Album extends AbstractModel implements HasMedia
             ->nonQueued();
     }
 
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('album-covers')->useDisk('album_images')->singleFile();
-    }
-
     public function attachCoverImage(string $string): void
     {
         $fileExtensionFromStringHelper = new FileExtensionFromString;
+        $randomString = Str::random();
 
         $this
             ->addMedia($string)
             ->preservingOriginal()
             ->setName("$this->slug-cover")
-            ->setFileName("$this->slug-cover.{$fileExtensionFromStringHelper($string)}")
+            ->setFileName("$this->slug-$randomString-cover.{$fileExtensionFromStringHelper($string)}")
             ->toMediaCollection('album-covers');
     }
 
     public function detachCoverImage(): void
     {
-        $this->getFirstMedia('album-covers')?->delete();
+        $this->clearMediaCollection('album-covers');
     }
 
     protected function coverImage(): Attribute
