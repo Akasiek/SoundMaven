@@ -17,6 +17,7 @@ class ArtistSeeder extends Seeder
         foreach ($data as $artist) {
             $model = Artist::updateOrCreate(['name' => $artist['name']], ['type' => $artist['type']]);
             if ($seedImages && isset($artist['image'])) {
+                $model->detachBackgroundImage();
                 $model->attachBackgroundImage(base_path("database/seeders/data/artist_background_images/{$artist['image']}"));
             }
         }

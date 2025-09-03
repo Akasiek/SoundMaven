@@ -57,6 +57,7 @@ class AlbumSeeder extends CsvSeeder
             }
 
             if ($seedImages && $coverImage) {
+                $album->detachCoverImage();
                 $album->attachCoverImage(base_path("database/seeders/data/cover_images/$coverImage"));
             }
 
