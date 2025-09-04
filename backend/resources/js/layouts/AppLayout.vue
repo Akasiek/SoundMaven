@@ -4,7 +4,9 @@ import PrimaryLayout from "@/layouts/PrimaryLayout.vue";
 import Footer from "@/components/Footer.vue";
 import { onMounted, ref } from "vue";
 import QuickReviewModal from "@/components/QuickReviewModal.vue";
+import { useAuthUser } from "@/composables/useAuthUser";
 
+const user = useAuthUser();
 const mainHeight = ref(0);
 
 const getHeight = (selector: string) => (document.querySelector(selector) as HTMLElement)?.offsetHeight || 0;
@@ -21,7 +23,7 @@ onMounted(() => {
 
 <template>
   <PrimaryLayout>
-    <QuickReviewModal/>
+    <QuickReviewModal v-if="user"/>
     <Navigation/>
     <main class="mt-18 px-4 sm:px-6 lg:px-8" :style="{ minHeight: `${mainHeight ?? 0}px` }">
       <slot/>
