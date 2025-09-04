@@ -27,6 +27,7 @@ class GenreSeeder extends Seeder
                 'Blues Rock',
                 'Folk Rock',
                 'Glam Rock',
+                'Rock Opera',
             ],
             'Metal' => [
                 'Heavy Metal',
