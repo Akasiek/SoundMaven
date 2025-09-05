@@ -4,7 +4,7 @@ interface Album {
   slug: string;
   description: string;
   release_date: string;
-  type: string;
+  type: 'LP' | 'EP' | 'Single' | 'Compilation' | 'Live' | 'Remix' | 'Soundtrack' | 'Other';
   cover_image: string;
   cover_image_preview: string;
   average_rating: number;
