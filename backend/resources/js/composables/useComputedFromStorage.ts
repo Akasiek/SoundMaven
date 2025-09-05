@@ -1,7 +1,7 @@
 import { useStorage } from "@vueuse/core";
 import { computed } from "vue";
 
-export function useComputedStorage<T = string>(
+export function useComputedFromStorage<T = string>(
   storageKey: string,
   defaultValue: T | null = null
 ) {
