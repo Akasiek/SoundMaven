@@ -126,14 +126,15 @@ const getRatingColor = (rating: string | number) => {
 
       <p v-if="page.props?.success" class="text-green-500"> {{ page.props.success }} </p>
 
-      <div class="space-x-2 flex" :class="isInModal ? 'justify-end' : ''">
+      <div class="space-x-2 flex justify-end">
+        <Button
+          type="button" variant="destructive" v-if="currentUserReview" @click="deleteReview" :disabled="form.processing" class="cursor-pointer"
+        >
+          Delete
+        </Button>
         <Button type="submit" :disabled="form.processing">
           {{ `${currentUserReview ? "Update" : "Submit"}` }}
           <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin"/>
-        </Button>
-        <Button type="button" variant="destructive" v-if="currentUserReview" @click="deleteReview" :disabled="form.processing"
-                class="cursor-pointer">
-          Delete
         </Button>
       </div>
 
