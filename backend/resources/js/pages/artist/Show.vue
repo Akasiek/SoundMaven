@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AlbumList from "@/components/albums/AlbumList.vue";
 import ArtistHero from "@/components/artists/ArtistHero.vue";
+import AlbumListWithTypes from "@/components/albums/AlbumListWithTypes.vue";
 
 defineProps<{ artist: { data: ExtendedArtist } }>();
 </script>
@@ -10,12 +10,8 @@ defineProps<{ artist: { data: ExtendedArtist } }>();
     <ArtistHero :artist="artist.data"/>
 
     <section class="pt-24 pb-12">
-       <AlbumList :albums="artist.data.albums" :show-artist="false" :show-date="true"/>
+      <AlbumListWithTypes :albums="artist.data.albums" :storage-key="`${artist.data.slug}_show-view_album-type_default`"/>
     </section>
   </main>
 
 </template>
-
-<style scoped>
-
-</style>
