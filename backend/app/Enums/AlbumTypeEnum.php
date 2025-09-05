@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum AlbumTypes: string
+enum AlbumTypeEnum: string
 {
     case LP = 'LP';
     case EP = 'EP';

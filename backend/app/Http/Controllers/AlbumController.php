@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AlbumTypes;
+use App\Enums\AlbumTypeEnum;
 use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumTracksRequest;
@@ -67,7 +67,7 @@ class AlbumController extends Controller
     public function displayCreateForm(): \Inertia\Response
     {
         return Inertia::render('album/Create', [
-            'types' => AlbumTypes::cases(),
+            'types' => AlbumTypeEnum::cases(),
         ]);
     }
 
@@ -83,7 +83,7 @@ class AlbumController extends Controller
     {
         return Inertia::render('album/Update', [
             'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])),
-            'types' => AlbumTypes::cases(),
+            'types' => AlbumTypeEnum::cases(),
         ]);
     }
 

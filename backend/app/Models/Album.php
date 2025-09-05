@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\AlbumTypes;
+use App\Enums\AlbumTypeEnum;
 use App\Helpers\FileExtensionFromString;
 use App\Helpers\SecondsToTime;
 use App\Models\Abstract\AbstractModel;
@@ -39,7 +39,7 @@ class Album extends AbstractModel implements HasMedia
     ];
 
     protected $casts = [
-        'type' => AlbumTypes::class,
+        'type' => AlbumTypeEnum::class,
     ];
 
     public function sluggable(): array
