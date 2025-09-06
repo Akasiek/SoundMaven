@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Store\StoreArtistRequest;
 use App\Http\Requests\Update\UpdateArtistRequest;
 use App\Http\Resources\ArtistResource;
+use App\Http\Resources\Collections\AlbumCollection;
+use App\Models\Album;
 use App\Models\Artist;
 use App\Services\ArtistService;
 use Illuminate\Http\JsonResponse;
@@ -29,8 +31,18 @@ class ArtistController extends Controller
 
     public function show(Artist $artist): \Inertia\Response
     {
+        $typeQuery = request()->query('type');
+        $albums = Album::with(['artist', 'genres'])
+            ->where('artist_id', $artist->id)
+            ->when($typeQuery, function ($query, $typeQuery) {
+                $query->where('type', $typeQuery);
+            })
+            ->get();
+
         return inertia('artist/Show', [
-            'artist' => new ArtistResource($artist->loadMissing(['albums'])),
+            'artist' => ArtistResource::make($artist->loadMissing(['albums'])),
+            'albums' => AlbumCollection::make($albums),
+            'typeCount' => $artist->getAlbumTypeCounts(),
         ]);
     }
 

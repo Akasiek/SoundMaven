@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\AlbumTypeEnum;
 use App\Helpers\FileExtensionFromString;
 use App\Models\Abstract\AbstractModel;
+use DB;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -112,5 +114,29 @@ class Artist extends AbstractModel implements HasMedia
     public function albums(): HasMany
     {
         return $this->hasMany(Album::class);
+    }
+
+    /**
+     * Get album counts by type for this artist, sorted by enum order
+     */
+    public function getAlbumTypeCounts(): array
+    {
+        $typesCount = $this->albums()
+            ->select('type', DB::raw('count(*) as count'))
+            ->groupBy('type')
+            ->pluck('count', 'type')
+            ->toArray();
+        $typesCount['All'] = array_sum($typesCount);
+
+        $sortOrder = AlbumTypeEnum::getSortOrder();
+        uksort($typesCount, function ($a, $b) use ($sortOrder) {
+            if ($a === 'All') return -1;
+            if ($b === 'All') return 1;
+            $orderA = $sortOrder[$a] ?? 999;
+            $orderB = $sortOrder[$b] ?? 999;
+            return $orderA <=> $orderB;
+        });
+
+        return $typesCount;
     }
 }
