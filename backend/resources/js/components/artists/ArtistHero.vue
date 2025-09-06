@@ -9,8 +9,8 @@ const name = getNonBreakingSpacesAsRef(artist.original_name);
 <template>
   <section class="w-full relative scale-105">
     <div id="artist-gradient-bottom" class="absolute inset-x-0 -bottom-0.5 h-1/2"></div>
-    <div id="artist-gradient-right" class="absolute inset-y-0 -right-0.5 w-1/2"></div>
-    <div id="artist-gradient-left" class="absolute inset-y-0 -left-0.5 w-1/2"></div>
+    <div id="artist-gradient-right" class="absolute inset-y-0 -right-0.5 w-3/5"></div>
+    <div id="artist-gradient-left" class="absolute inset-y-0 -left-0.5 w-3/5"></div>
     <div id="artist-radial-gradient" class="absolute inset-0"></div>
     <div class="aspect-video w-full">
       <img :src="artist.background_image" :alt="`${artist.name} background`" class="w-full h-full object-center object-cover">
