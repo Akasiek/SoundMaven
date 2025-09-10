@@ -10,9 +10,9 @@ defineProps<{
 </script>
 
 <template>
-  <Link prefetch :href="route('albums.show', album.slug)" class="block group transition duration-300 ease-in-out" :title="album.title">
+  <Link prefetch :href="route('albums.show', album.slug)" class="block group transition-colors duration-300 ease-in-out" :title="album.title">
     <div
-      class="w-full aspect-square overflow-hidden relative transition duration-300 ease-in-out border-2 rounded-md border-zinc-800 group-hover:border-zinc-600">
+      class="w-full aspect-square overflow-hidden relative transition-colors duration-300 ease-in-out border-2 rounded-md border-zinc-800 group-hover:border-zinc-600">
       <img v-if="album.cover_image" :src="album.cover_image" :alt="album.title" class="w-full h-full object-cover object-center"/>
       <svg v-else xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
         <rect width="300" height="300" fill="#27262AFF"></rect>
@@ -23,7 +23,7 @@ defineProps<{
     </div>
 
     <div
-      class="grid grid-cols-[1fr_auto] gap-x-2.5 px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition duration-300 ease-in-out">
+      class="grid grid-cols-[1fr_auto] gap-x-2.5 px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition-colors duration-300 ease-in-out">
       <div class="space-y-1 w-full">
         <h2 class="sm:text-lg font-bold line-clamp-2" >
           {{ album.title }}
