@@ -3,26 +3,11 @@ import { Ref, shallowRef } from "vue";
 import { InertiaForm } from "@inertiajs/vue3";
 import debounce from "lodash.debounce";
 import axios from "axios";
+import { useModalOpenState } from "@/lib/utils";
 
 const KEYS = { OPEN: 'q', ESCAPE: 'Escape' } as const;
 
-export const useQuickReviewModalOpenState = createGlobalState(() => {
-  const isModalOpen = shallowRef<boolean>(false);
-
-  const openModal = () => {
-    isModalOpen.value = true;
-  }
-
-  const closeModal = () => {
-    isModalOpen.value = false;
-  }
-
-  const toggleModal = (state?: boolean) => {
-    isModalOpen.value = state !== undefined ? state : !isModalOpen.value;
-  }
-
-  return { isModalOpen, openModal, closeModal, toggleModal };
-});
+export const useQuickReviewModalOpenState = useModalOpenState;
 
 export const useQuickReviewChosenAlbumState = createGlobalState(() => {
   const chosenAlbum = shallowRef<ExtendedAlbum | null>(null);
