@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const useModalOpenState = createGlobalState(() => {
+export const createModalState = () => createGlobalState(() => {
   const isModalOpen = shallowRef<boolean>(false);
 
   const openModal = () => {
