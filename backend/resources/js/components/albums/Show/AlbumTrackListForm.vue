@@ -35,10 +35,8 @@ const form = useForm<{
 });
 
 const submit = () => {
-  // console.log('Submitting form with tracks:', form.tracks);
   form.put(route('albums.updateTracks', { album: album.slug }), {
     onSuccess: () => {
-      // Reset the form after successful submission
       form.reset();
     },
     onError: (errors) => {
