@@ -19,8 +19,8 @@ const user = useAuthUser();
   <nav class="fixed inset-x-0 top-0 w-full h-18 bg-zinc-800 px-4 sm:px-6 lg:px-8 z-30" id="top-nav">
     <div class="container w-full mx-auto flex justify-between items-center h-full">
 
-      <Link prefetch class="block w-48" :href="route('home')">
-        <img src="/images/logo.svg" alt="Logo">
+      <Link prefetch class="block px-5 -ml-5 py-5" :href="route('home')">
+        <img src="/images/logo.svg" alt="Logo" class="w-48">
       </Link>
 
       <div class="flex items-center gap-x-5">
