@@ -2,19 +2,12 @@
 import AlbumCard from "@/components/albums/AlbumCard.vue";
 import { computed } from "vue";
 
-const { albums, groupByType } = withDefaults(
-  defineProps<{
-    albums: (ExtendedAlbum | Album)[],
-    showArtist?: boolean,
-    showDate?: boolean
-    groupByType?: boolean
-  }>(),
-  {
-    showArtist: true,
-    showDate: false,
-    groupByType: false
-  }
-);
+const { albums, groupByType = false, showArtist = true, showDate = false } = defineProps<{
+  albums: (ExtendedAlbum | Album)[],
+  showArtist?: boolean,
+  showDate?: boolean
+  groupByType?: boolean
+}>();
 
 const groupedAlbumsByType = computed(() => {
   if (!groupByType) {
