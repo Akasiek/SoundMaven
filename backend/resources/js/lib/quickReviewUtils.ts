@@ -7,16 +7,7 @@ import { createToggleState } from "@/lib/utils";
 
 const KEYS = { OPEN: 'q', ESCAPE: 'Escape' } as const;
 
-export const useQuickReviewModalOpenState = () => {
-  const { isOpen, open, close, toggle } = createToggleState()();
-
-  return {
-    isModalOpen: isOpen,
-    openModal: open,
-    closeModal: close,
-    toggleModal: toggle
-  };
-};
+export const useQuickReviewModalOpenState = createToggleState();
 
 export const useQuickReviewChosenAlbumState = createGlobalState(() => {
   const chosenAlbum = shallowRef<ExtendedAlbum | null>(null);
@@ -33,7 +24,7 @@ export const useQuickReviewChosenAlbumState = createGlobalState(() => {
 });
 
 export const handleGlobalHotkeys = (): void => {
-  const { isModalOpen, openModal, closeModal } = useQuickReviewModalOpenState();
+  const { isOpen: isModalOpen, open: openModal, close: closeModal } = useQuickReviewModalOpenState();
 
   // Handle global key events for opening/closing the modal
   useMagicKeys({

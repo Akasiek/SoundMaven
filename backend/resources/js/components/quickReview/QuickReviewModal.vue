@@ -5,7 +5,7 @@ import { handleGlobalHotkeys, useQuickReviewChosenAlbumState, useQuickReviewModa
 import QuickReviewSearchInput from "@/components/quickReview/QuickReviewSearchInput.vue";
 import QuickReviewChosenAlbumView from "@/components/quickReview/QuickReviewChosenAlbumView.vue";
 
-const { isModalOpen, closeModal } = useQuickReviewModalOpenState();
+const { isOpen: isModalOpen, close: closeModal } = useQuickReviewModalOpenState();
 const { chosenAlbum, clearChosenAlbum: clearChosenAlbumState } = useQuickReviewChosenAlbumState();
 
 handleGlobalHotkeys();

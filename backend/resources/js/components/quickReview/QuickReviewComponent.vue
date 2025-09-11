@@ -3,7 +3,7 @@ import { Star } from "lucide-vue-next";
 import QuickReviewModal from "@/components/quickReview/QuickReviewModal.vue";
 import { useQuickReviewModalOpenState } from "@/lib/quickReviewUtils";
 
-const { openModal } = useQuickReviewModalOpenState();
+const { open: openModal } = useQuickReviewModalOpenState();
 </script>
 
 <template>
