@@ -4,6 +4,7 @@ import { InertiaForm } from "@inertiajs/vue3";
 import debounce from "lodash.debounce";
 import axios from "axios";
 import { createToggleState } from "@/lib/utils";
+import { isUserInputActive, preventDefaultAndStopPropagation } from "@/lib/hotkeyUtils";
 
 const KEYS = { OPEN: 'q', ESCAPE: 'Escape' } as const;
 
@@ -39,7 +40,7 @@ export const handleGlobalHotkeys = (): void => {
   });
 
   const handleOpenKey = (e: KeyboardEvent) => {
-    if (!isModalOpen.value) {
+    if (!isModalOpen.value && !isUserInputActive()) {
       preventDefaultAndStopPropagation(e);
       openModal();
     }
@@ -50,11 +51,6 @@ export const handleGlobalHotkeys = (): void => {
       preventDefaultAndStopPropagation(e);
       closeModal();
     }
-  };
-
-  const preventDefaultAndStopPropagation = (e: KeyboardEvent): void => {
-    e.preventDefault();
-    e.stopPropagation();
   };
 }
 
