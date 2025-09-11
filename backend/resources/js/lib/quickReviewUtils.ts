@@ -3,11 +3,20 @@ import { Ref, shallowRef } from "vue";
 import { InertiaForm } from "@inertiajs/vue3";
 import debounce from "lodash.debounce";
 import axios from "axios";
-import { createModalState } from "@/lib/utils";
+import { createToggleState } from "@/lib/utils";
 
 const KEYS = { OPEN: 'q', ESCAPE: 'Escape' } as const;
 
-export const useQuickReviewModalOpenState = createModalState();
+export const useQuickReviewModalOpenState = () => {
+  const { isOpen, open, close, toggle } = createToggleState()();
+
+  return {
+    isModalOpen: isOpen,
+    openModal: open,
+    closeModal: close,
+    toggleModal: toggle
+  };
+};
 
 export const useQuickReviewChosenAlbumState = createGlobalState(() => {
   const chosenAlbum = shallowRef<ExtendedAlbum | null>(null);
@@ -42,7 +51,6 @@ export const handleGlobalHotkeys = (): void => {
     if (!isModalOpen.value) {
       preventDefaultAndStopPropagation(e);
       openModal();
-      // form.query = '';
     }
   };
 
@@ -50,7 +58,6 @@ export const handleGlobalHotkeys = (): void => {
     if (isModalOpen.value) {
       preventDefaultAndStopPropagation(e);
       closeModal();
-      // form.query = '';
     }
   };
 

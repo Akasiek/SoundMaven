@@ -7,20 +7,21 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const createModalState = () => createGlobalState(() => {
-  const isModalOpen = shallowRef<boolean>(false);
+export const createToggleState = () => createGlobalState(() => {
+  const isOpen = shallowRef<boolean>(false);
 
-  const openModal = () => {
-    isModalOpen.value = true;
+  const open = () => {
+    isOpen.value = true;
   }
 
-  const closeModal = () => {
-    isModalOpen.value = false;
+  const close = () => {
+    isOpen.value = false;
   }
 
-  const toggleModal = () => {
-    isModalOpen.value = !isModalOpen.value;
+  const toggle = () => {
+    isOpen.value = !isOpen.value;
   }
 
-  return { isModalOpen, openModal, closeModal, toggleModal };
+  return { isOpen, open, close, toggle };
 });
+
