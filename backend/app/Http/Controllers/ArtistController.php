@@ -12,6 +12,7 @@ use App\Services\ArtistService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Inertia\Inertia;
 
 class ArtistController extends Controller
 {
@@ -39,8 +40,8 @@ class ArtistController extends Controller
             })
             ->get();
 
-        return inertia('artist/Show', [
-            'artist' => ArtistResource::make($artist->loadMissing(['albums'])),
+        return Inertia::render('artist/Show', [
+            'artist' => ArtistResource::make($artist),
             'albums' => AlbumCollection::make($albums),
             'typeCount' => $artist->getAlbumTypeCounts(),
         ]);
