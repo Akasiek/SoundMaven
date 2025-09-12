@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { getNonBreakingSpacesAsRef } from "@/composables/getNonBreakingSpaces";
+import Image from "@/components/Image.vue";
 
 const { artist } = defineProps<{ artist: Artist }>()
 
@@ -8,15 +9,16 @@ const name = getNonBreakingSpacesAsRef(artist.original_name);
 
 <template>
   <section class="w-full relative scale-105">
-    <div id="artist-gradient-bottom" class="absolute inset-x-0 -bottom-0.5 h-1/2"></div>
-    <div id="artist-gradient-right" class="absolute inset-y-0 -right-0.5 w-3/5"></div>
-    <div id="artist-gradient-left" class="absolute inset-y-0 -left-0.5 w-3/5"></div>
-    <div id="artist-radial-gradient" class="absolute inset-0"></div>
-    <div class="aspect-video w-full">
-      <img :src="artist.background_image" :alt="`${artist.name} background`" class="w-full h-full object-center object-cover">
+    <div id="artist-gradient-bottom" class="absolute inset-x-0 -bottom-0.5 h-1/2 z-10"></div>
+    <div id="artist-gradient-right" class="absolute inset-y-0 -right-0.5 w-3/5 z-10"></div>
+    <div id="artist-gradient-left" class="absolute inset-y-0 -left-0.5 w-3/5 z-10"></div>
+    <div id="artist-radial-gradient" class="absolute inset-0 z-10"></div>
+    <div class="aspect-video w-full z-0">
+      <Image :src="artist.background_image" :alt="`${artist.name} background`" :placeholder="artist.background_image_placeholder"
+             classes="w-full h-full object-center object-cover"/>
     </div>
 
-    <div class="absolute inset-x-0 bottom-10 mx-16">
+    <div class="absolute inset-x-0 bottom-10 mx-16 z-10">
       <h1 class="text-6xl font-black text-white mb-12 max-w-3xl">
         {{ name }}
       </h1>

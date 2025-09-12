@@ -91,6 +91,14 @@ class Album extends AbstractModel implements HasMedia
             ->quality(80)
             ->format('webp')
             ->nonQueued();
+
+        $this
+            ->addMediaConversion('placeholder')
+            ->width(200)
+            ->blur(50)
+            ->quality(75)
+            ->format('jpeg')
+            ->nonQueued();
     }
 
     public function attachCoverImage(string $string): void
@@ -122,6 +130,14 @@ class Album extends AbstractModel implements HasMedia
     {
         return Attribute::make(
             get: fn() => $this->getFirstMediaUrl('album-covers', 'preview'),
+        );
+    }
+
+    protected function coverImagePlaceholder(): Attribute
+    {
+       $exists = (bool)$this->getFirstMedia('album-covers');
+        return Attribute::make(
+            get: fn() => $exists ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($this->getFirstMediaPath('album-covers', 'placeholder'))) : null,
         );
     }
 

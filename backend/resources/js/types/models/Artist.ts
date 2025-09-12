@@ -7,6 +7,7 @@ interface Artist {
   type: string;
   background_image: string;
   background_image_preview: string;
+  background_image_placeholder: string;
 
   created_at: string;
   updated_at: string;

@@ -65,9 +65,17 @@ class Artist extends AbstractModel implements HasMedia
 
         $this
             ->addMediaConversion('preview')
-            ->width(300)
+            ->width(400)
             ->quality(80)
             ->format('webp')
+            ->nonQueued();
+
+        $this
+            ->addMediaConversion('placeholder')
+            ->width(400)
+            ->blur(50)
+            ->quality(75)
+            ->format('jpeg')
             ->nonQueued();
     }
 
@@ -100,6 +108,13 @@ class Artist extends AbstractModel implements HasMedia
     {
         return Attribute::make(
             get: fn() => $this->getFirstMediaUrl('artist-backgrounds', 'preview'),
+        );
+    }
+
+    protected function backgroundImagePlaceholder(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => 'data:image/jpeg;base64,' . base64_encode(file_get_contents($this->getFirstMediaPath('artist-backgrounds', 'placeholder'))),
         );
     }
 

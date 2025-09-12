@@ -7,6 +7,7 @@ interface Album {
   type: 'LP' | 'EP' | 'Single' | 'Compilation' | 'Live' | 'Remix' | 'Soundtrack' | 'Other';
   cover_image: string;
   cover_image_preview: string;
+  cover_image_placeholder: string;
   average_rating: number;
   rating_color: string;
   total_length: number;
