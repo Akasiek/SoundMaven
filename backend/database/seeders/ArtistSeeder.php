@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Artist;
 use Illuminate\Database\Seeder;
+use Storage;
 
 class ArtistSeeder extends Seeder
 {
@@ -13,6 +14,14 @@ class ArtistSeeder extends Seeder
     public function run(bool $seedImages = true): void
     {
         $data = $this->getArtistData();
+
+        if ($seedImages) {
+            $drive = Storage::drive('artist_images');
+            $directories = $drive->allDirectories();
+            foreach ($directories as $directory) {
+                $drive->deleteDirectory($directory);
+            }
+        }
 
         foreach ($data as $artist) {
             $model = Artist::updateOrCreate(['name' => $artist['name']], ['type' => $artist['type']]);

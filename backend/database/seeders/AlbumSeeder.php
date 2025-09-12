@@ -6,6 +6,7 @@ use App\Models\Album;
 use App\Models\Artist;
 use App\Models\Genre;
 use Exception;
+use Storage;
 
 class AlbumSeeder extends CsvSeeder
 {
@@ -44,6 +45,15 @@ class AlbumSeeder extends CsvSeeder
     {
         $data = $this->mapCsvData();
         $data = $this->mapSpecialValues($data);
+
+        // Clear image storage
+        if ($seedImages) {
+            $drive = Storage::drive('album_images');
+            $directories = $drive->allDirectories();
+            foreach ($directories as $directory) {
+                $drive->deleteDirectory($directory);
+            }
+        }
 
         foreach ($data as $row) {
             $coverImage = $row['cover_image'];
