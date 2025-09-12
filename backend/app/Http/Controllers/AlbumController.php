@@ -57,7 +57,7 @@ class AlbumController extends Controller
             ->take(5)->get();
 
         return Inertia::render('album/Show', [
-            'album' => new AlbumResource($album->loadMissing(['artist', 'tracks', 'genres'])->loadCount(['reviews'])),
+            'album' => AlbumResource::make($album->loadMissing(['artist', 'tracks', 'genres'])->loadCount(['reviews'])),
             'currentUserReview' => $currentUserReview ? new AlbumReviewResource($currentUserReview) : null,
             'latestRatings' => AlbumReviewResource::collection($latestRatings),
             'latestReviews' => AlbumReviewResource::collection($latestReviews),

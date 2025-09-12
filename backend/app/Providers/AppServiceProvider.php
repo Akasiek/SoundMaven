@@ -21,5 +21,20 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         JsonResource::withoutWrapping();
+
+        Vite::prefetch(6);
+
+        Inertia::macro('prefetch', function (string|array $urls) {
+            if (!request()->inertia()) {
+                return $this;
+            }
+
+            $this->share('prefetch', [
+                ...$this->getShared('prefetch', []),
+                ...(array)$urls,
+            ]);
+
+            return $this;
+        });
     }
 }

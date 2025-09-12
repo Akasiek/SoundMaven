@@ -8,7 +8,7 @@ import { ref, watch } from "vue";
 import { useEventBus } from "@vueuse/core";
 
 const form = useForm<{ query: string; }>({ query: '' });
-const queryResults = ref<{ data: { album: ExtendedAlbum[] } } | null>(null);
+const queryResults = ref<{ album: ExtendedAlbum[] } | null>(null);
 const { chosenAlbum, setChosenAlbum } = useQuickReviewChosenAlbumState();
 
 const handleSearchSubmit = useSearchSubmit(form, queryResults);
@@ -44,11 +44,11 @@ useEventBus<string>('reloadSearch').on(handleReloadSearch);
     </form>
 
     <div
-      v-if="queryResults?.data.album.length"
-      class="mx-8 mb-8 overflow-y-auto max-h-[70dvh] rounded-lg border-2 bg-zinc-800"
+      v-if="queryResults?.album.length"
+      class="mx-8 mb-8 overflow-y-auto max-h-[70dvh] rounded-lg border-2 bg-zinc-800 space-y-2"
     >
       <div
-        v-for="album in queryResults.data.album"
+        v-for="album in queryResults.album"
         :key="album.id"
         @click="setChosenAlbum(album)"
         class="flex items-center space-x-4 bg-zinc-800 hover:bg-zinc-750 transition-colors cursor-pointer px-4 py-4 rounded-md"

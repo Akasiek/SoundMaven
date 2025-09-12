@@ -56,7 +56,7 @@ export const handleGlobalHotkeys = (): void => {
 
 export const useSearchSubmit = (
   form: InertiaForm<{ query: string }>,
-  queryResults: Ref<{ data: { album: ExtendedAlbum[] } } | null>
+  queryResults: Ref<{ album: ExtendedAlbum[] } | null>
 ): () => void => {
   const { chosenAlbum, setChosenAlbum } = useQuickReviewChosenAlbumState();
   const handleSubmit = () => {
@@ -80,7 +80,7 @@ export const useSearchSubmit = (
     // If an album is already chosen, update it with the latest data from the search results
     if (queryResults.value && chosenAlbum.value) {
       setChosenAlbum(
-        queryResults.value.data.album.find((a) => a.id === chosenAlbum.value?.id) || chosenAlbum.value
+        queryResults.value.album.find((a) => a.id === chosenAlbum.value?.id) || chosenAlbum.value
       );
     }
   };
