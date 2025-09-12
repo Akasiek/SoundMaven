@@ -2,7 +2,7 @@
 import AlbumList from "@/components/albums/AlbumList.vue";
 
 interface Props {
-  albums: { data: ExtendedAlbum[] };
+  albums: ExtendedAlbum[];
 }
 
 defineProps<Props>();
@@ -11,7 +11,7 @@ defineProps<Props>();
 <template>
   <div class="container mx-auto">
     <div class="py-12">
-      <AlbumList :albums="albums.data" :show-artist="true"/>
+      <AlbumList :albums="albums" :show-artist="true"/>
     </div>
   </div>
 </template>

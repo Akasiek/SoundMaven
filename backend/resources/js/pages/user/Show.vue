@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
 defineProps<{
-  user: { data: User }
+  user: User
 }>();
 </script>
 
 <template>
-  {{ user.data.name }}
+  {{ user.name }}
 </template>
 
 <style scoped>

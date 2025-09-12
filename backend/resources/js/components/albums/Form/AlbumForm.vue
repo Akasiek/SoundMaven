@@ -8,7 +8,7 @@ import { Button } from "@/components/shadcn/ui/button";
 import { LoaderCircle, X } from "lucide-vue-next";
 import InputError from "@/components/inputs/InputError.vue";
 
-const { album } = defineProps<{ types: string[], album?: { data: ExtendedAlbum } }>();
+const { album } = defineProps<{ types: string[], album?: ExtendedAlbum }>();
 
 const isUpdate = !!album && !!album.data;
 const imagePreviewUrl = ref<string | null>(null);
@@ -22,18 +22,18 @@ const form = useForm<{
   artist_id?: string; // Optional artist ID for form submission
   cover_image: File | null; // File object for the cover image
 }>({
-  title: album?.data.title || '',
-  release_date: album?.data.release_date || new Date().toISOString().slice(0, 10), // Default to today
-  type: album?.data.type || 'LP',
-  artist: album?.data.artist ? { id: album.data.artist.id, label: album.data.artist.name } : null,
-  artist_id: album?.data.artist ? album.data.artist.id : undefined,
+  title: album?.title || '',
+  release_date: album?.release_date || new Date().toISOString().slice(0, 10), // Default to today
+  type: album?.type || 'LP',
+  artist: album?.artist ? { id: album.artist.id, label: album.artist.name } : null,
+  artist_id: album?.artist ? album.artist.id : undefined,
   cover_image: null,
 });
 
 const submit = () => {
   form.artist_id = form.artist?.id;
   const formRoute = isUpdate
-    ? route('albums.update', { album: album.data.slug })
+    ? route('albums.update', { album: album.slug })
     : route('albums.store');
 
   router.post(formRoute, {
