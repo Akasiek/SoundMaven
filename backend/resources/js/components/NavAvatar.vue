@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
-import { LogOut } from 'lucide-vue-next';
+import { LogOut, User as UserIcon } from 'lucide-vue-next';
 import type { User } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
@@ -23,11 +23,16 @@ defineProps<{ user: User; }>();
       </Avatar>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="min-w-56 rounded-lg" align="end" :side-offset="4">
-      <!-- TODO -->
+      <DropdownMenuItem :as-child="true">
+        <Link prefetch :href="route('users.show', user.slug )">
+          <UserIcon class="mr-1 text-zinc-50"/>
+          Profile
+        </Link>
+      </DropdownMenuItem>
       <DropdownMenuSeparator class="bg-zinc-700"/>
       <DropdownMenuItem :as-child="true">
         <Link class="block w-full" method="post" :href="route('logout')" as="button">
-          <LogOut class="mr-2 h-4 w-4 text-zinc-50"/>
+          <LogOut class="mr-1 text-zinc-50"/>
           Log out
         </Link>
       </DropdownMenuItem>
