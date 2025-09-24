@@ -1,9 +1,8 @@
 <script setup lang="ts">
-
 import { Link } from '@inertiajs/vue3'
 import NavAvatar from "@/components/NavAvatar.vue";
 import { useAuthUser } from "@/composables/useAuthUser";
-
+import NavSearchComponent from "@/components/navSearch/NavSearchComponent.vue";
 
 const links = [
   { name: 'Home', url: route('home') },
@@ -24,6 +23,11 @@ const user = useAuthUser();
       </Link>
 
       <div class="flex items-center gap-x-5">
+
+        <NavSearchComponent/>
+
+        <hr class="border-l border-zinc-600 h-6">
+
         <Link
           prefetch
           v-for="link in links"
