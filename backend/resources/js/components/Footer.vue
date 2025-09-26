@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <footer class="min-h-36 bg-zinc-850">
+  <footer class="min-h-36 bg-zinc-800">
     TEST
   </footer>
 </template>
