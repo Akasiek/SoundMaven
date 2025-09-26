@@ -18,6 +18,11 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'slug' => $this->slug,
+            'stats' => [
+                'album_rating_count' => $this->whenCounted('albumReviews', $this->album_rating_count),
+                'album_review_count' => $this->whenCounted('albumReviews', $this->album_review_count),
+                'average_album_rating' => $this->whenCounted('albumReviews', $this->average_album_rating),
+            ]
         ];
     }
 }

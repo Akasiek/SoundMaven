@@ -11,8 +11,10 @@ class UserController
 {
     public function show(User $user): Response
     {
+        $user->loadCount(['albumReviews']);
+
         return Inertia::render('user/Show', [
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
         ]);
     }
 }
