@@ -24,7 +24,7 @@ defineProps<{ user: User; }>();
     </DropdownMenuTrigger>
     <DropdownMenuContent class="min-w-56 rounded-lg" align="end" :side-offset="4">
       <DropdownMenuItem :as-child="true">
-        <Link prefetch :href="route('users.show', user.slug )">
+        <Link prefetch :href="route('users.show', user.slug, true)">
           <UserIcon class="mr-1 text-zinc-50"/>
           Profile
         </Link>
