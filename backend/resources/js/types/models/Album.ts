@@ -13,6 +13,9 @@ interface Album {
   total_length: number;
   total_length_formatted: string; // in "MM:SS" ("HH:MM:SS" if needed) format
 
+  user_rating?: string;
+  user_rating_color?: string;
+
   created_at: string;
   updated_at: string;
   created_by: string;

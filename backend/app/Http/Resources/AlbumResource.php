@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Helpers\RatingColor;
 use App\Models\Album;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -33,7 +34,8 @@ class AlbumResource extends JsonResource
             'reviews' => AlbumReviewResource::collection($this->whenLoaded('reviews')),
             'reviews_count' => $this->whenLoaded('reviews', $this->reviews_count),
 
-            'user_rating' => $this->whenHas('rating', $this->getAttribute('rating')),
+            'user_rating' => $this->whenHas('rating', $this->getAttribute('rating'), null),
+            'user_rating_color' => $this->whenHas('rating', RatingColor::get($this->getAttribute('rating')), null),
 
             'current_user_review' => AlbumReviewResource::make($this->whenLoaded('currentUserReview')),
 
