@@ -22,7 +22,7 @@ class AlbumResource extends JsonResource
             'cover_image' => $this->cover_image,
             'cover_image_preview' => $this->cover_image_preview,
             'cover_image_placeholder' => $this->cover_image_placeholder,
-            'average_rating' => $this->whenCounted('reviews', $this->average_rating),
+            'average_rating' => $this->average_rating,
             'rating_color' => $this->rating_color,
             'total_length' => $this->whenLoaded('tracks', $this->total_length),
             'total_length_formatted' => $this->whenLoaded('tracks', $this->total_length_formatted),
