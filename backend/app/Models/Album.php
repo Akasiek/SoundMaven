@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AlbumTypeEnum;
 use App\Helpers\FileExtensionFromString;
+use App\Helpers\RatingColor;
 use App\Helpers\SecondsToTime;
 use App\Models\Abstract\AbstractModel;
 use Cocur\Slugify\Slugify;
@@ -188,20 +189,8 @@ class Album extends AbstractModel implements HasMedia
      */
     public function ratingColor(): Attribute
     {
-        $avg = $this->averageRating;
-
-        if ($avg === 'Ø') {
-            $color = 'text-gray-400';
-        } elseif ($avg < 30) {
-            $color = 'text-red-400';
-        } elseif ($avg < 70) {
-            $color = 'text-yellow-400';
-        } else {
-            $color = 'text-green-400';
-        }
-
         return Attribute::make(
-            get: fn() => $color,
+            get: fn() => RatingColor::get($this->averageRating),
         );
     }
 
