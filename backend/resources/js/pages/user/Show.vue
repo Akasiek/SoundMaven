@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
+import AlbumCard from "@/components/albums/AlbumCard.vue";
 
-defineProps<{
-  user: UserWithStats
+const props = defineProps<{
+  user: UserWithStats,
+  latestRatings: any
 }>();
 </script>
 
 <template>
-  <main class="container mx-auto grid grid-cols-[1fr_2fr] pt-8 gap-8">
-    <aside class="bg-zinc-800 rounded-md min-h-24">
+  <main class="container mx-auto grid grid-cols-[1fr_2fr] pt-8 gap-8 mb-18">
+    <aside class="bg-zinc-800 rounded-md min-h-24 h-fit">
       <div class="flex items-center gap-4 justify-center p-8 mr-4">
         <Avatar class="w-16 h-16">
           <AvatarImage src="https://github.com/unovue.png" :alt="`${user.name} profile picture`"/>
@@ -40,7 +42,17 @@ defineProps<{
 
     </aside>
     <section>
+      <div>
+        <h1> User's Latest Ratings </h1>
+        <hr class="w-24 mt-4 mb-6 border-zinc-800">
 
+        <div class="grid grid-cols-4 gap-4">
+          <AlbumCard
+            v-for="album in latestRatings" :key="album.id"
+            :album="album" :show-artist="true" :show-user-rating="true" size="md"
+          />
+        </div>
+      </div>
 
     </section>
   </main>

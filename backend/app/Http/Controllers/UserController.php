@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AlbumResource;
 use App\Http\Resources\UserResource;
+use App\Models\Album;
 use App\Models\User;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -11,10 +13,17 @@ class UserController
 {
     public function show(User $user): Response
     {
-        $user->loadCount(['albumReviews']);
-
         return Inertia::render('user/Show', [
-            'user' => new UserResource($user),
+            'user' => UserResource::make($user->loadCount(['albumReviews'])),
+            'latestRatings' => AlbumResource::collection(
+                Album::with(['artist'])
+                    ->rightJoin('album_reviews', 'albums.id', '=', 'album_reviews.album_id')
+                    ->where('album_reviews.created_by', $user->id)
+                    ->orderBy('album_reviews.created_at', 'desc')
+                    ->addSelect(['albums.*', 'album_reviews.rating as rating'])
+                    ->limit(24)
+                    ->get()
+            ),
         ]);
     }
 }
