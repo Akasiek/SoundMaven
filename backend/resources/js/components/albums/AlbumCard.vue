@@ -2,11 +2,35 @@
 import { Link } from "@inertiajs/vue3";
 import { getNonBreakingSpaces } from "@/composables/getNonBreakingSpaces";
 
-defineProps<{
+const { showUserRating = false, size = 'lg' } = defineProps<{
   album: ExtendedAlbum | Album;
   showArtist?: boolean;
   showDate?: boolean;
+  showUserRating?: boolean;
+  size?: string
 }>();
+
+const styles = {
+  lg: {
+    albumTitle: "!text-base sm:!text-lg",
+    artistName: "!text-sm sm:!text-base",
+    rating: "text-xl sm:text-2xl md:text-[28px] pr-2"
+  },
+  md: {
+    albumTitle: "text-sm sm:!text-base",
+    artistName: "!text-xs sm:!text-sm",
+    rating: "text-lg sm:text-xl md:text-2xl pr-0.5"
+  },
+  sm: {
+    albumTitle: "!text-xs sm:!text-sm",
+    artistName: "!text-xs",
+    rating: "text-base sm:text-lg md:text-xl pr-0"
+  }
+}
+
+const getStyledSize = (size: string, element: string) => {
+  return styles[size as keyof typeof styles][element as keyof typeof styles['lg']]
+}
 </script>
 
 <template>
@@ -25,7 +49,7 @@ defineProps<{
     <div
       class="grid grid-cols-[1fr_auto] gap-x-2.5 px-3 mt-4 py-3 border-2 rounded-md border-zinc-800 group-hover:border-zinc-600 transition-colors duration-300 ease-in-out">
       <div class="space-y-1 w-full">
-        <h2 class="sm:text-lg font-bold line-clamp-2" >
+        <h2 class="font-bold line-clamp-2" :class="getStyledSize(size, 'albumTitle')">
           {{ album.title }}
         </h2>
 
@@ -35,7 +59,7 @@ defineProps<{
           :href="route('artists.show', (album as ExtendedAlbum).artist.slug)"
           class="hover:underline line-clamp-2"
         >
-          <h3 class="text-sm sm:text-base font-sans font-normal text-zinc-300">
+          <h3 class="font-sans font-normal text-zinc-300" :class="getStyledSize(size, 'artistName')">
             {{ getNonBreakingSpaces((album as ExtendedAlbum).artist.original_name) }}
           </h3>
         </Link>
