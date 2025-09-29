@@ -69,8 +69,13 @@ const getStyledSize = (size: string, element: string) => {
 
       </div>
 
-      <div :class="`pr-2 py-2.5 text-xl sm:text-2xl md:text-[28px] font-black flex justify-center leading-none ${album.rating_color}`">
-        {{ album.average_rating }}
+      <div class="py-2.5  font-black flex justify-center leading-none" :class="getStyledSize(size, 'rating')">
+        <span v-if="showUserRating" :class="`${album.user_rating_color}`">
+          {{ album.user_rating }}
+        </span>
+        <span v-else :class="`${album.rating_color}`">
+          {{ album.average_rating }}
+        </span>
       </div>
     </div>
   </Link>
