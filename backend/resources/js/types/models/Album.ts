@@ -15,6 +15,7 @@ interface Album {
 
   user_rating?: string;
   user_rating_color?: string;
+  user_review?: string;
 
   created_at: string;
   updated_at: string;

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import UserLatestReviews from "@/components/users/Show/UserLatestReviews.vue";
+import UserLatestRatings from "@/components/users/Show/UserLatestRatings.vue";
 
 defineProps<{
   user: UserWithStats,
-  latestRatings: any
+  latestRatings: ExtendedAlbum[],
+  latestReviews: ExtendedAlbum[],
 }>();
 </script>
 
@@ -43,6 +45,7 @@ defineProps<{
     </aside>
     <section class="space-y-18">
       <UserLatestRatings :latest-ratings="latestRatings"/>
+      <UserLatestReviews :latest-reviews="latestReviews"/>
     </section>
   </main>
 </template>

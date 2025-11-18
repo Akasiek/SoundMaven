@@ -24,6 +24,16 @@ class UserController
                     ->limit(24)
                     ->get()
             ),
+            'latestReviews' => AlbumResource::collection(
+                Album::with(['artist'])
+                    ->rightJoin('album_reviews', 'albums.id', '=', 'album_reviews.album_id')
+                    ->where('album_reviews.created_by', $user->id)
+                    ->orderBy('album_reviews.created_at', 'desc')
+                    ->addSelect(['albums.*', 'album_reviews.rating as rating', 'album_reviews.body as body'])
+                    ->whereNotNull('album_reviews.body')
+                    ->limit(24)
+                    ->get()
+            ),
         ]);
     }
 }

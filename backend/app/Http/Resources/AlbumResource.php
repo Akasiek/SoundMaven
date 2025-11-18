@@ -36,6 +36,7 @@ class AlbumResource extends JsonResource
 
             'user_rating' => $this->whenHas('rating', $this->getAttribute('rating'), null),
             'user_rating_color' => $this->whenHas('rating', RatingColor::get($this->getAttribute('rating')), null),
+            'user_review' => $this->whenHas('body', $this->getAttribute('body'), null),
 
             'current_user_review' => AlbumReviewResource::make($this->whenLoaded('currentUserReview')),
 
