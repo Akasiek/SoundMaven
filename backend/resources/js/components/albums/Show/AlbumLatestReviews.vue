@@ -36,7 +36,7 @@ const toggleReview = (index: number) => {
           </div>
         </div>
 
-        <p class="text-zinc-300 mt-2 prose max-w-full " :class="(review.body.length <= 420 || openedReviews[index] || false) ? '' : 'line-clamp-3'">
+        <p class="text-zinc-300 mt-2 prose max-w-full wrap-anywhere" :class="(review.body.length <= 420 || openedReviews[index] || false) ? '' : 'line-clamp-3'">
           {{ review.body }}
         </p>
         <button class="text-green-400 hover:underline mt-2 cursor-pointer" @click="toggleReview(index)" v-if="review.body.length > 420">
