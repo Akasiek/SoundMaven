@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import AlbumHero from "@/components/albums/AlbumHero.vue";
 import AlbumTrackList from "@/components/albums/Show/AlbumTrackList.vue";
 import AlbumUserReviewForm from "@/components/albums/Show/AlbumUserReviewForm.vue";
