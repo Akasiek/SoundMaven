@@ -31,12 +31,15 @@ const toggleReview = (index: number) => {
             <p class="font-semibold">{{ review.creator.name }}</p>
           </Link>
 
-          <div class="flex items-end text-2xl leading-none font-bold" :class="`text-${getRatingColor(review.rating)}-400`">
-            {{ review.rating }} <span class="text-sm text-zinc-500 ml-0.5">/100</span>
+          <div class="flex items-end text-2xl leading-none font-black" :class="`text-${getRatingColor(review.rating)}-400`">
+            {{ review.rating }} <span class="text-xs text-zinc-500 ml-0.5">/100</span>
           </div>
         </div>
 
-        <p class="text-zinc-300 mt-2 prose max-w-full wrap-anywhere" :class="(review.body.length <= 420 || openedReviews[index] || false) ? '' : 'line-clamp-3'">
+        <p
+          class="border-l border-zinc-700 pl-4 ml-2 text-zinc-300 mt-2 prose max-w-full wrap-anywhere"
+          :class="(review.body.length <= 420 || openedReviews[index] || false) ? '' : 'line-clamp-3'"
+        >
           {{ review.body }}
         </p>
         <button class="text-green-400 hover:underline mt-2 cursor-pointer" @click="toggleReview(index)" v-if="review.body.length > 420">
