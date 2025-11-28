@@ -25,8 +25,8 @@ const toggleReview = (index: number) => {
         <div class="flex justify-between items-center gap-5">
           <Link class="flex items-center gap-5" :href="route('users.show', { user: review.creator.slug })">
             <Avatar class="w-10 h-10">
-              <AvatarImage src="https://github.com/unovue.png" :alt="`@${review.creator.name}`"/>
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage v-if="review.creator.avatar_preview" :src="review.creator.avatar_preview" :alt="`${review.creator.name} profile picture`"/>
+              <AvatarFallback v-else>CN</AvatarFallback>
             </Avatar>
             <p class="font-semibold">{{ review.creator.name }}</p>
           </Link>

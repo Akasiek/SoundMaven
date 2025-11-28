@@ -18,6 +18,8 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'slug' => $this->slug,
+            'avatar' => $this->avatar,
+            'avatar_preview' => $this->avatar_preview,
             'stats' => [
                 'album_rating_count' => $this->whenCounted('albumReviews', $this->album_rating_count),
                 'album_review_count' => $this->whenCounted('albumReviews', $this->album_review_count),

@@ -17,9 +17,9 @@ defineProps<{ user: User; }>();
 <template>
   <DropdownMenu :modal="false">
     <DropdownMenuTrigger as-child>
-      <Avatar class="w-10 h-10">
-        <AvatarImage src="https://github.com/unovue.png" alt="@unovue"/>
-        <AvatarFallback>CN</AvatarFallback>
+      <Avatar class="w-10 h-10 cursor-pointer">
+        <AvatarImage v-if="user.avatar_preview" :src="user.avatar_preview" :alt="`${user.name} profile picture`"/>
+        <AvatarFallback v-else>CN</AvatarFallback>
       </Avatar>
     </DropdownMenuTrigger>
     <DropdownMenuContent class="min-w-56 rounded-lg" align="end" :side-offset="4">

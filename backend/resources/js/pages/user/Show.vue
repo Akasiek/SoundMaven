@@ -15,8 +15,8 @@ defineProps<{
     <aside class="bg-zinc-800 rounded-md min-h-24 h-fit">
       <div class="flex items-center gap-4 justify-center p-8 mr-4">
         <Avatar class="w-16 h-16">
-          <AvatarImage src="https://github.com/unovue.png" :alt="`${user.name} profile picture`"/>
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage v-if="user.avatar_preview" :src="user.avatar_preview" :alt="`${user.name} profile picture`"/>
+          <AvatarFallback v-else>CN</AvatarFallback>
         </Avatar>
         <h2>
           {{ user.name }}

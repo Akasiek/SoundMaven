@@ -3,6 +3,8 @@ interface User {
   name: string;
   email: string;
   slug: string;
+  avatar: string | null;
+  avatar_preview: string | null;
 }
 
 interface UserWithStats extends User {

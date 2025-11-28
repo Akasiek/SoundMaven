@@ -16,8 +16,8 @@ defineProps<{ latestRatings: ExtendedAlbumReview[] }>();
 
             <Link class="flex-1 flex items-center gap-3" :href="route('users.show', { user: rating.creator.slug })">
               <Avatar class="w-10 h-10">
-                <AvatarImage src="https://github.com/unovue.png" :alt="`@${rating.creator.name}`"/>
-                <AvatarFallback>CN</AvatarFallback>
+                <AvatarImage v-if="rating.creator.avatar_preview" :src="rating.creator.avatar_preview" :alt="`${rating.creator.name} profile picture`"/>
+                <AvatarFallback v-else>CN</AvatarFallback>
               </Avatar>
               <p class="font-semibold">{{ rating.creator.name }} </p>
             </Link>
