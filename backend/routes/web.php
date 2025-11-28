@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index')->name('home');
@@ -46,3 +47,5 @@ Route::controller(UserController::class)->prefix('users')->group(function () {
 });
 
 include __DIR__ . '/auth.php';
+
+Route::fallback(fn() => Inertia::render('ErrorPage', ['status' => 404]));
