@@ -98,6 +98,7 @@ return [
 
     'links' => [
         public_path('storage') => storage_path('app/public'),
+        public_path('storage/user_images') => storage_path('app/user_images'),
         public_path('storage/artist_images') => storage_path('app/artist_images'),
         public_path('storage/album_images') => storage_path('app/album_images'),
     ],
