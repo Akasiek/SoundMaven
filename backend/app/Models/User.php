@@ -74,4 +74,18 @@ class User extends Authenticatable implements MustVerifyEmail
             get: fn() => round($this->albumReviews()->whereNotNull('rating')->avg('rating'), 2)
         );
     }
+
+    public function isAdmin(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->role === UserRolesEnum::ADMIN
+        );
+    }
+
+    public function isMaintainer(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => in_array($this->role, [UserRolesEnum::MAINTAINER, UserRolesEnum::ADMIN])
+        );
+    }
 }
