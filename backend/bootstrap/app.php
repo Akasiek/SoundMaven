@@ -36,11 +36,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
             $status = $response->getStatusCode();
+            $isProductionError = !app()->environment(['local', 'testing']) && in_array($status, [500, 503]);
+            $isForbiddenOrNotFound = in_array($status, [404, 403]);
 
-            if (
-                (!app()->environment(['local', 'testing']) && in_array($status, [500, 503]))
-                || in_array($status, [404, 403])
-            ) {
+            if ($isProductionError || $isForbiddenOrNotFound) {
                 return Inertia::render('ErrorPage', ['status' => $status])
                     ->toResponse($request)
                     ->setStatusCode($status);
