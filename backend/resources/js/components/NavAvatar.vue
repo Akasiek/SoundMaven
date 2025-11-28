@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
-import { LogOut, User as UserIcon } from 'lucide-vue-next';
-import type { User } from "@/types";
+import { LogOut, User as UserIcon, UserCog } from 'lucide-vue-next';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
   DropdownMenu,
@@ -29,6 +28,12 @@ defineProps<{ user: User; }>();
           Profile
         </Link>
       </DropdownMenuItem>
+      <DropdownMenuItem :as-child="true">
+        <Link prefetch :href="route('profile.edit')">
+          <UserCog class="mr-1 text-zinc-50"/>
+          Settings
+        </Link>
+      </DropdownMenuItem>
       <DropdownMenuSeparator class="bg-zinc-700"/>
       <DropdownMenuItem :as-child="true">
         <Link class="block w-full" method="post" :href="route('logout')" as="button">
@@ -40,7 +45,3 @@ defineProps<{ user: User; }>();
     </DropdownMenuContent>
   </DropdownMenu>
 </template>
-
-<style scoped>
-
-</style>
