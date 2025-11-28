@@ -135,6 +135,11 @@
         color-scheme: dark;
     }
 
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 4rem;
+    }
+
     body {
         @apply bg-background text-foreground;
         color-scheme: dark;
