@@ -9,15 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserHasAdminPrivileges
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param Closure(Request): (Response) $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        return !auth()->user() || auth()->user()->role !== UserRolesEnum::ADMIN
-            ? redirect()->route('home')->with('error', 'You do not have permission to access this page.')
-            : $next($request);
+        $isAuthenticated = auth()->hasUser();
+        $isAdmin = $isAuthenticated && auth()->user()->role === UserRolesEnum::ADMIN;
+
+        abort_if(!$isAdmin, Response::HTTP_FORBIDDEN);
+
+        return $next($request);
     }
 }

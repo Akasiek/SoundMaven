@@ -9,15 +9,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserHasMaintainerPrivileges
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param Closure(Request): (Response) $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
-        return !auth()->user() || !in_array(auth()->user()->role, [UserRolesEnum::MAINTAINER, UserRolesEnum::ADMIN])
-            ? redirect()->route('home')->with('error', 'You do not have permission to access this page.')
-            : $next($request);
+        $isAuthenticated = auth()->check();
+        $isMaintainerOrAdmin = $isAuthenticated && in_array(auth()->user()->role, [UserRolesEnum::MAINTAINER, UserRolesEnum::ADMIN]);
+
+        abort_if(!$isMaintainerOrAdmin, Response::HTTP_FORBIDDEN);
+
+        return $next($request);
     }
 }
