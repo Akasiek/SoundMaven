@@ -8,7 +8,7 @@ class FileExtensionFromString
     {
         $file = $this->clearOffDirectoryPath($string);
 
-        if (! $this->verifyIfFileHasExtension($file)) {
+        if (!$this->verifyIfFileHasExtension($file)) {
             return null;
         }
 

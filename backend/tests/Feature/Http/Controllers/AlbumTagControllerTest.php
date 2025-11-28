@@ -10,7 +10,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
     public function test_get_album_tags()
     {
         AlbumTag::factory(3)->create();
-        $response = $this->get("/album-tags");
+        $response = $this->get('/album-tags');
 
         $response->assertStatus(200);
         $response->assertJsonCount(3, 'data');
@@ -30,7 +30,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
                 'name' => $tag->name,
                 'slug' => $tag->slug,
                 'albums_count' => 0,
-            ]
+            ],
         ]);
 
         $tag = AlbumTag::factory()->hasAlbums(3)->create();
@@ -43,7 +43,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
                 'name' => $tag->name,
                 'slug' => $tag->slug,
                 'albums_count' => 3,
-            ]
+            ],
         ]);
     }
 
@@ -53,7 +53,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
         AlbumTag::factory()->create(['name' => 'Tag 1']);
         AlbumTag::factory()->create(['name' => 'Tag 2']);
 
-        $response = $this->get("/album-tags?sort=name");
+        $response = $this->get('/album-tags?sort=name');
 
         $response->assertStatus(200);
         $response->assertJsonPath('data.0.name', 'Tag 1');
@@ -65,7 +65,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
         AlbumTag::where('name', 'Tag 3')->firstOrFail()->albums()->attach(Album::all()->random(2));
         AlbumTag::where('name', 'Tag 2')->firstOrFail()->albums()->attach(Album::all()->random(1));
 
-        $response = $this->get("/album-tags?sort=albums_count");
+        $response = $this->get('/album-tags?sort=albums_count');
 
         $response->assertStatus(200);
         $response->assertJsonPath('data.0.name', 'Tag 1');
@@ -79,7 +79,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
         AlbumTag::factory()->create(['name' => 'Tag 2']);
         AlbumTag::factory()->create(['name' => 'Tag 3']);
 
-        $response = $this->get("/album-tags?filter[name]=Tag 1");
+        $response = $this->get('/album-tags?filter[name]=Tag 1');
 
         $response->assertStatus(200);
         $response->assertJsonCount(1, 'data');
@@ -98,7 +98,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
 
     public function test_store_album_tag()
     {
-        $response = $this->post("/album-tags", [
+        $response = $this->post('/album-tags', [
             'name' => 'Tag 1',
         ]);
 
@@ -107,7 +107,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
             'data' => [
                 'name' => 'Tag 1',
                 'slug' => 'tag-1',
-            ]
+            ],
         ]);
     }
 
@@ -123,7 +123,7 @@ class AlbumTagControllerTest extends ControllerWithAuthTestCase
             'data' => [
                 'name' => 'Tag 2',
                 'slug' => 'tag-2',
-            ]
+            ],
         ]);
     }
 

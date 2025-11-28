@@ -11,6 +11,7 @@ use Storage;
 class AlbumSeeder extends CsvSeeder
 {
     protected string $fileName = 'database/seeders/data/albums.csv';
+
     protected string $model = Album::class;
 
     public function run(bool $seedImages = true): void

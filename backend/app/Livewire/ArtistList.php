@@ -15,6 +15,6 @@ class ArtistList extends Component
     {
         return view('pages.artist-list')->with([
             'artists' => Artist::paginate(24),
-        ])->title("Artists");
+        ])->title('Artists');
     }
 }

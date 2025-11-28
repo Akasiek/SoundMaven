@@ -15,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use SoftDeletes, HasFactory, Notifiable, Sluggable;
+    use HasFactory, Notifiable, Sluggable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -43,9 +43,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return ['slug' => [
             'source' => 'name',
-            'method' => static function (string $string, string $separator): string {
+            'method' => static function(string $string, string $separator): string {
                 return new Slugify(['separator' => $separator])->slugify($string) ?: 'unnamed';
-            }
+            },
         ]];
     }
 

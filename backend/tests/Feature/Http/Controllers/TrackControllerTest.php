@@ -87,8 +87,8 @@ class TrackControllerTest extends ControllerWithAuthTestCase
                 'album' => [
                     'id' => $track->album->id,
                     'title' => $track->album->title,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -96,7 +96,7 @@ class TrackControllerTest extends ControllerWithAuthTestCase
     {
         $album = Album::factory()->create();
 
-        $response = $this->post("tracks", [
+        $response = $this->post('tracks', [
             'title' => 'Track 1',
             'length' => 180,
             'order' => 1,
@@ -112,8 +112,8 @@ class TrackControllerTest extends ControllerWithAuthTestCase
                 'album' => [
                     'id' => $album->id,
                     'title' => $album->title,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -134,7 +134,7 @@ class TrackControllerTest extends ControllerWithAuthTestCase
                 ['title' => 'Track 1', 'length' => 180, 'order' => 1],
                 ['title' => 'Track 2', 'length' => 240, 'order' => 2],
                 ['title' => 'Track 3', 'length' => 300, 'order' => 3],
-            ]
+            ],
         ]);
 
         $slugResponse = $this->get("/tracks?filter[album.slug]={$album->slug}");
@@ -151,7 +151,7 @@ class TrackControllerTest extends ControllerWithAuthTestCase
             'order' => 1,
         ]);
 
-        $response = $this->post("/tracks", [
+        $response = $this->post('/tracks', [
             'title' => 'Track 2',
             'length' => 220,
             'order' => 1,
@@ -184,8 +184,8 @@ class TrackControllerTest extends ControllerWithAuthTestCase
                 'album' => [
                     'id' => $album->id,
                     'title' => $album->title,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 
@@ -212,8 +212,8 @@ class TrackControllerTest extends ControllerWithAuthTestCase
                 'album' => [
                     'id' => $album->id,
                     'title' => $album->title,
-                ]
-            ]
+                ],
+            ],
         ]);
     }
 

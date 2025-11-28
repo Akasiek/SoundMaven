@@ -15,7 +15,7 @@ class UpdateAlbumTracksRequest extends UpdateRequest
     public function rules(): array
     {
         return [
-            'tracks' => ['array', 'required', new ValidateTrackSequence()],
+            'tracks' => ['array', 'required', new ValidateTrackSequence],
             'tracks.*.title' => 'string|required|max:255',
             'tracks.*.duration' => 'string|required|max:255',
             'tracks.*.order' => 'integer|required|min:1|distinct',

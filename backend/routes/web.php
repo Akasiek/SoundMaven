@@ -8,26 +8,27 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 
-Route::controller(HomeController::class)->group(function () {
+Route::controller(HomeController::class)->group(function() {
     Route::get('/', 'index')->name('home');
 });
 
-Route::controller(SearchController::class)->prefix('search')->group(function () {
+Route::controller(SearchController::class)->prefix('search')->group(function() {
     Route::get('/', 'search')->name('search');
 });
 
-Route::controller(ArtistController::class)->prefix('artists')->group(function () {
+Route::controller(ArtistController::class)->prefix('artists')->group(function() {
     Route::get('/', 'index')->name('artists.list');
     Route::get('/fetch', 'fetchRaw')->name('artists.fetchRaw');
     Route::get('/{artist:slug}', 'show')->name('artists.show');
 });
 
-Route::controller(AlbumController::class)->prefix('albums')->group(function () {
+Route::controller(AlbumController::class)->prefix('albums')->group(function() {
     Route::get('/', 'index')->name('albums.list');
     Route::post('/', 'store')->name('albums.store');
 
-    Route::middleware('isMaintainer')->group(function () {
+    Route::middleware('isMaintainer')->group(function() {
         Route::get('/create', 'displayCreateForm')->name('albums.create');
         Route::put('/{album:slug}', 'update')->name('albums.update');
         Route::get('/{album:slug}/update', 'displayUpdateForm')->name('albums.edit');
@@ -37,15 +38,15 @@ Route::controller(AlbumController::class)->prefix('albums')->group(function () {
     Route::get('/{album:slug}', 'show')->name('albums.show');
 });
 
-Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function () {
+Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function() {
     Route::post('/', 'store')->name('album-reviews.store');
     Route::delete('/{albumReview}', 'destroy')->name('album-reviews.destroy');
 });
 
-Route::controller(UserController::class)->prefix('users')->group(function () {
+Route::controller(UserController::class)->prefix('users')->group(function() {
     Route::get('/{user:slug}', 'show')->name('users.show');
 });
 
 include __DIR__ . '/auth.php';
 
-Route::fallback(fn() => Inertia::render('ErrorPage', ['status' => 404]));
+Route::fallback(fn() => Inertia::render('ErrorPage', ['status' => Response::HTTP_NOT_FOUND]));

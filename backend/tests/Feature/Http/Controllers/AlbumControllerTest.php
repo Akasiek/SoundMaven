@@ -122,7 +122,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $artist->id,
                     'name' => $artist->name,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -151,7 +151,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $artist->id,
                     'name' => $artist->name,
                 ],
-            ]
+            ],
         ]);
 
         $response = $this->get("/albums/{$album->slug}");
@@ -168,7 +168,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $artist->id,
                     'name' => $artist->name,
                 ],
-            ]
+            ],
         ]);
 
         $this->assertEquals($response->json(), $response->json());
@@ -196,7 +196,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $artist->id,
                     'name' => $artist->name,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -222,7 +222,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'title' => '()',
                 'slug' => 'untitled',
                 'description' => 'Album with a hard title to slugify',
-            ]
+            ],
         ]);
 
         // Add another album with the same title
@@ -241,7 +241,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 'title' => '() () ()',
                 'slug' => 'untitled-2',
                 'description' => 'Another album with a hard title to slugify',
-            ]
+            ],
         ]);
     }
 
@@ -272,7 +272,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $artist->id,
                     'name' => $artist->name,
                 ],
-            ]
+            ],
         ]);
 
         $this->assertDatabaseHas('media', [
@@ -312,7 +312,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $newArtist->id,
                     'name' => $newArtist->name,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -336,7 +336,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                     'id' => $album->artist->id,
                     'name' => $album->artist->name,
                 ],
-            ]
+            ],
         ]);
     }
 
@@ -386,7 +386,7 @@ class AlbumControllerTest extends ControllerWithAuthTestCase
                 ['title' => 'Track 1', 'length' => 180, 'order' => 1],
                 ['title' => 'Track 2', 'length' => 240, 'order' => 2],
                 ['title' => 'Track 3', 'length' => 300, 'order' => 3],
-            ]
+            ],
         ]);
     }
 

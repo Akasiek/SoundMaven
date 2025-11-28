@@ -48,7 +48,7 @@ class AlbumReviewControllerTest extends ControllerWithAuthTestCase
                     'name' => $review->creator->name,
                     'email' => $review->creator->email,
                 ],
-            ]
+            ],
         ]);
     }
 

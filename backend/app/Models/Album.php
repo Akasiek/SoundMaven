@@ -25,7 +25,7 @@ use Str;
 
 class Album extends AbstractModel implements HasMedia
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia, Searchable;
+    use BlameableTrait, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -47,9 +47,9 @@ class Album extends AbstractModel implements HasMedia
     {
         return ['slug' => [
             'source' => 'title',
-            'method' => static function (string $string, string $separator): string {
+            'method' => static function(string $string, string $separator): string {
                 return new Slugify(['separator' => $separator])->slugify($string) ?: 'untitled';
-            }
+            },
         ]];
     }
 
@@ -75,7 +75,7 @@ class Album extends AbstractModel implements HasMedia
         $this->addMediaCollection('album-covers')->useDisk('album_images')->singleFile();
     }
 
-    public function registerMediaConversions(Media|null $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this
             ->addMediaConversion('thumb')
@@ -136,7 +136,8 @@ class Album extends AbstractModel implements HasMedia
 
     protected function coverImagePlaceholder(): Attribute
     {
-       $exists = (bool)$this->getFirstMedia('album-covers');
+        $exists = (bool) $this->getFirstMedia('album-covers');
+
         return Attribute::make(
             get: fn() => $exists ? 'data:image/jpeg;base64,' . base64_encode(file_get_contents($this->getFirstMediaPath('album-covers', 'placeholder'))) : null,
         );
@@ -175,7 +176,7 @@ class Album extends AbstractModel implements HasMedia
     public function averageRating(): Attribute
     {
         return Attribute::make(
-            get: fn() => (int)$this->reviews()->avg('rating') ?: "Ø",
+            get: fn() => (int) $this->reviews()->avg('rating') ?: 'Ø',
         );
     }
 
@@ -184,8 +185,6 @@ class Album extends AbstractModel implements HasMedia
      *
      * This method calculates the average rating of the album and returns a CSS class
      * that represents the color associated with the rating range.
-     *
-     * @return Attribute
      */
     public function ratingColor(): Attribute
     {
@@ -211,6 +210,7 @@ class Album extends AbstractModel implements HasMedia
     private function getTotalLength(bool $formatted = false): mixed
     {
         $totalLength = $this->tracks->sum('length');
+
         return $formatted ? new SecondsToTime()->convert($totalLength) : $totalLength;
     }
 }

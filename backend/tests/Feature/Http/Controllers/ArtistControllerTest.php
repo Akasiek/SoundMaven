@@ -89,7 +89,7 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'name' => 'Artist 1',
                 'description' => 'Description 1',
                 'type' => 'solo',
-            ]
+            ],
         ]);
     }
 
@@ -107,7 +107,7 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'name' => 'Artist 1',
                 'description' => 'Description 1',
                 'type' => 'solo',
-            ]
+            ],
         ]);
     }
 
@@ -130,7 +130,7 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'description' => 'Description 1',
                 'type' => 'solo',
                 // Don't check 'background_image' because of random storage path
-            ]
+            ],
         ]);
 
         $this->assertDatabaseHas('media', [
@@ -161,7 +161,7 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'name' => 'Artist 2',
                 'description' => 'Description 2',
                 'type' => 'band',
-            ]
+            ],
         ]);
 
         // Test patch
@@ -174,7 +174,7 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'name' => 'Artist 3',
                 'description' => 'Description 2',
                 'type' => 'band',
-            ]
+            ],
         ]);
     }
 
@@ -203,7 +203,7 @@ class ArtistControllerTest extends ControllerWithAuthTestCase
                 'description' => 'Description 2',
                 'type' => 'band',
                 // Don't check 'background_image' because of random storage path
-            ]
+            ],
         ]);
 
         $this->assertDatabaseHas('media', [

@@ -23,4 +23,3 @@ class ControllerWithAuthTestCase extends TestCase
         $this->actingAs(User::factory()->create());
     }
 }
-

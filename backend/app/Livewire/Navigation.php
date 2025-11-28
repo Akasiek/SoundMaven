@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class Navigation extends Component
 {
-    /** @var array{name: string, route: string}[] $links */
+    /** @var array{name: string, route: string}[] */
     public array $links;
 
     public function mount(): void

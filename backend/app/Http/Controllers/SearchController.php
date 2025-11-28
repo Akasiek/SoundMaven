@@ -9,7 +9,7 @@ use App\Services\SearchService;
 
 class SearchController extends Controller
 {
-    public function __construct(private readonly SearchService $service = new SearchService()) { }
+    public function __construct(private readonly SearchService $service = new SearchService) {}
 
     public function search(SearchRequest $request): SearchResultCollection
     {

@@ -12,8 +12,9 @@ class SearchResultCollection extends ResourceCollection
 {
     public function toArray($request): array
     {
-        return $this->collection->mapWithKeys(function (ResourceCollection $collection) use ($request) {
+        return $this->collection->mapWithKeys(function(ResourceCollection $collection) use ($request) {
             $searchType = $this->getSearchTypeFromResourceName($collection->collects);
+
             return [$searchType->value => $collection->toArray($request)];
         })->toArray();
     }

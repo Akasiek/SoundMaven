@@ -13,7 +13,8 @@ class TimeToSeconds
      */
     public static function convert(string $time): int
     {
-        $instance = new self();
+        $instance = new self;
+
         return $instance($time);
     }
 
@@ -26,7 +27,6 @@ class TimeToSeconds
 
         return $this->convertToSeconds();
     }
-
 
     /**
      * @throws Exception
@@ -44,7 +44,7 @@ class TimeToSeconds
     private function convertToSeconds(): int
     {
         $time = array_map(
-            fn($value) => (int)$value,
+            fn($value) => (int) $value,
             explode(':', $this->time)
         );
 

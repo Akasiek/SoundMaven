@@ -16,23 +16,23 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class Track extends AbstractModel
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, Searchable;
+    use BlameableTrait, HasFactory, HasUuids, Searchable, SoftDeletes;
 
     protected $fillable = [
         'title',
         'length',
         'order',
         'album_id',
-        'disc'
+        'disc',
     ];
 
     public function sluggable(): array
     {
         return ['slug' => [
             'source' => 'title',
-            'method' => static function (string $string, string $separator): string {
+            'method' => static function(string $string, string $separator): string {
                 return new Slugify(['separator' => $separator])->slugify($string) ?: 'untitled';
-            }
+            },
         ]];
     }
 
@@ -66,7 +66,7 @@ class Track extends AbstractModel
     public function lengthFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, array $attributes) => (new SecondsToTime)($attributes['length'])
+            get: fn($value, array $attributes) => (new SecondsToTime)($attributes['length'])
         );
     }
 }

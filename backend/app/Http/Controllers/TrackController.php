@@ -45,7 +45,6 @@ class TrackController extends Controller
         );
     }
 
-
     public function update(UpdateTrackRequest $request, string $trackParam): TrackResource
     {
         $track = Track::whereSlugOrId($trackParam)->firstOrFail();

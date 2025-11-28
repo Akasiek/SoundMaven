@@ -15,10 +15,11 @@ class SpecificAlbumReviewSeeder extends Seeder
         $album = Album::where('title', $albumTitle)->first();
         if (!$album) {
             $this->command->error("Album with title '$albumTitle' not found.");
+
             return;
         }
 
-        $count = (int)$this->command->ask('How many reviews would you like to create for this album?', 100);
+        $count = (int) $this->command->ask('How many reviews would you like to create for this album?', 100);
 
         foreach (range(1, $count) as $ignored) {
             auth()->login($this->getUser($album));

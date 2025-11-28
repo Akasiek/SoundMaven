@@ -19,6 +19,7 @@ class SearchService
     {
         if ($dto->type) {
             $searchType = SearchTypeEnum::from($dto->type);
+
             return new SearchResultCollection(
                 [$searchType->value => $this->getSearchTypeCollection($searchType, $dto->query)]
             );

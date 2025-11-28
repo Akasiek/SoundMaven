@@ -10,7 +10,7 @@ use Livewire\Component;
 #[Title('Welcome')]
 class Welcome extends Component
 {
-    /** @var Collection<Album> $albums */
+    /** @var Collection<Album> */
     public Collection $albums;
 
     public function mount()

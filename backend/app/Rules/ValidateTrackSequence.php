@@ -25,6 +25,7 @@ class ValidateTrackSequence implements ValidationRule
         foreach ($orders as $order) {
             if ($order !== $expectedOrder) {
                 $fail("The order must start from 1 and increment by 1. Found: $order, expected: $expectedOrder.");
+
                 return;
             }
             $expectedOrder++;
@@ -39,6 +40,7 @@ class ValidateTrackSequence implements ValidationRule
         foreach ($discNumbers as $discNumber) {
             if ($discNumber !== $expectedDiscNumber) {
                 $fail("Disc numbers must start from 1 and increment by 1. Found: $discNumber, expected: $expectedDiscNumber.");
+
                 return;
             }
             $expectedDiscNumber++;

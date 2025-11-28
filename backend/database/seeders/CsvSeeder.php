@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 abstract class CsvSeeder extends Seeder
 {
     protected string $fileName;
+
     protected string $model;
 
     /**
@@ -41,6 +42,7 @@ abstract class CsvSeeder extends Seeder
         while (($row = fgetcsv($file, null, ';')) !== false) {
             if ($headerRow) {
                 $headerRow = false;
+
                 continue;
             }
 

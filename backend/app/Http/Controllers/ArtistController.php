@@ -35,7 +35,7 @@ class ArtistController extends Controller
         $typeQuery = request()->query('type');
         $albums = Album::with(['artist', 'genres'])
             ->where('artist_id', $artist->id)
-            ->when($typeQuery, function ($query, $typeQuery) {
+            ->when($typeQuery, function($query, $typeQuery) {
                 $query->where('type', $typeQuery);
             })
             ->get();
@@ -73,7 +73,7 @@ class ArtistController extends Controller
     public function fetchRaw(Request $request): JsonResponse
     {
         $artists = Artist::query()
-            ->when($request->has('search'), function ($query) use ($request) {
+            ->when($request->has('search'), function($query) use ($request) {
                 $query->whereRaw('LOWER(name) LIKE ?', ['%' . strtolower($request->input('search')) . '%']);
             })
             ->paginate($request->input('perPage', 24));

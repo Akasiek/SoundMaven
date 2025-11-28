@@ -91,7 +91,7 @@ class GenreControllerTest extends ControllerWithAuthTestCase
                 'id' => $genre->id,
                 'name' => $genre->name,
                 'description' => $genre->description,
-            ]
+            ],
         ]);
     }
 
@@ -111,7 +111,7 @@ class GenreControllerTest extends ControllerWithAuthTestCase
 
     public function test_store_genre()
     {
-        $response = $this->post("genres", [
+        $response = $this->post('genres', [
             'name' => 'Genre 1',
             'description' => 'Description 1',
         ]);
@@ -121,7 +121,7 @@ class GenreControllerTest extends ControllerWithAuthTestCase
             'data' => [
                 'name' => 'Genre 1',
                 'description' => 'Description 1',
-            ]
+            ],
         ]);
     }
 
@@ -140,7 +140,7 @@ class GenreControllerTest extends ControllerWithAuthTestCase
                 'id' => $genre->id,
                 'name' => 'Genre 2',
                 'description' => 'Description 2',
-            ]
+            ],
         ]);
     }
 
@@ -158,7 +158,7 @@ class GenreControllerTest extends ControllerWithAuthTestCase
                 'id' => $genre->id,
                 'name' => 'Genre 2',
                 'description' => $genre->description,
-            ]
+            ],
         ]);
     }
 

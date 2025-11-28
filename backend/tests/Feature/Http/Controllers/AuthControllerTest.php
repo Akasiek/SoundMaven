@@ -21,7 +21,7 @@ class AuthControllerTest extends TestCase
             'name' => $userData['name'],
             'email' => $userData['email'],
             'password' => 'test12345',
-            'password_confirmation' => 'test12345'
+            'password_confirmation' => 'test12345',
         ]);
 
         $response->assertCreated();
@@ -30,12 +30,12 @@ class AuthControllerTest extends TestCase
     public function test_can_login()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('test12345')
+            'password' => bcrypt('test12345'),
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'test12345'
+            'password' => 'test12345',
         ]);
 
         $response->assertOk();
@@ -54,12 +54,12 @@ class AuthControllerTest extends TestCase
     public function test_cannot_login_with_invalid_credentials()
     {
         $user = User::factory()->create([
-            'password' => bcrypt('test12345')
+            'password' => bcrypt('test12345'),
         ]);
 
         $response = $this->post('/login', [
             'email' => $user->email,
-            'password' => 'invalidPassword'
+            'password' => 'invalidPassword',
         ]);
 
         $response->assertUnprocessable();
@@ -73,7 +73,7 @@ class AuthControllerTest extends TestCase
             'name' => $userData['name'],
             'email' => $userData['email'],
             'password' => 'test',
-            'password_confirmation' => 'test'
+            'password_confirmation' => 'test',
         ]);
 
         $response->assertUnprocessable();

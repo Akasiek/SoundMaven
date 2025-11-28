@@ -8,8 +8,6 @@ use Illuminate\Validation\Rules\Password;
 
 class RegisterRequest extends FormRequest
 {
-
-
     public function rules(): array
     {
         return [
@@ -18,5 +16,4 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
-
 }

@@ -12,14 +12,13 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
 
-
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware) {
+    ->withMiddleware(function(Middleware $middleware) {
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 
         $middleware->web(append: [
@@ -33,8 +32,8 @@ return Application::configure(basePath: dirname(__DIR__))
             'isMaintainer' => EnsureUserHasMaintainerPrivileges::class,
         ]);
     })
-    ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
+    ->withExceptions(function(Exceptions $exceptions) {
+        $exceptions->respond(function(Response $response, Throwable $exception, Request $request) {
             $status = $response->getStatusCode();
             $isProductionError = !app()->environment(['local', 'testing']) && in_array($status, [500, 503]);
             $isForbiddenOrNotFound = in_array($status, [404, 403]);

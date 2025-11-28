@@ -22,9 +22,9 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/401', fn () => response()->json(['message' => 'Unauthorized'], 401))->name('401');
 
-Route::prefix('/api')->group(function () {
+Route::prefix('/api')->group(function() {
 
-    Route::controller(AlbumController::class)->prefix('albums')->group(function () {
+    Route::controller(AlbumController::class)->prefix('albums')->group(function() {
         Route::get('/', [AlbumController::class, 'index']);
         Route::get('/{albumParam}', [AlbumController::class, 'show']);
         Route::get('/{albumParam}/tracks', [AlbumController::class, 'showTracks']);
@@ -33,8 +33,8 @@ Route::prefix('/api')->group(function () {
         Route::get('/{albumParam}/tags', [AlbumController::class, 'showTags']);
     });
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::controller(AlbumController::class)->prefix('albums')->group(function () {
+    Route::middleware('auth:sanctum')->group(function() {
+        Route::controller(AlbumController::class)->prefix('albums')->group(function() {
             Route::post('/', [AlbumController::class, 'store']);
             Route::put('/{albumParam}', [AlbumController::class, 'update']);
             Route::patch('/{albumParam}', [AlbumController::class, 'update']);
@@ -47,7 +47,7 @@ Route::prefix('/api')->group(function () {
             Route::delete('/{albumParam}/tags/{tagParam}', [AlbumController::class, 'detachTag']);
         });
 
-        Route::controller(ArtistController::class)->prefix('artists')->group(function () {
+        Route::controller(ArtistController::class)->prefix('artists')->group(function() {
             Route::get('/', [ArtistController::class, 'index']);
             Route::post('/', [ArtistController::class, 'store']);
             Route::get('/{param}', [ArtistController::class, 'show']);
@@ -56,7 +56,7 @@ Route::prefix('/api')->group(function () {
             Route::delete('/{artist}', [ArtistController::class, 'destroy']);
         });
 
-        Route::controller(TrackController::class)->prefix('tracks')->group(function () {
+        Route::controller(TrackController::class)->prefix('tracks')->group(function() {
             Route::get('/', [TrackController::class, 'index']);
             Route::post('/', [TrackController::class, 'store']);
             Route::get('/{trackParam}', [TrackController::class, 'show']);
@@ -65,7 +65,7 @@ Route::prefix('/api')->group(function () {
             Route::delete('/{track}', [TrackController::class, 'destroy']);
         });
 
-        Route::controller(GenreController::class)->prefix('genres')->group(function () {
+        Route::controller(GenreController::class)->prefix('genres')->group(function() {
             Route::get('/', [GenreController::class, 'index']);
             Route::post('/', [GenreController::class, 'store']);
             Route::get('/{genreParam}', [GenreController::class, 'show']);
@@ -76,7 +76,7 @@ Route::prefix('/api')->group(function () {
             Route::get('/{genreParam}/albums', [GenreController::class, 'showAlbums']);
         });
 
-        Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function () {
+        Route::controller(AlbumReviewController::class)->prefix('album-reviews')->group(function() {
             Route::get('/', [AlbumReviewController::class, 'index']);
             Route::post('/', [AlbumReviewController::class, 'store']);
             Route::get('/{albumReview}', [AlbumReviewController::class, 'show']);
@@ -85,7 +85,7 @@ Route::prefix('/api')->group(function () {
             Route::delete('/{albumReview}', [AlbumReviewController::class, 'destroy']);
         });
 
-        Route::controller(AlbumTagController::class)->prefix('album-tags')->group(function () {
+        Route::controller(AlbumTagController::class)->prefix('album-tags')->group(function() {
             Route::get('/', [AlbumTagController::class, 'index']);
             Route::post('/', [AlbumTagController::class, 'store']);
             Route::get('/{albumTag}', [AlbumTagController::class, 'show']);
@@ -95,7 +95,7 @@ Route::prefix('/api')->group(function () {
         });
     });
 
-    Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    Route::middleware('auth:sanctum')->get('/user', function(Request $request) {
         return $request->user();
     });
 });

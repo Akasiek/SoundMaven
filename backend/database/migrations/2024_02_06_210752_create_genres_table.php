@@ -4,13 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('genres', function (Blueprint $table) {
+        Schema::create('genres', function(Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('parent_id')->nullable();
 
@@ -26,12 +27,12 @@ return new class extends Migration {
         });
 
         // Add foreign key for parent_id after table creation
-        Schema::table('genres', function (Blueprint $table) {
+        Schema::table('genres', function(Blueprint $table) {
             $table->foreign('parent_id')->references('id')->on('genres')->nullOnDelete();
         });
 
         // Many-to-Many relationship with albums
-        Schema::create('album_genre', function (Blueprint $table) {
+        Schema::create('album_genre', function(Blueprint $table) {
             $table->foreignUuid('album_id')->constrained()->cascadeOnDelete();
             $table->foreignUuid('genre_id')->constrained()->cascadeOnDelete();
 

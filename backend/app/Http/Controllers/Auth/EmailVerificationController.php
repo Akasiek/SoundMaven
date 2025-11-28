@@ -36,5 +36,4 @@ class EmailVerificationController
 
         return back()->with('status', 'verification-link-sent');
     }
-
 }

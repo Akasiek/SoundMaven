@@ -20,7 +20,7 @@ use Str;
 
 class Artist extends AbstractModel implements HasMedia
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait, InteractsWithMedia, Searchable;
+    use BlameableTrait, HasFactory, HasUuids, InteractsWithMedia, Searchable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -54,7 +54,7 @@ class Artist extends AbstractModel implements HasMedia
         $this->addMediaCollection('artist-backgrounds')->useDisk('artist_images')->singleFile();
     }
 
-    public function registerMediaConversions(Media|null $media = null): void
+    public function registerMediaConversions(?Media $media = null): void
     {
         $this
             ->addMediaConversion('thumb')
@@ -144,11 +144,16 @@ class Artist extends AbstractModel implements HasMedia
         $typesCount['All'] = array_sum($typesCount);
 
         $sortOrder = AlbumTypeEnum::getSortOrder();
-        uksort($typesCount, function ($a, $b) use ($sortOrder) {
-            if ($a === 'All') return -1;
-            if ($b === 'All') return 1;
+        uksort($typesCount, function($a, $b) use ($sortOrder) {
+            if ($a === 'All') {
+                return -1;
+            }
+            if ($b === 'All') {
+                return 1;
+            }
             $orderA = $sortOrder[$a] ?? 999;
             $orderB = $sortOrder[$b] ?? 999;
+
             return $orderA <=> $orderB;
         });
 

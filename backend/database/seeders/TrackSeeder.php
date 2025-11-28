@@ -9,6 +9,7 @@ use App\Models\Track;
 class TrackSeeder extends CsvSeeder
 {
     protected string $fileName = 'database/seeders/data/tracks.csv';
+
     protected string $model = Track::class;
 
     protected function getMapping(): array

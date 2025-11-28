@@ -190,23 +190,23 @@ return [
                         ],
                         [
                             'name' => 'title',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'slug',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'artist_name',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'track_titles',
-                            'type' => 'string[]'
+                            'type' => 'string[]',
                         ],
                         [
                             'name' => 'created_at',
-                            'type' => 'int64'
+                            'type' => 'int64',
                         ],
                         [
                             'name' => '__soft_deleted',
@@ -229,19 +229,19 @@ return [
                         ],
                         [
                             'name' => 'name',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'slug',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'album_titles',
-                            'type' => 'string[]'
+                            'type' => 'string[]',
                         ],
                         [
                             'name' => 'created_at',
-                            'type' => 'int64'
+                            'type' => 'int64',
                         ],
                         [
                             'name' => '__soft_deleted',
@@ -264,23 +264,23 @@ return [
                         ],
                         [
                             'name' => 'title',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'slug',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'album_title',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'length_formatted',
-                            'type' => 'string'
+                            'type' => 'string',
                         ],
                         [
                             'name' => 'created_at',
-                            'type' => 'int64'
+                            'type' => 'int64',
                         ],
                         [
                             'name' => '__soft_deleted',
@@ -293,7 +293,7 @@ return [
                 'search-parameters' => [
                     'query_by' => 'title,slug,album_title,length_formatted',
                 ],
-            ]
+            ],
         ],
     ],
 

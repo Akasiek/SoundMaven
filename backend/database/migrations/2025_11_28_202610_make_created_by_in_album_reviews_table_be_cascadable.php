@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::table('album_reviews', function (Blueprint $table) {
+        Schema::table('album_reviews', function(Blueprint $table) {
             $table->dropConstrainedForeignId('created_by');
             $table->dropConstrainedForeignId('updated_by');
             $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnDelete();
@@ -18,7 +18,7 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::table('album_reviews', function (Blueprint $table) {
+        Schema::table('album_reviews', function(Blueprint $table) {
             $table->dropConstrainedForeignId('created_by');
             $table->dropConstrainedForeignId('updated_by');
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();

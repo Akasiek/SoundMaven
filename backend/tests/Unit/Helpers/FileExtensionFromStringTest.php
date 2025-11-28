@@ -18,5 +18,4 @@ class FileExtensionFromStringTest extends TestCase
         $this->assertEquals('jpeg', $helper('image.JPEG'));
         $this->assertEquals(null, $helper('image'));
     }
-
 }

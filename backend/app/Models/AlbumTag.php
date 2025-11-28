@@ -10,7 +10,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class AlbumTag extends AbstractModel
 {
-    use HasFactory, HasUuids, BlameableTrait;
+    use BlameableTrait, HasFactory, HasUuids;
 
     protected $fillable = [
         'name',

@@ -1,15 +1,18 @@
 <?php
 
-use App\Http\Controllers\Auth\{EmailVerificationController, LoginController, RegisterController, ResetPasswordController};
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest')->group(function() {
     Route::get('register', [RegisterController::class, 'displayRegisterForm'])->name('register');
     Route::post('register', [RegisterController::class, 'register'])->name('register.request');
 
     Route::get('login', [LoginController::class, 'displayLoginForm'])->name('login');
     Route::post('login', [LoginController::class, 'login'])->name('login.request');
 
-    Route::controller(ResetPasswordController::class)->group(function () {
+    Route::controller(ResetPasswordController::class)->group(function() {
         Route::get('forgot-password', 'displayForgotPasswordForm')->name('password.request');
         Route::post('forgot-password', 'forgotPassword')->name('password.email');
         Route::get('reset-password/{token}', 'displayResetPasswordForm')->name('password.reset');
@@ -17,10 +20,10 @@ Route::middleware('guest')->group(function () {
     });
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function() {
     Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    Route::controller(EmailVerificationController::class)->group(function () {
+    Route::controller(EmailVerificationController::class)->group(function() {
         Route::get('/email/verify', 'displayVerificationEmailPrompt')
             ->name('verification.notice');
         Route::get('/email/verify/{id}/{hash}', 'verifyEmail')

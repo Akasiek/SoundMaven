@@ -83,7 +83,7 @@ class TrackTest extends RefreshingTestCase
     public function test_can_calculate_length_in_minutes()
     {
         $track = Track::factory()->create([
-            'length' => 231
+            'length' => 231,
         ]);
 
         $this->assertEquals('03:51', $track->length_formatted);
@@ -92,7 +92,7 @@ class TrackTest extends RefreshingTestCase
     public function test_can_calculate_length_in_minutes_and_hours()
     {
         $track = Track::factory()->create([
-            'length' => 3861
+            'length' => 3861,
         ]);
 
         $this->assertEquals('01:04:21', $track->length_formatted);

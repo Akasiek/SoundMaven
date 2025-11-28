@@ -4,9 +4,9 @@ namespace Tests\Feature\Http\Controllers;
 
 class SearchControllerTest extends ControllerWithAuthTestCase
 {
-    static protected string $url = '/search';
+    protected static string $url = '/search';
 
-    public function testSearch(): void
+    public function test_search(): void
     {
         $this->getJson(self::$url . '/?query=ghost')
             ->assertStatus(200)
@@ -17,7 +17,7 @@ class SearchControllerTest extends ControllerWithAuthTestCase
             ]]);
     }
 
-    public function testAlbumSearch(): void
+    public function test_album_search(): void
     {
         $this->getJson(self::$url . '/?type=album&query=elephant')
             ->assertStatus(200)

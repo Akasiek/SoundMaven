@@ -13,7 +13,6 @@ use Inertia\Response;
 use Password;
 use Str;
 
-
 class ResetPasswordController
 {
     public function displayForgotPasswordForm(Request $request): Response
@@ -57,7 +56,7 @@ class ResetPasswordController
         // database. Otherwise, we will parse the error and return the response.
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user) use ($request) {
+            function($user) use ($request) {
                 $user->forceFill([
                     'password' => Hash::make($request->password),
                     'remember_token' => Str::random(60),

@@ -13,7 +13,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 class Genre extends AbstractModel
 {
-    use SoftDeletes, HasFactory, HasUuids, BlameableTrait;
+    use BlameableTrait, HasFactory, HasUuids, SoftDeletes;
 
     protected $fillable = [
         'name',

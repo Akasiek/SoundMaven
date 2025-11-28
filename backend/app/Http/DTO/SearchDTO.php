@@ -6,7 +6,7 @@ use App\Http\Requests\SearchRequest;
 
 readonly class SearchDTO
 {
-    public function __construct(public string $query, public ?string $type = null) { }
+    public function __construct(public string $query, public ?string $type = null) {}
 
     public static function fromRequest(SearchRequest $request): self
     {

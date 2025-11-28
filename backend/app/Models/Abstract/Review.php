@@ -9,7 +9,7 @@ use RichanFongdasen\EloquentBlameable\BlameableTrait;
 
 abstract class Review extends Model
 {
-    use HasFactory, HasUuids, BlameableTrait;
+    use BlameableTrait, HasFactory, HasUuids;
 
     protected $perPage = 25;
 
