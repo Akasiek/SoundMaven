@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserRoles;
+use App\Enums\UserRolesEnum;
 use App\Models\User;
 use Exception;
 use Illuminate\Database\Seeder;
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => $email,
             'password' => bcrypt($password),
-            'role' => UserRoles::ADMIN,
+            'role' => UserRolesEnum::ADMIN,
         ]);
     }
 }

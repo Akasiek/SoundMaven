@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\UserRoles;
+use App\Enums\UserRolesEnum;
 use Cocur\Slugify\Slugify;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -32,11 +32,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'role' => UserRoles::class,
+        'role' => UserRolesEnum::class,
     ];
 
     protected $attributes = [
-        'role' => UserRoles::USER,
+        'role' => UserRolesEnum::USER,
     ];
 
     public function sluggable(): array
