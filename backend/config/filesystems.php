@@ -46,6 +46,14 @@ return [
             'throw' => false,
         ],
 
+        'user_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/user_images'),
+            'url' => env('APP_URL').'/storage/user_images',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'artist_images' => [
             'driver' => 'local',
             'root' => storage_path('app/artist_images'),

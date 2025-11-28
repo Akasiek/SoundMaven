@@ -14,8 +14,8 @@ return new class extends Migration
             $table->string('slug')->unique();
 
             $table->timestamps();
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->nullOnDelete();
         });
 
         Schema::create('album_album_tag', function(Blueprint $table) {

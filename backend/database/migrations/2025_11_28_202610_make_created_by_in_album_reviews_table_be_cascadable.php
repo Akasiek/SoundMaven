@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::table('album_reviews', function(Blueprint $table) {
             $table->dropConstrainedForeignId('created_by');
             $table->dropConstrainedForeignId('updated_by');
-            $table->foreignId('created_by')->nullable()->constrained('users')->cascadeOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->cascadeOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->cascadeOnDelete();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
         Schema::table('album_reviews', function(Blueprint $table) {
             $table->dropConstrainedForeignId('created_by');
             $table->dropConstrainedForeignId('updated_by');
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->nullOnDelete();
         });
     }
 };

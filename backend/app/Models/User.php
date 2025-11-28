@@ -3,19 +3,25 @@
 namespace App\Models;
 
 use App\Enums\UserRolesEnum;
+use App\Helpers\FileExtensionFromString;
 use Cocur\Slugify\Slugify;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Str;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-    use HasFactory, Notifiable, Sluggable, SoftDeletes;
+    use HasFactory, HasUuids, InteractsWithMedia, Notifiable, Sluggable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -47,6 +53,62 @@ class User extends Authenticatable implements MustVerifyEmail
                 return new Slugify(['separator' => $separator])->slugify($string) ?: 'unnamed';
             },
         ]];
+    }
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('user-avatars')->useDisk('user_images')->singleFile();
+    }
+
+    public function registerMediaConversions(?Media $media = null): void
+    {
+        $this
+            ->addMediaConversion('thumb')
+            ->width(256)
+            ->height(256)
+            ->quality(90)
+            ->format('webp')
+            ->nonQueued();
+
+        $this
+            ->addMediaConversion('preview')
+            ->width(64)
+            ->height(64)
+            ->quality(80)
+            ->format('webp')
+            ->nonQueued();
+    }
+
+    public function attachAvatar(string $string): void
+    {
+        $fileExtension = new FileExtensionFromString;
+        $randomString = Str::random();
+
+        $this
+            ->addMedia($string)
+            ->preservingOriginal()
+            ->setName("$this->slug-cover")
+            ->setFileName("$this->slug-$randomString-cover.{$fileExtension($string)}")
+            ->toMediaCollection('user-avatars');
+    }
+
+    public function detachAvatar(): void
+    {
+        $this->clearMediaCollection('user-avatars');
+    }
+
+    protected function avatar(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getFirstMediaUrl('user-avatars', 'thumb'),
+        );
+    }
+
+    protected function avatarPreview(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getFirstMediaUrl('user-avatars', 'preview'),
+        );
     }
 
     public function albumReviews(): HasMany

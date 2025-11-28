@@ -21,9 +21,9 @@ return new class extends Migration
 
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('updated_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('created_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('updated_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('deleted_by')->nullable()->constrained('users')->nullOnDelete();
         });
 
         // Add foreign key for parent_id after table creation

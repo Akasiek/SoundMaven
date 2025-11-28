@@ -32,7 +32,7 @@ return new class extends Migration
     {
         Schema::table('album_reviews', function(Blueprint $table) {
             $table->softDeletes();
-            $table->foreignId('deleted_by')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('deleted_by')->nullable()->constrained('users')->nullOnDelete();
         });
     }
 };
