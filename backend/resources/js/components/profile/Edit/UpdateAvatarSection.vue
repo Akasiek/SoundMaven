@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { X } from "lucide-vue-next";
-import { Label } from "@/components/shadcn/ui/label";
 import { Input } from "@/components/shadcn/ui/input";
 import InputError from "@/components/inputs/InputError.vue";
 import { Button } from "@/components/shadcn/ui/button";
@@ -60,7 +59,6 @@ const clearImage = () => {
         </div>
       </div>
       <div class="min-w-64 space-y-2 mb-2">
-        <Label for="cover_image">Avatar</Label>
         <div class="flex items-center gap-2">
 
           <Input
