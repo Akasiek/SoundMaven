@@ -5,6 +5,7 @@ interface User {
   slug: string;
   avatar: string | null;
   avatar_preview: string | null;
+  favorite_artist: Artist | null;
 }
 
 interface UserWithStats extends User {

@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'slug' => $this->slug,
             'avatar' => $this->avatar,
             'avatar_preview' => $this->avatar_preview,
+            'favorite_artist' => ArtistResource::make($this->whenLoaded('favoriteArtist')),
             'stats' => [
                 'album_rating_count' => $this->whenCounted('albumReviews', $this->album_rating_count),
                 'album_review_count' => $this->whenCounted('albumReviews', $this->album_review_count),

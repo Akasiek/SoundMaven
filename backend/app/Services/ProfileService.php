@@ -17,6 +17,7 @@ class ProfileService
                 'name' => $dto->name,
                 'email' => $dto->email,
                 'password' => $dto->password ? bcrypt($dto->password) : null,
+                'favorite_artist_id' => $dto->favorite_artist_id,
             ]);
 
             // Also filter out default values to avoid unnecessary updates

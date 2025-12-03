@@ -16,15 +16,21 @@ const form = useForm<{
   password: string,
   password_confirmation: string,
   avatar: File | string | null,
+  favorite_artist: { id: string, label: string } | null;
+  favorite_artist_id?: string;
 }>({
   email: user.email || '',
   name: user.name || '',
   password: '',
   password_confirmation: '',
   avatar: null,
+  favorite_artist: user.favorite_artist ? { id: user.favorite_artist.id, label: user.favorite_artist.name } : null,
+  favorite_artist_id: user.favorite_artist ? user.favorite_artist.id : undefined,
 });
 
 const submit = () => {
+  form.favorite_artist_id = form.favorite_artist?.id;
+
   router.post(route('profile.update'), {
     ...form.data(),
     _method: 'put',
@@ -57,6 +63,7 @@ const submit = () => {
           <ul class="space-y-2 font-sans [&>li]:text-sm [&>li]:hover:underline">
             <li><a href="#update-profile-information-section"> Profile Information </a></li>
             <li><a href="#update-avatar-section"> Avatar </a></li>
+            <li><a href="#update-fav-artist-section"> Favorite Artist </a></li>
           </ul>
         </div>
 
@@ -64,6 +71,7 @@ const submit = () => {
 
           <UpdateProfileInformationSection :form="form" id="update-profile-information-section"/>
           <UpdateAvatarSection :form="form" :user="user" id="update-avatar-section"/>
+          <UpdateFavArtistSection :form="form" id="update-fav-artist-section"/>
 
           <div class="flex items-center gap-x-5 mt-6 py-0!">
 

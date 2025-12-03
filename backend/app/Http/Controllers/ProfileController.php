@@ -16,7 +16,7 @@ class ProfileController
     public function displayUpdateForm(): Response
     {
         return Inertia::render('profile/Edit', [
-            'user' => UserResource::make(auth()->user()),
+            'user' => UserResource::make(auth()->user()->load('favoriteArtist')),
             'messages' => session()->only(['success', 'error']),
         ]);
     }

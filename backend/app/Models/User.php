@@ -10,6 +10,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -28,6 +29,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         'email',
         'password',
         'role',
+        'favorite_artist_id',
     ];
 
     protected $hidden = [
@@ -111,11 +113,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         );
     }
 
-    public function albumReviews(): HasMany
-    {
-        return $this->hasMany(AlbumReview::class, 'created_by');
-    }
-
     public function albumRatingCount(): Attribute
     {
         return Attribute::make(
@@ -149,5 +146,15 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
         return Attribute::make(
             get: fn() => in_array($this->role, [UserRolesEnum::MAINTAINER, UserRolesEnum::ADMIN])
         );
+    }
+
+    public function albumReviews(): HasMany
+    {
+        return $this->hasMany(AlbumReview::class, 'created_by');
+    }
+
+    public function favoriteArtist(): BelongsTo
+    {
+        return $this->belongsTo(Artist::class, 'favorite_artist_id');
     }
 }

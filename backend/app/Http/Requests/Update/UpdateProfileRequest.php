@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Update;
 
+use App\Models\Artist;
 use App\Models\User;
 use Auth;
 use Illuminate\Validation\Rule;
@@ -24,6 +25,7 @@ class UpdateProfileRequest extends UpdateRequest
             ],
             'password' => ['sometimes', 'nullable', 'confirmed', Password::defaults()],
             'avatar' => 'image|nullable|sometimes|max:5120',
+            'favorite_artist_id' => ['nullable', 'sometimes', 'uuid', Rule::exists(Artist::class, 'id')],
         ];
 
         return $this->convertRulesBasedOnMethod($rules);
