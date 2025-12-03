@@ -67,7 +67,7 @@ const submit = () => {
           </ul>
         </div>
 
-        <form @submit.prevent="submit" class="[&>div]:py-12">
+        <form @submit.prevent="submit" class="[&>div]:py-10">
 
           <UpdateProfileInformationSection :form="form" id="update-profile-information-section"/>
           <UpdateAvatarSection :form="form" :user="user" id="update-avatar-section"/>
