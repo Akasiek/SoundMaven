@@ -45,11 +45,14 @@ const submit = () => {
   <div class="py-12">
     <DefaultSection class="max-w-4xl mb-12">
 
-      <h1> Profile Settings </h1>
+      <div class="grid grid-cols-[1fr_2fr] gap-6">
+        <div></div>
+        <h1> Profile Settings </h1>
+      </div>
 
       <div class="grid grid-cols-[1fr_2fr] gap-6 mt-8">
 
-        <div class="pt-24 -mt-16 sticky top-0 self-start">
+        <div class="pt-24 -mt-40 sticky top-0 self-start">
           <h3 class="mb-6"> Sections </h3>
           <ul class="space-y-2 font-sans">
             <li><a href="#update-profile-section" class="text-sm hover:underline"> Profile Information </a></li>
@@ -58,7 +61,7 @@ const submit = () => {
           </ul>
         </div>
 
-        <form @submit.prevent="submit" class="[&>div]:py-8">
+        <form @submit.prevent="submit" class="[&>div]:py-12">
 
           <UpdateNameSection :form="form" id="update-profile-section"/>
           <UpdatePasswordSection :form="form" id="update-password-section"/>
