@@ -54,9 +54,9 @@ const submit = () => {
 
         <div class="pt-24 -mt-40 sticky top-0 self-start">
           <h3 class="mb-6"> Sections </h3>
-          <ul class="space-y-2 font-sans">
-            <li><a href="#update-profile-information-section" class="text-sm hover:underline"> Profile Information </a></li>
-            <li><a href="#update-avatar-section" class="text-sm hover:underline"> Avatar </a></li>
+          <ul class="space-y-2 font-sans [&>li]:text-sm [&>li]:hover:underline">
+            <li><a href="#update-profile-information-section"> Profile Information </a></li>
+            <li><a href="#update-avatar-section"> Avatar </a></li>
           </ul>
         </div>
 
