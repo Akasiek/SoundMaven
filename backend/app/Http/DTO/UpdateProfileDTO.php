@@ -7,10 +7,18 @@ use Illuminate\Http\UploadedFile;
 
 readonly class UpdateProfileDTO
 {
-    public function __construct(public ?string $password, public ?UploadedFile $avatar) {}
+    public function __construct(
+        public ?string $name,
+        public ?string $email,
+        public ?string $password,
+        public ?UploadedFile $avatar
+    ) {}
 
     public static function fromRequest(UpdateProfileRequest $request): self
     {
-        return new self(password: $request->input('password'), avatar: $request->file('avatar'));
+        return new self(
+            name: $request->input('name'), email: $request->input('email'),
+            password: $request->input('password'), avatar: $request->file('avatar')
+        );
     }
 }

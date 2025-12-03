@@ -12,10 +12,24 @@ class ProfileService
     {
         try {
             $user = auth()->user();
-            $result = true;
 
-            if ($dto->password) {
-                $result = $user->update(['password' => bcrypt($dto->password)]);
+            $updates = array_filter([
+                'name' => $dto->name,
+                'email' => $dto->email,
+                'password' => $dto->password ? bcrypt($dto->password) : null,
+            ]);
+
+            // Also filter out default values to avoid unnecessary updates
+            $updates = array_filter($updates, function($value, $key) use ($user) {
+                if ($key === 'password') {
+                    return true; // Always update password if provided
+                }
+
+                return $value !== $user->$key;
+            }, ARRAY_FILTER_USE_BOTH);
+
+            if (!empty($updates)) {
+                $user->update($updates);
             }
 
             if ($dto->avatar) {
@@ -23,7 +37,7 @@ class ProfileService
                 $user->attachAvatar($dto->avatar);
             }
 
-            return $result;
+            return true;
         } catch (Exception $e) {
             Log::error('Profile update failed: ' . $e->getMessage());
 

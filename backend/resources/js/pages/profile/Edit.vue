@@ -13,10 +13,14 @@ const { user } = defineProps<{ user: User, messages: { success?: string, error?:
 const imagePreviewUrl = ref<string | null>(null);
 
 const form = useForm<{
+  email: string,
+  name: string,
   password: string,
   password_confirmation: string,
-  avatar: File | null,
+  avatar: File | string | null,
 }>({
+  email: user.email || '',
+  name: user.name || '',
   password: '',
   password_confirmation: '',
   avatar: null,
@@ -71,7 +75,7 @@ const clearImage = () => {
 
 <template>
   <div class="py-12">
-    <DefaultSection class="max-w-4xl">
+    <DefaultSection class="max-w-4xl mb-12">
 
       <h1> Profile Settings </h1>
 
@@ -79,24 +83,54 @@ const clearImage = () => {
 
         <div class="pt-24 -mt-16 sticky top-0 self-start">
           <h3 class="mb-6"> Sections </h3>
-          <ul class="space-y-2">
-            <li><a href="#update-password-section" class="text-sm hover:underline"> Update Password </a></li>
-            <li><a href="#avatar-section" class="text-sm hover:underline"> Update Avatar </a></li>
+          <ul class="space-y-2 font-sans">
+            <li><a href="#update-profile-section" class="text-sm hover:underline"> Profile Information </a></li>
+            <li><a href="#update-password-section" class="text-sm hover:underline"> Password </a></li>
+            <li><a href="#avatar-section" class="text-sm hover:underline"> Avatar </a></li>
           </ul>
         </div>
 
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" class="[&>div]:py-8">
 
-          <div class="space-y-6 border-t py-8 border-zinc-700" id="update-password-section">
-            <h3> Update Password </h3>
+          <div class=" grid grid-cols-2 gap-x-6 gap-y-4 items-center justify-center border-t border-zinc-700" id="update-profile-section">
+            <h3 class="col-span-2 mb-4"> Update Profile Information </h3>
+            <div class="grid gap-2">
+              <Label for="name">Name</Label>
+              <Input
+                id="name"
+                type="text"
+                v-model="form.name"
+                placeholder="Name"
+                :tabindex="1"
+              />
+            </div>
+
+            <div class="grid gap-2">
+              <Label for="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                v-model="form.email"
+                placeholder="Email"
+                :tabindex="2"
+              />
+            </div>
+
+            <InputError :message="form.errors.name"/>
+            <InputError :message="form.errors.email"/>
+
+          </div>
+
+          <div class=" grid grid-cols-2 gap-x-6 gap-y-4 items-center justify-center border-t border-zinc-700" id="update-password-section">
+            <h3 class="col-span-2 mb-4"> Update Password </h3>
             <div class="grid gap-2">
               <Label for="password">New Password</Label>
               <Input
                 id="password"
                 type="password"
-                :tabindex="3"
                 v-model="form.password"
                 placeholder="Password"
+                :tabindex="3"
               />
             </div>
 
@@ -105,15 +139,15 @@ const clearImage = () => {
               <Input
                 id="password_confirmation"
                 type="password"
-                :tabindex="4"
                 v-model="form.password_confirmation"
                 placeholder="Confirm Password"
+                :tabindex="4"
               />
             </div>
             <InputError :message="form.errors.password" class="col-span-2"/>
           </div>
 
-          <div class="space-y-6 border-t py-6 border-zinc-700" id="avatar-section">
+          <div class="space-y-6 border-t  border-zinc-700" id="avatar-section">
             <h3> Update Avatar </h3>
 
             <div class="flex items-center gap-4 col-span-3">
@@ -135,12 +169,14 @@ const clearImage = () => {
                     type="file"
                     accept="image/*"
                     @change="handleImageUpload"
+                    :tabindex="5"
                   />
                   <Button
                     type="button"
                     variant="destructive"
                     @click="clearImage"
                     v-if="imagePreviewUrl"
+                    :tabindex="6"
                   >
                     <X class="h-5 w-5"/>
                   </Button>
@@ -150,17 +186,20 @@ const clearImage = () => {
             </div>
           </div>
 
-          <p class="mt-6 text-sm text-green-500" v-if="messages.success">
-            {{ messages.success }}
-          </p>
-          <p class="mt-6 text-sm text-red-500" v-if="messages.error">
-            {{ messages.error }}
-          </p>
+          <div class="flex items-center gap-x-5 mt-6 py-0!">
 
-          <Button type="submit" class="mt-6" :tabindex="4" :disabled="form.processing">
-            <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin"/>
-            Update
-          </Button>
+            <p class="grow text-sm text-green-500" v-if="messages.success">
+              {{ messages.success }}
+            </p>
+            <p class="grow text-sm text-red-500" v-if="messages.error || form.hasErrors">
+              {{ messages.error || 'Please fix the errors above and try again.' }}
+            </p>
+
+            <Button type="submit" class="block ml-auto cursor-pointer" :tabindex="7" :disabled="form.processing">
+              <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin"/>
+              Update
+            </Button>
+          </div>
         </form>
 
       </div>
