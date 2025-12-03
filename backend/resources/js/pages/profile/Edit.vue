@@ -3,9 +3,9 @@ import { LoaderCircle } from "lucide-vue-next";
 import { router, useForm } from "@inertiajs/vue3";
 import DefaultSection from "@/components/DefaultSection.vue";
 import { Button } from "@/components/shadcn/ui/button";
-import UpdateNameSection from "@/components/profile/Edit/UpdateNameSection.vue";
-import UpdatePasswordSection from "@/components/profile/Edit/UpdatePasswordSection.vue";
+import UpdateProfileInformationSection from "@/components/profile/Edit/UpdateProfileInformationSection.vue";
 import UpdateAvatarSection from "@/components/profile/Edit/UpdateAvatarSection.vue";
+import UpdateFavArtistSection from "@/components/profile/Edit/UpdateFavArtistSection.vue";
 
 const { user } = defineProps<{ user: User, messages: { success?: string, error?: string } }>();
 
@@ -55,16 +55,14 @@ const submit = () => {
         <div class="pt-24 -mt-40 sticky top-0 self-start">
           <h3 class="mb-6"> Sections </h3>
           <ul class="space-y-2 font-sans">
-            <li><a href="#update-profile-section" class="text-sm hover:underline"> Profile Information </a></li>
-            <li><a href="#update-password-section" class="text-sm hover:underline"> Password </a></li>
+            <li><a href="#update-profile-information-section" class="text-sm hover:underline"> Profile Information </a></li>
             <li><a href="#update-avatar-section" class="text-sm hover:underline"> Avatar </a></li>
           </ul>
         </div>
 
         <form @submit.prevent="submit" class="[&>div]:py-12">
 
-          <UpdateNameSection :form="form" id="update-profile-section"/>
-          <UpdatePasswordSection :form="form" id="update-password-section"/>
+          <UpdateProfileInformationSection :form="form" id="update-profile-information-section"/>
           <UpdateAvatarSection :form="form" :user="user" id="update-avatar-section"/>
 
           <div class="flex items-center gap-x-5 mt-6 py-0!">

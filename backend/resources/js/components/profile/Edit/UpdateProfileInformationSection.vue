@@ -6,6 +6,8 @@ import { InertiaForm } from "@inertiajs/vue3";
 
 defineProps<{
   form: InertiaForm<{
+    name: string;
+    email: string;
     password: string;
     password_confirmation: string;
   }>;
@@ -13,8 +15,33 @@ defineProps<{
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-x-6 gap-y-4 items-center justify-center border-t border-zinc-700">
-    <h3 class="col-span-2 mb-4"> Password </h3>
+  <div class=" grid grid-cols-2 gap-x-6 gap-y-8 items-start border-t border-zinc-700" id="update-profile-section">
+    <h3 class="col-span-2"> Profile Information </h3>
+    <div class="grid gap-2">
+      <Label for="name">Name</Label>
+      <Input
+        id="name"
+        type="text"
+        v-model="form.name"
+        placeholder="Name"
+        :tabindex="1"
+      />
+    <InputError :message="form.errors.name"/>
+    </div>
+
+    <div class="grid gap-2">
+      <Label for="email">Email</Label>
+      <Input
+        id="email"
+        type="email"
+        v-model="form.email"
+        placeholder="Email"
+        :tabindex="2"
+      />
+    <InputError :message="form.errors.email"/>
+    </div>
+
+
     <div class="grid gap-2">
       <Label for="password">New Password</Label>
       <Input
@@ -36,6 +63,7 @@ defineProps<{
         :tabindex="4"
       />
     </div>
-    <InputError :message="form.errors.password" class="col-span-2"/>
+
+    <InputError :message="form.errors.password" class="col-span-2 -mt-6"/>
   </div>
 </template>
