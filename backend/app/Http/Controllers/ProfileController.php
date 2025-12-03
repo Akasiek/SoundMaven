@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\DTO\UpdateProfileDTO;
 use App\Http\Requests\Update\UpdateProfileRequest;
+use App\Http\Resources\UserResource;
 use App\Services\ProfileService;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -15,7 +16,7 @@ class ProfileController
     public function displayUpdateForm(): Response
     {
         return Inertia::render('profile/Edit', [
-            'user' => auth()->user(),
+            'user' => UserResource::make(auth()->user()),
             'messages' => session()->only(['success', 'error']),
         ]);
     }

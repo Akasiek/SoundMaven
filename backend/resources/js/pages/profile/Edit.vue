@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { LoaderCircle, X } from "lucide-vue-next";
 import { router, useForm } from "@inertiajs/vue3";
 import DefaultSection from "@/components/DefaultSection.vue";
@@ -8,7 +8,7 @@ import { Label } from "@/components/shadcn/ui/label";
 import InputError from "@/components/inputs/InputError.vue";
 import { Button } from "@/components/shadcn/ui/button";
 
-defineProps<{ user: User, messages: { success?: string, error?: string } }>();
+const { user } = defineProps<{ user: User, messages: { success?: string, error?: string } }>();
 
 const imagePreviewUrl = ref<string | null>(null);
 
@@ -21,6 +21,13 @@ const form = useForm<{
   password_confirmation: '',
   avatar: null,
 });
+
+// Use current avatar as initial preview
+onMounted(() => {
+  if (user.avatar) {
+    imagePreviewUrl.value = user.avatar;
+  }
+})
 
 const submit = () => {
   router.post(route('profile.update'), {
@@ -56,7 +63,7 @@ const handleImageUpload = (event: Event): void => {
 
 const clearImage = () => {
   form.avatar = null;
-  imagePreviewUrl.value = null;
+  imagePreviewUrl.value = user.avatar || null;
   (document.getElementById('avatar') as HTMLInputElement)!.value = '';
 };
 </script>
