@@ -14,7 +14,7 @@ defineProps<{
 
 <template>
   <div class="grid grid-cols-2 gap-x-6 gap-y-4 items-center justify-center border-t border-zinc-700">
-    <h3 class="col-span-2 mb-4"> Update Password </h3>
+    <h3 class="col-span-2 mb-4"> Password </h3>
     <div class="grid gap-2">
       <Label for="password">New Password</Label>
       <Input

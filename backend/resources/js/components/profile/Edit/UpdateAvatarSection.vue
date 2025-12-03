@@ -47,7 +47,7 @@ const clearImage = () => {
 
 <template>
   <div class="space-y-6 border-t  border-zinc-700">
-    <h3> Update Avatar </h3>
+    <h3> Avatar </h3>
 
     <div class="flex items-center gap-4 col-span-3">
       <div class="max-w-32">
