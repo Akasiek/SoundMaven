@@ -34,12 +34,13 @@ const submit = () => {
     ...form.data(),
     _method: 'put',
   }, {
+    preserveScroll: true,
     onSuccess: () => {
-      form.reset();
-      clearImage();
+      form.reset('password', 'password_confirmation');
     },
     onError: (errors) => {
-      console.error('Form submission errors:', errors, form);
+      form.setError(errors);
+      console.error('Form submission errors:', errors);
     },
   });
 };
@@ -97,8 +98,6 @@ const clearImage = () => {
                 v-model="form.password"
                 placeholder="Password"
               />
-              <InputError :message="form.errors.password"/>
-              <p v-if="form.errors.password" class="text-sm text-red-600 mt-1">{{ form.errors.password }}</p>
             </div>
 
             <div class="grid gap-2">
@@ -110,8 +109,8 @@ const clearImage = () => {
                 v-model="form.password_confirmation"
                 placeholder="Confirm Password"
               />
-              <InputError :message="form.errors.password_confirmation"/>
             </div>
+            <InputError :message="form.errors.password" class="col-span-2"/>
           </div>
 
           <div class="space-y-6 border-t py-6 border-zinc-700" id="avatar-section">
@@ -146,6 +145,7 @@ const clearImage = () => {
                     <X class="h-5 w-5"/>
                   </Button>
                 </div>
+                <InputError :message="form.errors.avatar" class="mt-4"/>
               </div>
             </div>
           </div>
