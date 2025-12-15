@@ -37,7 +37,7 @@ const discs = album.tracks.reduce((acc, { disc, ...track }) => {
       </div>
     </template>
     <template v-else>
-      <p class="text-zinc-400">
+      <p class="text-zinc-400 font-sans">
         No tracklist found for this album.
       </p>
     </template>
