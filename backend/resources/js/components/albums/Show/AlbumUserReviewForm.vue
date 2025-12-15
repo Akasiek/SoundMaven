@@ -115,7 +115,7 @@ const getRatingColor = (rating: string | number) => {
             min="0"
             max="100"
             required
-            class="border-zinc-700 !text-4xl w-24 h-20 text-center font-bold pb-2 transition-colors text-zinc-900"
+            class="border-zinc-700 !text-4xl w-24 h-20 text-center font-bold pb-2 transition-colors text-zinc-900 font-serif"
             :class="getRatingColor(form.rating.toString())"
           />
         </div>
