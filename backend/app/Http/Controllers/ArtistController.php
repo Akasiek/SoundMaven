@@ -16,18 +16,17 @@ use Inertia\Inertia;
 
 class ArtistController extends Controller
 {
-    private ArtistService $service;
-
-    public function __construct(ArtistService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(private readonly ArtistService $service) {}
 
     public function index(): \Inertia\Response
     {
-        return inertia('artist/List', ['artists' => ArtistResource::collection(
-            Artist::with(['albums'])->paginate(request('perPage', 24))
-        )]);
+        $artists = ArtistResource::collection(
+            Artist::with(['albums'])
+                ->paginate(request('perPage', 24))
+                ->onEachSide(2)
+        );
+
+        return inertia('artist/List', ['artists' => $artists]);
     }
 
     public function show(Artist $artist): \Inertia\Response
