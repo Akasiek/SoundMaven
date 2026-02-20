@@ -7,7 +7,6 @@ use App\Http\Requests\Store\StoreAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumRequest;
 use App\Http\Requests\Update\UpdateAlbumTracksRequest;
 use App\Http\Resources\AlbumResource;
-use App\Http\Resources\AlbumReviewResource;
 use App\Http\Resources\Collections\AlbumReviewCollection;
 use App\Http\Resources\Collections\AlbumTagCollection;
 use App\Http\Resources\Collections\GenreCollection;
@@ -23,12 +22,7 @@ use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class AlbumController extends Controller
 {
-    private AlbumService $service;
-
-    public function __construct(AlbumService $service)
-    {
-        $this->service = $service;
-    }
+    public function __construct(private readonly AlbumService $service) { }
 
     public function index(): \Inertia\Response
     {
@@ -45,24 +39,7 @@ class AlbumController extends Controller
 
     public function show(Album $album): \Inertia\Response
     {
-        $currentUserReview = $album->reviews()->where('created_by', auth()->id())->first();
-        $latestRatings = $album->reviews()->with('creator')
-            ->whereNull('body')
-            ->whereNot('created_by', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->take(5)->get();
-        $latestReviews = $album->reviews()->with('creator')
-            ->whereNotNull('body')
-            ->whereNot('created_by', auth()->id())
-            ->orderBy('created_at', 'desc')
-            ->take(5)->get();
-
-        return Inertia::render('album/Show', [
-            'album' => AlbumResource::make($album->loadMissing(['artist', 'tracks', 'genres'])->loadCount(['reviews'])),
-            'currentUserReview' => $currentUserReview ? new AlbumReviewResource($currentUserReview) : null,
-            'latestRatings' => AlbumReviewResource::collection($latestRatings),
-            'latestReviews' => AlbumReviewResource::collection($latestReviews),
-        ]);
+        return Inertia::render('album/Show', $this->service->getShowProps($album));
     }
 
     public function displayCreateForm(): \Inertia\Response

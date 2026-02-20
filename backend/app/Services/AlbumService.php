@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Helpers\TimeToSeconds;
+use App\Http\Resources\AlbumResource;
+use App\Http\Resources\AlbumReviewResource;
 use App\Models\Album;
 use App\Models\Track;
 use Exception;
@@ -10,6 +12,28 @@ use Illuminate\Validation\ValidationException;
 
 class AlbumService
 {
+    public function getShowProps(Album $album): array
+    {
+        $currentUserReview = $album->reviews()->where('created_by', auth()->id())->first();
+        $latestRatings = $album->reviews()->with('creator')
+            ->whereNull('body')
+            ->whereNot('created_by', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->take(5)->get();
+        $latestReviews = $album->reviews()->with('creator')
+            ->whereNotNull('body')
+            ->whereNot('created_by', auth()->id())
+            ->orderBy('created_at', 'desc')
+            ->take(5)->get();
+
+        return [
+            'album' => AlbumResource::make($album->loadMissing(['artist', 'tracks', 'genres'])->loadCount(['reviews'])),
+            'currentUserReview' => $currentUserReview ? new AlbumReviewResource($currentUserReview) : null,
+            'latestRatings' => AlbumReviewResource::collection($latestRatings),
+            'latestReviews' => AlbumReviewResource::collection($latestReviews),
+        ];
+    }
+
     public function create(array $data): Album
     {
         $album = Album::create($data);
