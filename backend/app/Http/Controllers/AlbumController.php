@@ -35,6 +35,7 @@ class AlbumController extends Controller
         $albums = AlbumResource::collection(
             Album::with(['artist'])
                 ->paginate(request('perPage', 24))
+                ->onEachSide(2)
         );
 
         return Inertia::render('album/List', [
