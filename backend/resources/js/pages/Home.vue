@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import AlbumList from "@/components/albums/AlbumList.vue";
-
 interface Props {
   albums: ExtendedAlbum[];
 }
@@ -11,7 +9,7 @@ defineProps<Props>();
 <template>
   <div class="container mx-auto">
     <div class="py-12">
-      <AlbumList :albums="albums" :show-artist="true"/>
+      Work in progress
     </div>
   </div>
 </template>
