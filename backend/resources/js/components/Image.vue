@@ -3,7 +3,7 @@ import { ref } from "vue";
 import { cn } from "@/lib/utils";
 
 defineProps<{
-  classes: string,
+  classes?: string,
   src: string,
   alt: string,
   placeholder?: string
@@ -13,12 +13,12 @@ const loaded = ref(false);
 </script>
 
 <template>
-  <div class="relative">
+  <div class="relative w-full h-full">
     <img
       v-if="placeholder"
       :src="placeholder"
       :alt="alt"
-      :class="cn('absolute inset-0 transition-opacity duration-700 ease-in-out', classes)"
+      :class="cn('absolute inset-0 transition-opacity duration-700 ease-in-out w-full h-full object-center object-cover', classes)"
     />
 
     <img
@@ -26,7 +26,7 @@ const loaded = ref(false);
       :alt="alt"
       @load="loaded = true"
       :style="{ opacity: (!placeholder || loaded) ? 1 : 0 }"
-      :class="cn('transition-opacity duration-800 ease-in-out relative')"
+      class="transition-opacity duration-800 ease-in-out relative w-full h-full object-center object-cover"
     />
   </div>
 </template>
