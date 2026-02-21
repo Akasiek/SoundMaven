@@ -1,15 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import UserReviewCard from "@/components/reviews/UserReviewCard.vue";
 
 defineProps<{
   latestReviews: ExtendedAlbumReview[]
 }>();
-
-const openedReviews = ref<boolean[]>([]);
-const toggleReview = (index: number) => {
-  openedReviews.value[index] = !openedReviews.value[index];
-};
 </script>
 
 <template>
