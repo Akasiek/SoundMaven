@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
+import { getRatingColor } from "@/composables/getRatingColor";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.locale('en');
+dayjs.extend(relativeTime);
 
 defineProps<{ latestReviews: ExtendedAlbum[] }>();
 
@@ -42,22 +48,34 @@ const toggleReview = (index: number) => {
             </div>
           </div>
 
-          <h3 :class="`${album.user_rating_color}`" class="flex items-end text-2xl leading-none font-black mr-2">
-            {{ album.user_rating }} <span class="text-xs text-zinc-500 ml-0.5">/100</span>
+          <h3 v-if="album.user_review" :class="`text-${getRatingColor(album.user_review.rating)}-400`"
+              class="flex items-end text-2xl leading-none font-black mr-2">
+            {{ album.user_review.rating }} <span class="text-xs text-zinc-500 ml-0.5">/100</span>
           </h3>
         </div>
 
-        <div class="flex items-start gap-6 mt-4">
+        <div v-if="album.user_review?.body" class="flex items-start gap-6 mt-4">
           <div class="border-l border-zinc-700 pl-4 ml-2 w-full">
             <p class="text-zinc-300 wrap-anywhere w-full pr-4"
-               :class="((album.user_review && album.user_review.length <= 420) || openedReviews[index] || false) ? '' : 'line-clamp-3'">
-              {{ album.user_review }}
+               :class="((album.user_review.body && album.user_review.body.length <= 420) || openedReviews[index] || false) ? '' : 'line-clamp-3'">
+              {{ album.user_review.body }}
             </p>
             <button class="text-green-400 hover:underline mt-2 cursor-pointer" @click="toggleReview(index)"
-                    v-if="(album.user_review && album.user_review.length > 420)">
+                    v-if="(album.user_review.body && album.user_review.body.length > 420)">
               {{ (openedReviews[index] || false) ? 'Show less' : 'Show more' }}
             </button>
           </div>
+        </div>
+
+        <div
+          v-if="album.user_review?.date"
+          class=" border-zinc-700 mt-6 ml-2"
+          :title="dayjs(album.user_review.date).format('MMMM D, YYYY h:mm A')"
+        >
+          <p class="text-zinc-400 font-sans text-sm">
+            Reviewed {{ dayjs(album.user_review.date).fromNow() }}
+          </p>
+
         </div>
 
       </div>

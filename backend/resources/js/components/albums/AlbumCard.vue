@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
 import { getNonBreakingSpaces } from "@/composables/getNonBreakingSpaces";
+import { getRatingColor } from "@/composables/getRatingColor";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.locale('en');
+dayjs.extend(relativeTime);
 
 const { showUserRating = false, size = 'lg' } = defineProps<{
   album: ExtendedAlbum | Album;
@@ -64,19 +70,28 @@ const getStyledSize = (size: string, element: string) => {
           </h3>
         </Link>
         <p class="text-xs sm:text-sm font-sans text-zinc-400" v-show="showDate || false">
-          {{ new Date(album.release_date).toLocaleDateString() }}
+          {{ dayjs(album.release_date).format('MMMM D, YYYY') }}
         </p>
 
       </div>
 
-      <div class="py-2.5  font-black flex justify-center leading-none" :class="getStyledSize(size, 'rating')">
-        <span v-if="showUserRating" :class="`${album.user_rating_color}`">
-          {{ album.user_rating }}
+      <div class="py-2.5 font-black flex justify-center leading-none" :class="getStyledSize(size, 'rating')">
+        <span v-if="showUserRating && album.user_review" :class="`text-${getRatingColor(album.user_review.rating)}-400`">
+          {{ album.user_review.rating }}
         </span>
         <span v-else :class="`${album.rating_color}`">
           {{ album.average_rating }}
         </span>
       </div>
+
+      <div
+        v-if="showUserRating && album.user_review"
+        :title="dayjs(album.user_review?.date).format('MMMM D, YYYY HH:mm')"
+        class="col-span-2 border-t border-zinc-700 mt-2 pt-2 text-xs text-zinc-400 font-sans"
+      >
+        Rated {{ dayjs(album.user_review?.date).fromNow() }}
+      </div>
     </div>
+
   </Link>
 </template>

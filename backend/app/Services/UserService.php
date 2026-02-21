@@ -18,7 +18,7 @@ class UserService
                 ->rightJoin('album_reviews', 'albums.id', '=', 'album_reviews.album_id')
                 ->where('album_reviews.created_by', $user->id)
                 ->orderBy('album_reviews.created_at', 'desc')
-                ->addSelect(['albums.*', 'album_reviews.rating as rating'])
+                ->addSelect(['albums.*', 'album_reviews.rating as review_rating', 'album_reviews.created_at as review_date'])
                 ->limit(24)
                 ->get()
         );
@@ -28,7 +28,12 @@ class UserService
                 ->rightJoin('album_reviews', 'albums.id', '=', 'album_reviews.album_id')
                 ->where('album_reviews.created_by', $user->id)
                 ->orderBy('album_reviews.created_at', 'desc')
-                ->addSelect(['albums.*', 'album_reviews.rating as rating', 'album_reviews.body as body'])
+                ->addSelect([
+                    'albums.*',
+                    'album_reviews.body as review_body',
+                    'album_reviews.rating as review_rating',
+                    'album_reviews.created_at as review_date',
+                ])
                 ->whereNotNull('album_reviews.body')
                 ->limit(24)
                 ->get()
