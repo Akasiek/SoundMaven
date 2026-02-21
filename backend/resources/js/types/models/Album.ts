@@ -15,8 +15,8 @@ interface Album {
 
   user_review?: {
     rating: number;
-    body?: string;
-    date?: string;
+    body: string;
+    date: string;
   };
 
   created_at: string;
