@@ -4,6 +4,7 @@ import UserLatestReviews from "@/components/users/Show/UserLatestReviews.vue";
 import UserLatestRatings from "@/components/users/Show/UserLatestRatings.vue";
 
 import UserRatingDistributionChart from "@/components/users/Show/UserRatingDistributionChart.vue";
+import UserFavoriteUserCard from "@/components/users/Show/UserFavoriteUserCard.vue";
 
 defineProps<{
   user: UserWithStats,
@@ -17,7 +18,7 @@ defineProps<{
 <template>
   <main class="container mx-auto grid grid-cols-[1fr_2fr] pt-8 gap-8 mb-18">
     <aside class="space-y-8 min-h-24">
-      <div class="bg-zinc-800 rounded-md  h-fit">
+      <div class="bg-zinc-800 rounded-md h-fit">
 
         <div class="flex items-center gap-4 justify-center p-8 mr-4">
           <Avatar class="w-16 h-16">
@@ -50,6 +51,8 @@ defineProps<{
       </div>
 
       <UserRatingDistributionChart :ratingsForDistributionChart="ratingsForDistributionChart"/>
+
+      <UserFavoriteUserCard :user="user"/>
 
     </aside>
     <section class="space-y-18">

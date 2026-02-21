@@ -11,7 +11,7 @@ class UserService
 {
     public function getShowProps(User $user): array
     {
-        $userResource = UserResource::make($user->loadCount(['albumReviews']));
+        $userResource = UserResource::make($user->loadCount(['albumReviews'])->load('favoriteArtist'));
 
         $latestRatings = AlbumResource::collection(
             Album::with(['artist'])
