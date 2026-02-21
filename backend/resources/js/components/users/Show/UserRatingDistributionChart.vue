@@ -36,7 +36,7 @@ const chartOptions = {
 </script>
 
 <template>
-  <div class="bg-zinc-800 rounded-md min-h-24 h-fit p-4">
+  <div class="bg-zinc-800 rounded-md p-4">
     <h3 class="text-center mb-4">Rating distribution</h3>
     <Line id="user-rating-distribution-chart" :options="chartOptions" :data="chartData"/>
   </div>
